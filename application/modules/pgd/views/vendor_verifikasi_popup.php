@@ -47,8 +47,8 @@
           <tr>
               <td class="ui-state-default jqgrid-rownum" >&nbsp;<?php echo $i; ?></td>
               <td class="ui-state-default jqgrid-rownum" >&nbsp;<?php echo $row->KETERANGAN; ?></td>
-              <td class="ui-state-default jqgrid-rownum" align="center" ><input type="checkbox" name="chkvendor__<?php echo $row->KETERANGAN; ?>" VALUE="1" /></td>
-              <td class="ui-state-default jqgrid-rownum" align="center" ><input type="checkbox" name="chkverify__<?php echo $row->KETERANGAN; ?>" VALUE="1" /></td>
+              <td class="ui-state-default jqgrid-rownum" align="center" ><input type="checkbox" disabled name="chkvendor__<?php echo $row->KETERANGAN; ?>" <?php echo ($row->VENDOR_CEK == 1 ?" CHECKED " : " "); ?>   VALUE="1" /></td>
+              <td class="ui-state-default jqgrid-rownum" align="center" ><input type="checkbox" name="chkverify__<?php echo $row->KETERANGAN; ?>" <?php echo ($row->STATUS_CEK == 1 ?" CHECKED " : " "); ?> VALUE="1" /></td>
               
           </tr>
           <?php

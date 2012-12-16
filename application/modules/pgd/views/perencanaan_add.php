@@ -92,7 +92,7 @@
          <p>	
             <?php echo form_label("Swakelola * ") ?>
          <group>
-             <input type="radio" id="SWAKELOLA" name="SWAKELOLA" value="0"> Tidak</input>
+             <input type="radio" id="SWAKELOLA" CHECKED name="SWAKELOLA" value="0"> Tidak</input>
              <input type="radio" id="SWAKELOLA" name="SWAKELOLA" value="1" >Ya</input>
              
          </group> 
@@ -213,8 +213,8 @@
                     //clearForm: false,
                     success: function(msg){
                           //alert(msg);
-                          // $("#trace").html(msg);
-			  if(msg) { 			
+                           //$("#trace").html(msg);
+                          if(msg) { 			
                             window.location = "<?php echo base_url() ."index.php/pgd/perencanaan/anggaran_add"; ?>/" + msg;			
 			  } else { 
                            alert('Data gagal disimpan')

@@ -1,5 +1,5 @@
   <div class="accordion">
- <h3 href="<?php echo base_url()?>index.php/crud/grid/ep_ms_mata_uang_kurs">KURS MATA UANG</h3>
+ <h3 href="<?php echo base_url()?>index.php/adm/gridr/ep_ms_mata_uang_kurs">KURS MATA UANG</h3>
             <div>
 			<fieldset class="ui-widget-content">
 			<legend>Pencarian</legend>
@@ -20,8 +20,8 @@
 			</fieldset>	
 			<br/>
 			<p>
-				<input type="button" id="btnAdd"  value="Tambah Kurs" /> 
-				<input type="button" id="btnEdit"  value="Edit Kurs" /> 
+                            <button type="button" id="btnAdd"  >Tambah Kurs</button> 
+                                <button type="button" id="btnEdit"  >Edit Kurs</button> 
 			
 			</p>
 			
@@ -89,7 +89,7 @@
                 });
             });
 	$("#btnAdd" ).click(function() {
-		window.location = "<?php echo base_url() ."index.php/kurs/add"; ?>";  
+		window.location = "<?php echo base_url() ."index.php/adm/kurs/add"; ?>";  
 	});
 	
 	$("#btnEdit" ).click(function() {
@@ -106,7 +106,7 @@
                         str += v + "=" + selected[v] + "&";
                         count++; 
                     });
-                    window.location = "<?php echo base_url() . "index.php/kurs/edit"; ?>?" + str;
+                    window.location = "<?php echo base_url() . "index.php/adm/kurs/edit"; ?>?" + str;
 		}			
 	});
 

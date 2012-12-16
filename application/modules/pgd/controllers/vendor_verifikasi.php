@@ -38,7 +38,7 @@ class Vendor_verifikasi extends MY_Controller {
                 
             }
             
-            $sql = "SELECT KODE_TENDER,KODE_KANTOR, KODE_VENDOR, KETERANGAN ";
+            $sql = "SELECT KODE_TENDER,KODE_KANTOR, KODE_VENDOR, KETERANGAN, STATUS_CEK, VENDOR_CEK ";
             $sql .= " FROM EP_PGD_PENAWARAN_TEKNIS T ";
             $sql .= " WHERE T.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "' ";
             $sql .= " AND T.KODE_KANTOR = '" .$this->input->get("KODE_KANTOR"). "' ";

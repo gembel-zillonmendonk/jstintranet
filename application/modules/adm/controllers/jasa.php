@@ -50,7 +50,7 @@ class Jasa extends MY_Controller {
 					$sql .= " WHERE KODE_KEL_JASA = '" . $this->input->post("kode_kel_jasa") . "' " ;  
 		
 					$this->db->simple_query($sql);
-					redirect(base_url() . "index.php/kel_jasa");
+					redirect(base_url() . "index.php/adm/jasa");
 			}
 
 			$sql = "SELECT KODE_JASA, KODE_KEL_JASA, NAMA_JASA FROM EP_KOM_JASA ";
@@ -76,12 +76,14 @@ class Jasa extends MY_Controller {
 	}
 	
 	function delete() {
-		if ($this->input->get("KODE_KEL_JASA")) {
-			$sql = "DELETE FROM EP_KOM_KELOMPOK_JASA ";
-			$sql .= " WHERE KODE_KEL_JASA = '" . $this->input->get("KODE_KEL_JASA") . "' ";
+		if ($this->input->get("KODE_JASA")) {
+			$sql = "DELETE FROM EP_KOM_JASA ";
+			$sql .= " WHERE KODE_JASA = '" . $this->input->get("KODE_JASA") . "' ";
 		 
+                      
+                        
 			$this->db->simple_query($sql);
-		// 	redirect(base_url() . "index.php/kel_jasa_list");
+		  	redirect(base_url() . "index.php/adm/jasa");
 		 
 		}
 	}	

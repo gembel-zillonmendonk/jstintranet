@@ -33,7 +33,7 @@ class Panitia extends MY_Controller {
 			 if ($this->db->simple_query($sql)) {
 			 
 				$this->urut->set_plus($this->input->post("kode_kantor"),"PANITIA");
-				echo "1";
+				echo  $urut ;
 				// echo $sql;
 			 } else {
 				// echo $sql;
@@ -60,14 +60,15 @@ class Panitia extends MY_Controller {
 	
 	public function edit() {
 		
-		
+		//print_r($_POST);
 		
 		if ($this->input->post("add_type") == "add_anggota") {
 			 
 			$sql = "INSERT INTO EP_MS_ANGGOTA_PANITIA (KODE_PANITIA,  KODE_KANTOR, KODE_JABATAN, TGL_REKAM ) ";
-			 $sql .= " VALUES ( " . $this->input->post("kode_panitia_key") . ",'" .$this->input->post("kode_kantor"). "', '" . $this->input->post("kode_jabatan"). "', TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD')) ";
+			 $sql .= " VALUES ( " . $this->input->post("kode_panitia_key") . ",'" .$this->input->post("kode_kantor_key"). "', '" . $this->input->post("kode_jabatan"). "', TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD')) ";
 			 
-			  
+			// echo $sql;
+                         
 			 //echo $this->session->userdata("kode_panitia");
 			 
 			 $this->db->simple_query($sql);
@@ -81,7 +82,10 @@ class Panitia extends MY_Controller {
 			
 		}
 		$sql = "SELECT KODE_PANITIA, NAMA_PANITIA FROM EP_MS_KELOMPOK_PANITIA ";
-		$sql .= " WHERE KODE_PANITIA = " .  $this->session->userdata("kode_panitia");
+		$sql .= " WHERE KODE_PANITIA = " .  $this->session->userdata("kode_panitia"); 
+                $sql .= " AND KODE_KANTOR = '" .  $this->session->userdata("kode_kantor_panitia") . "'"; 
+                
+            
 
 	 
 		

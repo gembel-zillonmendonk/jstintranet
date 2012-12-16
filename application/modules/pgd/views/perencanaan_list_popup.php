@@ -3,9 +3,14 @@
             <div>
 			<p>
 			<div id="mysearch"></div>
+                        <form>
+                            <fieldset>     
+                            <label>JUDUL PEKERJAAN</label>
 				<input type="text" id="kolom" name="kolom"  value="" /> 
-				<input type="button" id="btnSrc"  value="Cari" /> 
-			</p>
+				<input type="button" id="btnSrcP"  value="Cari" /> 
+			</fieldset>
+                        </form>
+                        </p>
 			 
 			
 			
@@ -32,7 +37,7 @@
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
 	
-	$("#btnSrc").click(function() {
+	$("#btnSrcP").click(function() {
 	
 
 	
@@ -42,7 +47,7 @@
 		
 		srcval = $("#kolom").val();
 		var myfilter = { groupOp: "AND", rules: []};
-		myfilter.rules.push({field:"KODE_JASA",op:"eq",data:srcval});
+		myfilter.rules.push({field:"JUDUL_PEKERJAAN",op:"cn",data:srcval});
 		
 		var grid = $("#grid_ep_pgd_perencanaan");
 			

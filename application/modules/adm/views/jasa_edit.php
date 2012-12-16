@@ -18,7 +18,10 @@
 			'value' => $kode_kel_jasa
 			
 	   );
-	   echo form_input($kode_kel_jasa) ?><input type="button" id="btnPopup"  value="..." />
+	   echo form_input($kode_kel_jasa) ?>
+                            <!--
+                            <input type="button" id="btnPopup"  value="..." />
+                            -->
 	   <br/> <br/>
 	    <?php echo form_label("Kode Jasa") ?>
 	   <?php 
@@ -77,7 +80,7 @@
 		 
 		str= "";
 		jQuery('#modal_form_kelompok_jasa')
-                    .load($site_url + '/kel_jasa_get' + str)
+                    .load($site_url + '/adm/kel_jasa_get' + str)
                     .dialog({ //dialog form use for popup after click button in pager
                         autoOpen:false,
                         width:800,
@@ -97,7 +100,7 @@
 	
 	
 	$("#btncancel").click(function(){
-		window.location = "<?php echo base_url() ."index.php/jasa"; ?>";  
+		window.location = "<?php echo base_url() ."index.php/adm/jasa"; ?>";  
 	});
   
     $(".accordion")

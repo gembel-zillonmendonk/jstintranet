@@ -20,9 +20,9 @@
 			</form>
 			</fieldset>	
 			<p>
-				<input type="button" id="btnAdd"  value="Tambah Kelompok Jasa" /> 
-				<input type="button" id="btnEdit"  value="Edit Kelompok Jasa" /> 
-				<input type="button" id="btnDelete"  value="Hapus Kelompok Jasa" /> 
+                            <button type="button" id="btnAdd"  >Tambah Kelompok Jasa  </button> 
+                            <button type="button" id="btnEdit"  >Edit Kelompok Jasa </button> 
+                            <button type="button" id="btnDelete"  >Hapus Kelompok Jasa  </button> 
 			
 			</p>
 			
@@ -93,7 +93,7 @@
                 });
             });
 	$("#btnAdd" ).click(function() {
-		window.location = "<?php echo base_url() ."index.php/kel_jasa/add"; ?>";  
+		window.location = "<?php echo base_url() ."index.php/adm/kel_jasa/add"; ?>";  
 	});
 	
 	$("#btnEdit" ).click(function() {
@@ -111,13 +111,15 @@
                         str += v + "=" + selected[v] + "&";
                         count++; 
                     });
-                    window.location = "<?php echo base_url() . "index.php/kel_jasa/edit"; ?>?" + str;
+                    window.location = "<?php echo base_url() . "index.php/adm/kel_jasa/edit"; ?>?" + str;
 		}			
 	});
 	
 		
 	$("#btnDelete" ).click(function() {
-	alert("xx");
+	if (confirm("Akan Menghapus Kelompok Jasa")) {
+            
+        
 	 var selected = $('#grid_ep_kom_kelompok_jasa').jqGrid('getGridParam', 'selrow');
 		 if (selected) {
                     selected = jQuery('#grid_ep_kom_kelompok_jasa').jqGrid('getRowData',selected);
@@ -132,9 +134,10 @@
                         count++; 
                     }); 
 					
-                    window.location = "<?php echo base_url() . "index.php/kel_jasa/delete"; ?>?" + str;
+                    window.location = "<?php echo base_url() . "index.php/adm/kel_jasa/delete"; ?>?" + str;
 		}			
-	});
+            }
+            });
 	 
 	 
 

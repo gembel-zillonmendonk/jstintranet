@@ -1,7 +1,7 @@
 <?php
-print_r($kode_aktifitas);
-
-print_r($arr_antarmuka);
+// echo $kode_aktifitas . "-> " . $nama_aktifitas . "<br/>";
+ 
+// print_r($arr_antarmuka);
 
 ?>
 <div id="trace"></div>
@@ -14,7 +14,7 @@ if (in_array("MonitorTender", $arr_antarmuka)) {
  <h3 id="MonitorTender" href="<?php echo base_url(); ?>index.php/pgd/pengadaan_monitor/header?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">HEADER</h3>
     <div>
         
-          <div id="list" ></div>
+          <div id="list" ></div>o
     </div>
  </div>
 <?php
@@ -294,7 +294,7 @@ if (in_array("InputPenataPelaksanaNonLelang", $arr_antarmuka)) {
  <h3 id="InputPenataPelaksanaNonLelang" href="" >PENATA PELAKSANA NON PELELANGAN</h3>
     <div>
       <fieldset class="ui-widget-content">
-      <form id="frm_InputPenataPelaksanaNonLelang" method="POST" action="update_penata_pelaksana" > 
+      <form class="clsinput" id="frm_InputPenataPelaksanaNonLelang" method="POST" action="update_penata_pelaksana" > 
          <p>
           <?php echo form_label("Penata Pelaksana Non Pelelangan *") ?>
             <select name="NAMA_PELAKSANA" class="{validate:{required:true,maxlength:1024}}">
@@ -559,7 +559,7 @@ if (in_array("InputTenderDocument", $arr_antarmuka)) {
         
         <p>	
             <?php echo form_label("File *") ?>
-            <input type="file" class="{validate:{required:true,maxlength:64}}" name="NAMA_FILE" id="NAMA_FILE" />
+            <input type="file" class="{validate:{required:true,maxlength:64}}" name="userfile" id="NAMA_FILE" />
         </p>
         <button type="button" value="Tambah" id="btnInputTenderDocumentAdd"  >Tambah</button>
         <button type="button" value="Tambah" id="btnInputTenderDocumentReset" >Kosongkan</button>
@@ -613,7 +613,34 @@ if (in_array("InputTenderDocument", $arr_antarmuka)) {
 }
 ?> 
  
- 
+
+<?php
+if (in_array("MonitorMetodePengadaan", $arr_antarmuka)) {
+?>
+<div class="accordion">
+ <h3 id="MonitorMetodePengadaan" href="<?php echo base_url(); ?>index.php/pgd/pengadaan_monitor/metode_pengadaan?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">METODE PENGADAAN</h3>
+    <div>
+          <div id="list" ></div>
+    </div>
+ </div>
+<?php
+}
+?> 
+
+ <?php
+if (in_array("MonitorTenderVendor", $arr_antarmuka)) {
+?> 
+  <div class="accordion">
+ <h3 id="MonitorTenderVendor" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_vendor_view?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >DAFTAR VENDOR</h3>
+    <div>
+        
+       <div id="list" ></div>
+    </div>
+ </div>   
+<?php
+}
+?> 
+
  
  <?php
 if (in_array("InputTenderVendor", $arr_antarmuka)) {
@@ -753,175 +780,10 @@ function fnDeleteVendor(str) {
  }
 ?> 
 
- <?php
-if (in_array("InputEvaluasiAdminVendor", $arr_antarmuka)) {
-?>
+ 
   
-  <div id="modal_form_verifikasi" ></div>  
-   <div class="accordion">
- <h3 id="InputEvaluasiAdminVendor" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_vendor_status?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >DAFTAR VENDOR - VERIFIKASI ADMINISTRASI</h3>
-    <div>
-        
-        
-       <div id="list" ></div>
-    </div>
- </div>  
-<script>
-
-function fnVerifikasiVendor(str) {
-   
-    $('#grid_ep_pgd_tender_vendor_status').jqGrid('setSelection',str); 
-    var selected = $('#grid_ep_pgd_tender_vendor_status').jqGrid('getGridParam', 'selrow');
-     
-    selected = jQuery('#grid_ep_pgd_tender_vendor_status').jqGrid('getRowData',selected );
-			 
-     str="?";                    
-     str += "KODE_TENDER=" + selected["KODE_TENDER"] ;
-     str += "&KODE_KANTOR=" + selected["KODE_KANTOR"] ;
-     str += "&KODE_VENDOR=" + selected["KODE_VENDOR"] ;
-     
-     
-    jQuery('#modal_form_verifikasi')
-                     .load($site_url + '/pgd/vendor_verifikasi/edit' + str)
-                    .dialog({ //dialog form use for popup after click button in pager
-                        autoOpen:false,
-                        width:800,
-                        modal:true,
-                        //position:'top',
-                        buttons: { 
-                            "SIMPAN": function() { 
-                                     $('#KETERANGAN_VERIFIKASI').val(tinyMCE.get('commentar_verifikasi').getContent());
-
-                                    str = $("#frm_vendor_verifikasi").serialize();
-                                    
-                                    $.ajax({
-                                        url: "verifikasi_admin_vendor" ,
-                                        type: "POST",
-                                        data: str,
-                                        dataType: "html",
-                                        success: function(msg) {
-                                                alert(msg);
-                                            
-                                        
-                                    }
-
-                                      });
-                                    
-                            }, 
-                            "BATAL": function() { 
-                                $(this).dialog("close");
-                            } 
-                        }
-                    });
-            jQuery('#modal_form_verifikasi').dialog("open");
-            
-}
-  
-</script> 
-  
-  
-<?php
-}
-?>
-
-
- <?php
-if (in_array("InputEvaluasiVendor", $arr_antarmuka)) {
-?>
- <div id="modal_form_evaluasi_teknis" ></div>  
- <div id="modal_form_evaluasi_harga" ></div>
- <div class="accordion">
- <h3 id="InputEvaluasiTender" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_evaluasi?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >EVALUASI</h3>
-    <div>
-        
-        
-       <div id="list" ></div>
-    </div>
- </div>  
-<script>
-  function fnNilaiHarga(str) {
-      alert("Edit Nilai Harga : " + str);
-      
-             
-      jQuery('#modal_form_evaluasi_teknis')
-                     .load($site_url + '/pgd/Pengadaan_evaluasi/harga/' + str)
-                    .dialog({ //dialog form use for popup after click button in pager
-                        autoOpen:false,
-                        width:800,
-                        modal:true,
-                        //position:'top',
-                        buttons: { 
-                            "SIMPAN": function() { 
-                                     
-                            }, 
-                            "BATAL": function() { 
-                                $(this).dialog("close");
-                            } 
-                        }
-                    });
-            jQuery('#modal_form_evaluasi_teknis').dialog("open");
-            
-      
-  }  
-  
-  function fnNilaiTeknis(str) {
-      alert("Edit Nilai Teknis : " + str);
-      
-      jQuery('#modal_form_evaluasi_teknis')
-                     .load($site_url + '/pgd/Pengadaan_evaluasi/teknis/' + str)
-                    .dialog({ //dialog form use for popup after click button in pager
-                        autoOpen:false,
-                        width:800,
-                        modal:true,
-                        //position:'top',
-                        buttons: { 
-                            "SIMPAN": function() { 
-                                     
-                            }, 
-                            "BATAL": function() { 
-                                $(this).dialog("close");
-                            } 
-                        }
-                    });
-            jQuery('#modal_form_evaluasi_teknis').dialog("open");
-      
-  }  
-  
-</script>
-
-
-  <?php
-}
-?>
-
-<?php
-if (in_array("MonitorMetodePengadaan", $arr_antarmuka)) {
-?>
-<div class="accordion">
- <h3 id="MonitorMetodePengadaan" href="<?php echo base_url(); ?>index.php/pgd/pengadaan_monitor/metode_pengadaan?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">METODE PENGADAAN</h3>
-    <div>
-          <div id="list" ></div>
-    </div>
- </div>
-<?php
-}
-?> 
-
-
-<?php
-if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
-?>
-<div class="accordion">
- <h3 id="MonitorMetodeJadwal" href="<?php echo base_url(); ?>index.php/pgd/pengadaan_monitor/metode_jadwal?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">METODE DAN JADWAL PENGADAAN</h3>
-    <div>
-          <div id="list" ></div>
-    </div>
- </div>
-<?php
-}
-?> 
-
-  
+ 
+ 
   
   
  <?php
@@ -931,29 +793,29 @@ if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
  <h3 id="InputPembuatanJadwal" href="" >PEMBUATAN JADWAL</h3>
     <div>
       <fieldset class="ui-widget-content">
-      <form id="frm_InputPembuatanJadwal" method="POST" action="update_pembuatan_jadwal" > 
+      <form class="clsinput"  id="frm_InputPembuatanJadwal" method="POST" action="update_pembuatan_jadwal" > 
           <p>	
             <?php echo form_label("Tgl Pembukaan Pendaftaran  *") ?>
-            <input type="text" style="" name="TGL_PEMBUKAAN_REG" id="TGL_PEMBUKAAN_REG" style="" class="datepicker  {validate:{required:true,date:true}}"  />  
+            <input type="text" style="" name="TGL_PEMBUKAAN_REG" value="<?php echo $TGL_PEMBUKAAN_REG; ?>" id="TGL_PEMBUKAAN_REG" style="" class="datepicker  {validate:{required:true,date:true}}"  />  
 	  </p> 
           <p>	
             <?php echo form_label("Tgl Penutupan Pendaftaran  *") ?>
-	    <input type="text" style="" name="TGL_PENUTUPAN_REG" id="TGL_PENUTUPAN_REG" class="datepicker  {validate:{required:true,date:true}}" />  
+	    <input type="text" style="" name="TGL_PENUTUPAN_REG" value="<?php echo $TGL_PENUTUPAN_REG; ?>" id="TGL_PENUTUPAN_REG" class="datepicker  {validate:{required:true,date:true}}" />  
 	 
           </p> 
           <p>	
             <?php echo form_label("Tgl Aanwijzing  *") ?>
-            <input type="text" style="" name="TGL_PRE_LELANG" id="TGL_PRE_LELANG" class="datepicker  {validate:{required:true,date:true}}" />  
+            <input type="text" style="" name="TGL_PRE_LELANG" value="<?php echo $TGL_PRE_LELANG; ?>"  id="TGL_PRE_LELANG" class="datepicker  {validate:{required:true,date:true}}" />  
 	 
           </p> 
           <p>	
             <?php echo form_label("Lokasi Aanwijzing  *") ?>
-	  <input type="text" style="" name="LOKASI_PRE_LELANG" id="LOKASI_PRE_LELANG" class="{validate:{required:true,maxlength:150}}" />  
+	  <input type="text" style="" name="LOKASI_PRE_LELANG" value="<?php echo $LOKASI_PRE_LELANG; ?>"   id="LOKASI_PRE_LELANG" class="{validate:{required:true,maxlength:150}}" />  
 	 
           </p> 
           <p>	
             <?php echo form_label("Tgl Pembukaan Penawaran  *") ?>
-	   <input type="text" style="" name="TGL_PEMBUKAAN_LELANG" id="TGL_PEMBUKAAN_LELANG" class="datepicker  {validate:{required:true,date:true}}" />  
+	   <input type="text" style="" name="TGL_PEMBUKAAN_LELANG" value="<?php echo $TGL_PEMBUKAAN_LELANG; ?>"  id="TGL_PEMBUKAAN_LELANG" class="datepicker  {validate:{required:true,date:true}}" />  
 	
           </p>
           
@@ -1017,7 +879,309 @@ if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
 <?php
 }
 ?>
+  
+  
+ <?php
+if (in_array("InputEvaluasiAdminVendor", $arr_antarmuka)) {
+?>
+  
+  <div id="modal_form_verifikasi" ></div>  
+   <div class="accordion">
+ <h3 id="InputEvaluasiAdminVendor" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_vendor_status?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >DAFTAR VENDOR - VERIFIKASI ADMINISTRASI</h3>
+    <div>
+        
+        
+       <div id="list" ></div>
+    </div>
+ </div>  
+<script>
 
+function fnVerifikasiVendor(str) {
+   
+    $('#grid_ep_pgd_tender_vendor_status').jqGrid('setSelection',str); 
+    var selected = $('#grid_ep_pgd_tender_vendor_status').jqGrid('getGridParam', 'selrow');
+     
+    selected = jQuery('#grid_ep_pgd_tender_vendor_status').jqGrid('getRowData',selected );
+			 
+     str="?";                    
+     str += "KODE_TENDER=" + selected["KODE_TENDER"] ;
+     str += "&KODE_KANTOR=" + selected["KODE_KANTOR"] ;
+     str += "&KODE_VENDOR=" + selected["KODE_VENDOR"] ;
+     
+     
+    jQuery('#modal_form_verifikasi')
+                     .load($site_url + '/pgd/vendor_verifikasi/edit' + str)
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                    
+                                     $('#KETERANGAN_VERIFIKASI').val(tinyMCE.get('commentar_verifikasi').getContent());
+
+                                    str = $("#frm_vendor_verifikasi").serialize();
+                                    
+                                    $.ajax({
+                                        url: "verifikasi_admin_vendor" ,
+                                        type: "POST",
+                                        data: str,
+                                        dataType: "html",
+                                        success: function(msg) {
+                                                alert(msg);
+                                            
+                                        
+                                    }
+
+                                      });
+                                    
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_verifikasi').dialog("open");
+            
+}
+  
+</script> 
+  
+  
+<?php
+}
+?>
+
+
+ <?php
+if (in_array("InputEvaluasiVendor", $arr_antarmuka)) {
+?>
+<div id="modal_form_komentar_harga" ></div>
+<div id="modal_form_komentar_teknis" ></div> 
+<div id="modal_form_evaluasi_teknis" ></div>  
+ <div id="modal_form_evaluasi_harga" ></div>
+ <div class="accordion">
+ <h3 id="InputEvaluasiTender" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_evaluasi?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >EVALUASI</h3>
+    <div>
+        
+        
+       <div id="list" ></div>
+    </div>
+ </div>  
+<script>
+
+
+  function fnHitungNilaiHarga(){
+      
+                alert("Hitung Nilai");
+                 $("#frm_EvaluasiHarga").ajaxSubmit({
+                                             success: function(msg){
+                                                 
+                                          //   $("#trace").html(msg);
+                                             alert(msg);
+  jQuery('#modal_form_evaluasi_harga').load($site_url + '/pgd/Pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' );
+ // alert(msg);
+                                                 //reload grid
+                                                 //   window.location.reload();
+                                                  
+                     
+                                             },
+                                             error: function(){
+                                                 alert('Data gagal disimpan')
+                                             }
+                    });
+            
+            
+        } 
+        
+   
+function fnKomentarHarga(kode_vendor,nama_vendor){
+             
+      jQuery('#modal_form_komentar_harga')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/komentar_harga/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                       
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                $('#KOMENTAR_EVALUASI_HARGA').val(tinyMCE.get('commentar_harga').getContent());
+                               
+                                $("#frmKomentarTeknis").ajaxSubmit({
+                                      //clearForm: false,
+                                      success: function(msg){
+                                            alert(msg);
+                                           $("#trace").html(msg);
+                                         // alert(msg);
+                                          //reload grid
+                                        jQuery('#modal_form_evaluasi_harga').load($site_url + '/pgd/Pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' )
+                                          },
+                                      error: function(){
+                                          alert('Data gagal disimpan')
+                                      }
+                                  });
+
+                               
+                               
+                               
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_komentar_harga').dialog("open");
+    
+}   
+
+
+function fnKomentarTeknis(kode_vendor,nama_vendor){
+             
+      jQuery('#modal_form_komentar_teknis')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                       
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                               
+                                $("#frmKomentarTeknis").ajaxSubmit({
+                                      //clearForm: false,
+                                      success: function(msg){
+                                            alert(msg);
+                                           $("#trace").html(msg);
+                                         // alert(msg);
+                                          //reload grid
+                                        jQuery('#modal_form_evaluasi_teknis').load($site_url + '/pgd/Pengadaan_evaluasi/teknis?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' )
+                                          },
+                                      error: function(){
+                                          alert('Data gagal disimpan')
+                                      }
+                                  });
+
+                               
+                               
+                               
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_komentar_teknis').dialog("open");
+    
+}   
+
+
+function fnNilaiHarga(str) {
+   //   alert("Edit Nilai Harga : " + str);
+      
+             
+      jQuery('#modal_form_evaluasi_harga')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                        
+                                      
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_evaluasi_harga').dialog("open");
+            
+      
+  }  
+  
+  function fnNilaiTeknis(str) {
+      alert("Edit Nilai Teknis : " + str);
+      
+      jQuery('#modal_form_evaluasi_teknis')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/teknis?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' )
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                         height:350,
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                 //  alert("xxx"); 
+                                   validator_EvaluasiTeknis = $("#frm_EvaluasiTeknis").validate({
+                                        meta: "validate",
+                                        submitHandler: function(form) {
+                                            jQuery(form).ajaxSubmit();
+                                        }
+                                    });
+                                    
+                                       
+                                      $("#frm_EvaluasiTeknis").ajaxSubmit({
+                                             success: function(msg){
+                                                 
+                                             $("#trace").html(msg);
+                                             alert(msg);
+                                                 
+                                                  
+  jQuery('#modal_form_evaluasi_teknis').load($site_url + '/pgd/Pengadaan_evaluasi/teknis?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' );
+ // alert(msg);
+                                                 //reload grid
+                                                 //   window.location.reload();
+                                                  
+                     
+                                             },
+                                             error: function(){
+                                                 alert('Data gagal disimpan')
+                                             }
+                                          
+                                      });
+                                    
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_evaluasi_teknis').dialog("open");
+      
+  }  
+  
+</script>
+
+
+  <?php
+}
+?>
+
+
+<?php
+if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
+?>
+<div class="accordion">
+ <h3 id="MonitorMetodeJadwal" href="<?php echo base_url(); ?>index.php/pgd/pengadaan_monitor/metode_jadwal?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">METODE DAN JADWAL PENGADAAN</h3>
+    <div>
+          <div id="list" ></div>
+    </div>
+ </div>
+<?php
+}
+?> 
+
+  
+  
+ 
 <?php
  if (in_array("MonitorTenderNegosiasi", $arr_antarmuka)) {
 ?>
@@ -1125,7 +1289,7 @@ if (1) {
            
         
         frmlength = $(".clsinput").length;
-        alert(frmlength);
+        //alert(frmlength);
         if (frmlength == 0) {
             
                    $.ajax({
@@ -1139,8 +1303,8 @@ if (1) {
                           $("#frmKomentar").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
-                                            alert(msg);
-                                           $("#trace").html(msg);
+                                        //    alert(msg);
+                                        //   $("#trace").html(msg);
                                          // alert(msg);
                                           //reload grid
 

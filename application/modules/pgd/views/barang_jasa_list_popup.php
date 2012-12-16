@@ -3,8 +3,13 @@
             <div>
 			<p>
 			<div id="mysearch"></div>
-				<input type="text" id="kolom" name="kolom"  value="" /> 
-				<input type="button" id="btnSrc"  value="Cari" /> 
+                        <select id="myfieldbarangjasa" >
+                            <option value="KODE_BARANG" >Kode Barang Jasa</option>
+                            <option value="NAMA_BARANG" >Nama Barang Jasa</option>
+                        </select>
+                        
+				<input type="text" id="kolombarangjasa" name="kolom"  value="" /> 
+				<input type="button" id="btnSrcbarangjasa"  value="Cari" /> 
 			</p>
 			 
 			
@@ -32,19 +37,19 @@
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
 	
-	$("#btnSrc").click(function() {
+	$("#btnSrcbarangjasa").click(function() {
 	
 
 	
-		//alert($("#kolom").val());
+		// alert($("#kolom").val());
 		
 		
-		
-		srcval = $("#kolom").val();
+		var myfield = $("#myfieldbarangjasa").val()
+		srcval = $("#kolombarangjasa").val();
 		var myfilter = { groupOp: "AND", rules: []};
-		myfilter.rules.push({field:"KODE_BARANG",op:"eq",data:srcval});
+		myfilter.rules.push({field: myfield ,op:"cn",data:srcval});
 		
-		var grid = $("#grid_ep_kom_jasa");
+		var grid = $("#grid_kom_barang_jasa");
 			
 		
 		alert(grid);

@@ -175,43 +175,97 @@ class Pekerjaan_pgd extends MY_Controller {
             
         }            
 
+        function do_ftp($strfile) {
+            $this->load->library('ftp');
+
+            $config['hostname'] = '127.0.0.1';
+            $config['username'] = 'uc';
+            $config['password'] = 'uc';
+            $config['port']     = 21;
+            $config['passive']  = FALSE;
+            $config['debug']    = TRUE;
+
+            $this->ftp->connect($config);
+            $this->ftp->upload('./uploaded_test/' . $strfile , $strfile );
+            $this->ftp->close();
+        }
+        
+        
+        function do_upload()
+	{
+		$config['upload_path'] = './uploaded_test/';
+		 $config['allowed_types'] = 'gif|jpg|png';
+		 $config['max_size']	= '100';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload())
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			// echo $error; 
+                        return ''; 
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+                         //print_r($data['upload_data']);
+                        $str = './uploaded_test/' . $data['upload_data']['file_name'];
+                        if (isset( $str)) {
+                            $this->do_ftp($data['upload_data']['file_name']);
+                         
+                        }
+                          return  $data['upload_data']['file_name'] ;
+			// $this->load->view('upload_success', $data);
+		}
+	}
+        
         
         function add_dokumen() {
-            //print_r($_POST);
+             print_r($_POST);
             
-            if ($this->input->post("KATEGORI")) {
-                $this->load->model('Nomorurut','urut');	 
-                $urut = $this->urut->get("ALL","TENDERDOKUMEN");	
+            $str_file =  $this->do_upload();
+            
+            if (strlen( $str_file)) {
                 
-                
-                $sql = "INSERT INTO EP_PGD_DOKUMEN ( ";
-                $sql .= "KODE_DOKUMEN ";
-                $sql .= ", KODE_TENDER";
-                $sql .= ", KODE_KANTOR";
-                $sql .= ", KATEGORI";
-                $sql .= ", KETERANGAN";
-                $sql .= ", NAMA_FILE ";
-                $sql .= ", TGL_REKAM";
-                $sql .= ", PETUGAS_REKAM )";
-                $sql .= " VALUES ( ";
-                $sql .=  $urut;
-                $sql .= ", '" . $this->input->post("KODE_TENDER") . "'";
-                $sql .= ", '" . $this->input->post("KODE_KANTOR") . "'";
-                
-                $sql .= ", '" . $this->input->post("KATEGORI") . "'";
-                $sql .= ", '" . $this->input->post("KETERANGAN") . "'";
-                $sql .= ", ''";
-                $sql .= ", TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')";
-                $sql .= ", '".$this->session->userdata("user_id")."')";
-                
-                echo $sql;
-                if ($this->db->simple_query($sql)){
-                    $this->urut->set_plus("ALL","TENDERDOKUMEN");	
-                    echo $urut;
-                    
-                }
-                
-                 
+            
+                    if ($this->input->post("KATEGORI")) {
+                        $this->load->model('Nomorurut','urut');	 
+                        $urut = $this->urut->get("ALL","TENDERDOKUMEN");	
+
+
+                        $sql = "INSERT INTO EP_PGD_DOKUMEN ( ";
+                        $sql .= "KODE_DOKUMEN ";
+                        $sql .= ", KODE_TENDER";
+                        $sql .= ", KODE_KANTOR";
+                        $sql .= ", KATEGORI";
+                        $sql .= ", KETERANGAN";
+                        $sql .= ", NAMA_FILE ";
+                        $sql .= ", TGL_REKAM";
+                        $sql .= ", PETUGAS_REKAM )";
+                        $sql .= " VALUES ( ";
+                        $sql .=  $urut;
+                        $sql .= ", '" . $this->input->post("KODE_TENDER") . "'";
+                        $sql .= ", '" . $this->input->post("KODE_KANTOR") . "'";
+
+                        $sql .= ", '" . $this->input->post("KATEGORI") . "'";
+                        $sql .= ", '" . $this->input->post("KETERANGAN") . "'";
+                        $sql .= ", '".$str_file."'";
+                        $sql .= ", TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS')";
+                        $sql .= ", '".$this->session->userdata("user_id")."')";
+
+                        echo $sql;
+                        if ($this->db->simple_query($sql)){
+                            $this->urut->set_plus("ALL","TENDERDOKUMEN");	
+                            echo $urut;
+
+                        }
+
+
+                    }
+            
             }
             
         }
@@ -219,15 +273,22 @@ class Pekerjaan_pgd extends MY_Controller {
         
         function editor(){
               $kode_aktifitas = 0;
-              $sql = "SELECT KODE_AKTIFITAS, KODE_TENDER, KODE_KANTOR ";
-              $sql .= "FROM EP_PGD_KOMENTAR_TENDER ";
-              $sql .= "WHERE KODE_KOMENTAR =  " . $this->input->get("KODE_KOMENTAR") ;
+              $sql = "SELECT K.KODE_AKTIFITAS, A.NAMA_AKTIFITAS, K.KODE_TENDER, K.KODE_KANTOR ";
+              $sql .= "FROM EP_PGD_KOMENTAR_TENDER K ";
+              $sql .= "LEFT JOIN  EP_ALURKERJA_AKTIFITAS A ON A.KODE_AKTIFITAS= K.KODE_AKTIFITAS ";
+              
+              
+              $sql .= "WHERE K.KODE_KOMENTAR =  " . $this->input->get("KODE_KOMENTAR") ;
+               
+              
                 $query = $this->db->query($sql);
                 $result = $query->result(); 
 
                 if (count($result))  {
                     $kode_aktifitas = $result[0]->KODE_AKTIFITAS;
                     $data["kode_aktifitas"] = $result[0]->KODE_AKTIFITAS;
+                    $data["nama_aktifitas"] = $result[0]->NAMA_AKTIFITAS;
+                    
                     $data["kode_komentar"] =$this->input->get("KODE_KOMENTAR");
                     
                     $data["kode_tender"] = $result[0]->KODE_TENDER;
@@ -238,7 +299,7 @@ class Pekerjaan_pgd extends MY_Controller {
               
               $sql = "SELECT KODE_PERENCANAAN,   KODE_KANTOR_PERENCANAAN ";
               $sql .= "FROM EP_PGD_TENDER ";
-              $sql .= " WHERE KODE_TENDER =  " . $data["kode_tender"] ;
+              $sql .= " WHERE KODE_TENDER =  '" . $data["kode_tender"] . "'" ;
               $sql .= " AND KODE_KANTOR =  '" . $data["kode_kantor"] . "' " ;
               
                 $query = $this->db->query($sql);
@@ -271,6 +332,42 @@ class Pekerjaan_pgd extends MY_Controller {
              $data["arr_penatapelaksana"] = $this->opsi->getPenataPelaksana();
              
              $data["rs_metodetender"] = $this->opsi->getMetodeTender();
+             
+             
+             $data["TGL_PEMBUKAAN_REG"] = "";
+             $data["TGL_PENUTUPAN_REG"] = "";
+             $data["TGL_PRE_LELANG"] = "";
+             $data["LOKASI_PRE_LELANG"] = "";
+             $data["TGL_PEMBUKAAN_LELANG"] = "";
+             
+             
+             $sql = "SELECT TGL_PEMBUKAAN_REG, TGL_PENUTUPAN_REG, TGL_PRE_LELANG, LOKASI_PRE_LELANG, TGL_PEMBUKAAN_LELANG  ";
+             $sql .= "FROM EP_PGD_PERSIAPAN_TENDER ";
+             $sql .= " WHERE KODE_TENDER =  '" . $data["kode_tender"] . "'" ;
+             $sql .= " AND KODE_KANTOR =  '" . $data["kode_kantor"] . "' " ;
+              
+             $query = $this->db->query($sql);
+             $result = $query->result(); 
+             
+             if (count($result)) {
+                 if (strlen($result[0]->TGL_PEMBUKAAN_REG) > 0) {
+                        $data["TGL_PEMBUKAAN_REG"] = $result[0]->TGL_PEMBUKAAN_REG;
+                        $data["TGL_PENUTUPAN_REG"] = $result[0]->TGL_PENUTUPAN_REG;
+                        $data["TGL_PRE_LELANG"] = $result[0]->TGL_PRE_LELANG;
+                        $data["LOKASI_PRE_LELANG"] = $result[0]->LOKASI_PRE_LELANG;
+                        $data["TGL_PEMBUKAAN_LELANG"] = $result[0]->TGL_PEMBUKAAN_LELANG;
+
+                     
+                     
+                 }
+                 
+                 
+             }
+                
+             
+             
+             
+             
                
              $this->layout->view("pengadaan_editor", $data);
              

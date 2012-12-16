@@ -43,8 +43,12 @@ class Kurs extends CI_Controller {
 			
 			 
 			
-			$query = $this->db->simple_query($sql);
-			redirect(base_url() . "index.php/kurs");
+			if ($this->db->simple_query($sql)) {
+                            
+                            echo  "1";
+                            exit();
+                        }
+			 
 		}	
 		
 		$sql = "SELECT MATA_UANG_DARI, MATA_UANG_KE, NILAI, TO_CHAR(TGL_KURS,'YYYY-MM-DD') as TGL_KURS ";

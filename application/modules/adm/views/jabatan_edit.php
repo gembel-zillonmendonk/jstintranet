@@ -46,8 +46,8 @@
 		<h3 href="">MENU</h3>
     		<div>		 
  	<p>
-				<input type="button" id="btncancel"  value="Cancel" /> 
-				 <input type="button" id="btnSubmit"  value="Submit" /> 
+				<button type="button" id="btncancel"  >Cancel</button> 
+                                <button type="button" id="btnSubmit"  >Submit</button>
 				 
 			</p>			
 		<?php echo $menu; ?>
@@ -71,7 +71,7 @@
 		});	
 		
 		str = str.substr(0,str.length -1);
-		alert(str);
+		// alert(str);
 		kode_jabatan = $("#kode_jabatan").val();
 		
 		$.ajax({
@@ -79,15 +79,24 @@
 		   url: " update",
 		   data: "kode_jabatan=" + kode_jabatan + "&menu=" + str,
 		   success: function(msg){
-			 alert( "Data Saved: " + msg );
+			 alert( "Data berhasil disimpan.  " );
+                         window.location = "<?php echo base_url() ."index.php/adm/jabatan"; ?>";  
 		   }
 		});
 	});
 	
   
 	$("#btncancel").click(function(){
-		window.location = "<?php echo base_url() ."index.php/jabatan"; ?>";  
+		window.location = "<?php echo base_url() ."index.php/adm/jabatan"; ?>";  
 	});
+  
+  
+        function chk_parent(obj){
+            b = obj.attr("parent") ;
+             
+            $('input[id*="'+b+'"]').attr("checked",true) ;
+            
+        }
   
 	$(".chk").click(function() {
  	 idx = $(this).attr("id");
@@ -105,6 +114,8 @@
 		if (a) {
 			// alert($('input[id*="'+b+'"]').attr("id"));
 			$('input[id*="'+b+'"]').attr("checked",true) ;
+                        
+                        chk_parent($('input[id*="'+b+'"]'));
 		} 
 		 
 		 $('input[parent*="'+idx+'"]').each(function(){

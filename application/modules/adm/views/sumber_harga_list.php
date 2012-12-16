@@ -2,9 +2,9 @@
  <h3 href="<?php echo base_url()?>index.php/adm/gridr/ep_kom_sumber_harga">Sumber Harga</h3>
             <div>
 			<p>
-				<input type="button" id="btnAdd"  value="Tambah Sumber Harga" /> 
-				<input type="button" id="btnEdit"  value="Edit Sumber Harga" /> 
-				<input type="button" id="btnDelete"  value="Hapus Sumber Harga" /> 
+				<button type="button" id="btnAdd"  >Tambah Sumber Harga </button> 
+				<button type="button" id="btnEdit"  >Edit Sumber Harga</button> 
+				<button type="button" id="btnDelete"  >Hapus Sumber Harga</button>
 				
 			
 			</p>
@@ -68,7 +68,7 @@
 
 		
 	$("#btnDelete" ).click(function() {
- 
+           if (confirm("Akan Menghapus Sumber Harga")) {
 	 var selected = $('#grid_ep_kom_sumber_harga').jqGrid('getGridParam', 'selrow');
 		 if (selected) {
                     selected = jQuery('#grid_ep_kom_sumber_harga').jqGrid('getRowData',selected);
@@ -85,7 +85,8 @@
 					var del =  selected["KODE_SUMBER"] ;		
 					
                     window.location = "<?php echo base_url() . "index.php/adm/sumber_harga/delete"; ?>?" + str;
-		}			
+		}	
+            }		
 	});
 	 });
   

@@ -23,7 +23,7 @@ echo form_open("", $attributes);; ?>
 	  </p>
 	 <p>	
 	<?php echo form_label("Kantor") ?> 
-		<select name="kode_kantor" >
+		<select name="kode_kantor" id="kode_kantor"  >
 			<?php foreach($kode_kantor as $row ) {
 			?>
 			<option value="<?php echo $row["KODE_KANTOR"]; ?>" ><?php echo $row["NAMA_KANTOR"]; ?></option>
@@ -36,8 +36,8 @@ echo form_open("", $attributes);; ?>
 			</div>
 	</div>	
     <p>
-        <input type="button" id="btncancel"  value="Cancel" />
-        <input type="button" id="btnSubmit" value="Submit" />
+        <button type="button" id="btncancel"  >Cancel  </button>
+        <button type="button" id="btnSubmit" >Submit  </button>
     </p>	
 </form>	
 </fieldset> 	
@@ -80,7 +80,7 @@ echo form_open("", $attributes);; ?>
                        alert(msg);
 						
 						if(msg) {
-							window.location = "<?php echo base_url() ."index.php/adm/panitia"; ?>";  
+							window.location = "<?php echo base_url(); ?>index.php/adm/panitia/edit?KODE_PANITIA=" +  msg + "&KODE_KANTOR=" + $("#kode_kantor").val() ;    
 						}
 						
                         //reload grid

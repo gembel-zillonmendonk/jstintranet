@@ -25,8 +25,8 @@
 			
 			
 			<p>
-				<input type="button" id="btnAdd"  value="Tambah Panitia" /> 
-				<input type="button" id="btnEdit"  value="Edit Panitia" /> 
+                            <button type="button" id="btnAdd"  >Tambah Panitia</button> 
+                                <button type="button" id="btnEdit"  >Edit Panitia</button> 
 			
 			</p>
 			

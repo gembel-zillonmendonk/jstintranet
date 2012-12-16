@@ -27,7 +27,8 @@ class Ep_pgd_dokumen extends MY_Model {
                                 'KODE_KANTOR' =>array('hidden'=>true, 'width'=>10),  
                                 'KATEGORI'  =>array('hidden'=>false, 'width'=>20),
                                 'KETERANGAN'  =>array('hidden'=>false, 'width'=>60),
-                                'NAMA_FILE'  =>array('hidden'=>false, 'width'=>20)
+                                'NAMA_FILE'  =>array('hidden'=>false, 'width'=>20, 'formatter'=>'showlink', 'formatoptions'=>array('link'=>'test.php'))
+         
                                 );
     
     

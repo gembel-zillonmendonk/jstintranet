@@ -48,26 +48,20 @@ class Ep_pgd_item_tender extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND T.KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND T.KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
                 $this->sql_select  = $this->sql_select . " AND T.KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
-            $this->sql_select  = $this->sql_select . " )";  
+            $this->sql_select  = $this->sql_select . ")";  
+            
+          //  echo $this->sql_select; 
         
     }
 	
-    public $sql_select = "(SELECT T.KODE_BARANG_JASA , J.KODE_KEL_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,  T.UNIT, T.JUMLAH, T.UNIT, T.HARGA,  T.JUMLAH *  T.HARGA AS SUBTOTAL
+    public $sql_select = "( SELECT T.KODE_BARANG_JASA , J.KODE_SUB_BARANG_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,    T.JUMLAH, T.UNIT, T.HARGA,  T.JUMLAH *  T.HARGA AS SUBTOTAL
                 ,  '' as \"EDIT\"
 		FROM EP_PGD_ITEM_TENDER T
-		LEFT JOIN (
-			SELECT KODE_JASA, KODE_KEL_JASA, NAMA_JASA AS NAMA_BARANG_JASA 
-			FROM
-			EP_KOM_JASA
-			UNION ALL
-			SELECT KODE_BARANG, KODE_SUB_BARANG, NAMA_BARANG
-			FROM
-			MS_BARANG
-		) J ON T.KODE_BARANG_JASA = J.KODE_JASA  AND T.KODE_SUB_BARANG_JASA = J.KODE_KEL_JASA
+		LEFT JOIN  VW_BARANG_JASA J ON T.KODE_BARANG_JASA = J.KODE_BARANG_JASA  AND T.KODE_SUB_BARANG_JASA = J.KODE_SUB_BARANG_JASA
                 WHERE 1 = 1
 		 ";
 	

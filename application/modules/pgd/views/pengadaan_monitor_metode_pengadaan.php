@@ -7,9 +7,11 @@
             <?php echo form_label("Metode Pengadaan") ?>
 	    <input type="text" style="width: 50%" readonly="true"   value="<?php echo $nama_metode_tender;   ?>" />
 	</p>
+        <!--
         <p>	
             <?php echo form_label("Panitia Pelelangan") ?>
 	</p>
+        -->
         <p>	
             <?php echo form_label("Sistem Sampul") ?>
 	    <input type="text" style="width: 50%" readonly="true"   value="<?php echo $nama_metode_sampul;   ?>" />
@@ -27,6 +29,10 @@
         
          <p>	
             <?php echo form_label("Klasifikasi Peserta") ?>
+            <input type="checkbox" DISABLED  <?php echo $kode_klas_vendor_K == 'K' ? ' CHECKED ' : '  ' ; ?> >&nbsp;Kecil</input> 
+            &nbsp;<input type="checkbox" DISABLED  <?php echo $kode_klas_vendor_M == 'M' ? ' CHECKED ' : '  ' ; ?>  >&nbsp;Menengah</input> 
+            &nbsp;<input type="checkbox" DISABLED  <?php echo $kode_klas_vendor_B == 'B' ? ' CHECKED ' : '  ' ; ?> >&nbsp;Besar</input> 
+             
 	</p>
          <p>	
             <?php echo form_label("Keterangan Tambahan") ?>

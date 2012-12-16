@@ -2,7 +2,9 @@
 <?php $this->load->helper('form'); ?>
 <fieldset class="ui-widget-content">
      
-<?php echo form_open(); ?>
+<?php      
+$attributes = array( 'id' => 'frmKurs');
+echo form_open(  base_url() ."index.php/adm/kurs/edit", $attributes);  ?>
  
 	 <div class="accordion">
             <h3 href="">KURS MATA UANG</h3>
@@ -50,6 +52,7 @@
 	   $nilai = array(
                'name'        => 'nilai',
                'id'          => 'nilai',  
+                'class' => "number {validate:{required:true,maxlength:255}}",
 			   'value'		 => $nilai	
              );
 	   
@@ -62,8 +65,8 @@
 	</div>			
 
     <p>
-        <input type="button" id="btncancel"  value="Cancel" />
-        <input type="submit" value="Submit" />
+        <button type="button" id="btncancel"  >Cancel</button>
+            <button type="button" id="btnSubmit"  >Submit</button>
     </p>
 </form>	
 </fieldset> 
@@ -72,7 +75,7 @@
   $(document).ready(function(){
   
 	$("#btncancel").click(function(){
-		window.location = "<?php echo base_url() ."index.php/kurs"; ?>";  
+		window.location = "<?php echo base_url() ."index.php/adm/kurs"; ?>";  
 	});
   
     $(".accordion")
@@ -85,6 +88,43 @@
     .next()
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
+
+
+     var validator = $("#frmKurs").validate({
+            meta: "validate",
+            submitHandler: function(form) {
+                jQuery(form).ajaxSubmit();
+            }
+     });
+     
+     
+       $("#btnSubmit").click(function(){
+			 if(validator.form()) {
+			 
+			 
+				 jQuery("#frmKurs").ajaxSubmit({
+                    //clearForm: false,
+                    success: function(msg){
+                       // alert(msg);
+			 
+                            if(msg) {
+                                    window.location = "<?php echo base_url(); ?>index.php/adm/kurs";    
+                            }
+
+                        //reload grid
+                        
+                    },
+                    error: function(){
+                        alert('Data gagal disimpan')
+                    }
+                });
+
+//				 
+			}
+		});
+	
+
+
   });
   
 </script>        

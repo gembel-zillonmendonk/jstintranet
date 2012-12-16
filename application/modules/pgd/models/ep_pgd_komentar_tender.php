@@ -76,7 +76,7 @@ class Ep_pgd_komentar_tender extends MY_Model {
    , KOMENTAR
    , ATTACHMENT 
 FROM EP_PGD_KOMENTAR_TENDER
-WHERE KODE_ALURKERJA = 5";
+WHERE KODE_ALURKERJA = 5   ";
  
  
 	
@@ -97,7 +97,7 @@ WHERE KODE_ALURKERJA = 5";
                 $this->sql_select  = $this->sql_select . " AND  KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
-            $this->sql_select  = $this->sql_select . " )";  
+            $this->sql_select  = $this->sql_select . "  ORDER BY TGL_MULAI ASC)";  
         
     }
 	

@@ -3,9 +3,9 @@
             <div>
  
 			<p>
-				<input type="button" id="btnAdd"  value="Tambah Jasa" /> 
-				<input type="button" id="btnEdit"  value="Edit Jasa" /> 
-				<input type="button" id="btnDelete"  value="Hapus Jasa" /> 
+                            <button type="button" id="btnAdd"  >Tambah Jasa</button> 
+				<button type="button" id="btnEdit"  >Edit Jasa   </button> 
+				<button type="button" id="btnDelete"  >Hapus Jasa   </button>
 			
 			</p>
 			
@@ -94,26 +94,28 @@
 	
 		
 	$("#btnDelete" ).click(function() {
+	if (confirm("Akan Menghapus Jasa")) {
+            var selected = $('#grid_ep_kom_jasa').jqGrid('getGridParam', 'selrow');
+                    if (selected) {
+                       selected = jQuery('#grid_ep_kom_jasa').jqGrid('getRowData',selected);
+                       var keys = <?php echo json_encode(Array ( 0  => "KODE_JASA" )); ?>;
+                       var count = 0;
+
+                       var data = {};
+                       var str ="";
+                       $.each(keys, function(k, v) { 
+                           data = {v:selected[v]};
+                           str += v + "=" + selected[v] + "&";
+                           count++; 
+                       }); 
+
+                       window.location = "<?php echo base_url() . "index.php/adm/jasa/delete"; ?>?" + str;
+                   }			
+           } 
+	 
+           });
 	
-	 var selected = $('#grid_ep_kom_kelompok_jasa').jqGrid('getGridParam', 'selrow');
-		 if (selected) {
-                    selected = jQuery('#grid_ep_kom_kelompok_jasa').jqGrid('getRowData',selected);
-                    var keys = <?php echo json_encode(Array ( 0  => "KODE_JASA" )); ?>;
-                    var count = 0;
-                
-                    var data = {};
-                    var str ="";
-                    $.each(keys, function(k, v) { 
-                        data = {v:selected[v]};
-                        str += v + "=" + selected[v] + "&";
-                        count++; 
-                    }); 
-					
-                    window.location = "<?php echo base_url() . "index.php/jasa/delete"; ?>?" + str;
-		}			
-	});
-	 
-	 
+         
 
 	 });
   

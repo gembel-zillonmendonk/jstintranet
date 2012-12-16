@@ -57,7 +57,7 @@ echo form_open("", $attributes);; ?>
 		<?php echo form_label("Status Pemimpin") ?> 
 		<?php echo form_checkbox("status_pemimpin"); ?>	 
 		<p>
-				<input type="button" id="btnAddAnggota"  value="Tambah Anggota" /> 
+				<button type="button" id="btnAddAnggota"  >Tambah Anggota</button> 
 				<input type="hidden" id="add_type" name="add_type"  value="" /> 
 				<input type="hidden" id="kode_kantor" name="kode_kantor_key"  value="<?php echo $kode_kantor_key; ?>" /> 
 				<input type="hidden" id="kode_panitia" name="kode_panitia_key"  value="<?php echo $kode_panitia; ?>" /> 
@@ -81,7 +81,7 @@ echo form_open("", $attributes);; ?>
   $(document).ready(function(){
   
 	$("#btncancel").click(function(){
-		window.location = "<?php echo base_url() ."index.php/panitia"; ?>";  
+		window.location = "<?php echo base_url() ."index.php/adm/panitia"; ?>";  
 	});
   
 	$("#btnAddAnggota").click(function(){

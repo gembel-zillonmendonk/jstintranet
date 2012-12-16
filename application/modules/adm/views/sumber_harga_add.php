@@ -1,10 +1,13 @@
 
 <?php $this->load->helper('form'); ?>
 <fieldset class="ui-widget-content">
-     
+
+   <div class="accordion">
+            <h3 href="">SUMBER HARGA</h3>
+            <div>
+	       
 <?php echo form_open(); ?>
-  
-	   <br/>
+                <p>
 	   <?php echo form_label("Nama Sumber") ?>
 	   <?php 
            $nama_sumber = array(
@@ -20,14 +23,17 @@
 	    	
  
 </p>		
-			</div>
-	</div>			
+			
+	 		
 
     <p>
         <input type="button" id="btncancel"  value="Cancel" />
         <input type="submit" value="Submit" />
     </p>
-</form>	
+    </form>	
+    </div>
+
+</div>
 </fieldset> 
  <script>
   

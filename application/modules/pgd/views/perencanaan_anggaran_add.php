@@ -9,6 +9,7 @@
  -->
  <div id="modal_form_anggaran"></div>
 <?php $this->load->helper('form'); ?>
+ <script type="text/javascript" src="<?php echo base_url();  ?>js/tiny_mce/tiny_mce.js"></script>  
 <div class="accordion">
 <h3 href="">PEMBUATAN PERENCANAAN PENGADAAN</h3>
         <div>
@@ -37,8 +38,14 @@
 	    <select readonly="true"  id="BULAN_RENCANA_KEBUTUHAN" class="{validate:{required:true}}" >
                 <?php
                 echo "<option value=''>-- Pilih Bulan--</option>";
+                $bulan_rencana = substr($RENCANA_KEBUTUHAN,4,2);
+                
+                 
                 foreach($arr_bulan as $k=>$v){
-                    echo "<option value='" . $k ."'>".$v."</option>";
+                    $sel = ($k == $bulan_rencana ? " SELECTED" : " ");
+                    
+                    
+                    echo "<option " .$sel . "  value='" . $k ."'>".$v."</option>";
                     
                 }
                 ?>
@@ -46,6 +53,7 @@
             <select readonly="true"  id="TAHUN_RENCANA_KEBUTUHAN" class="{validate:{required:true}}"  >
                 <?php
                 echo "<option value=''>-- Pilih Tahun--</option>";
+              
                 foreach($arr_tahun as $k=>$v){ 
                     $sel = ($k == date("Y") ? " SELECTED " : "" );
                     
@@ -60,8 +68,11 @@
 	    <select readonly="true"   id="BULAN_RENCANA_PELAKSANAAN"  class="{validate:{required:true}}"  >
                 <?php
                 echo "<option value=''>-- Pilih Bulan--</option>";
+                $bulan_pelaksanaan = substr($RENCANA_PELAKSANAAN,4,2);
+               
                 foreach($arr_bulan as $k=>$v){
-                    echo "<option value='" . $k ."'>".$v."</option>";
+                     $sel = ($k == $bulan_pelaksanaan ? " SELECTED" : " ");
+                    echo "<option value='" . $k ."'   " .$sel . " >".$v."</option>";
                     
                 }
                 ?>
@@ -91,10 +102,20 @@
 	  	</p>
                 
          <p>	
-            <?php echo form_label("Swakelola * ") ?>
+            <?php echo form_label("Swakelola * ");
+            
+            $chk_tidak = ($SWAKELOLA == "0" ? " CHECKED ": " ");
+            $chk_ya = ($SWAKELOLA == "1" ? " CHECKED ": " ");
+            
+            
+            
+            ?>
+             
+             
+             
          <group>
-             <input readonly="true" type="radio" id="SWAKELOLA" name="SWAKELOLA" value="0"> Tidak</input>
-             <input readonly="true" type="radio" id="SWAKELOLA" name="SWAKELOLA" value="1" >Ya</input>
+             <input <?php echo $chk_tidak; ?> readonly="true" type="radio" id="SWAKELOLA" name="SWAKELOLA" value="0"> Tidak</input>
+             <input <?php echo $chk_ya; ?> readonly="true" type="radio" id="SWAKELOLA" name="SWAKELOLA" value="1" >Ya</input>
              
          </group> 
              
@@ -108,17 +129,97 @@
       </form>
       </fieldset>  
         </div>
- <div id="trace">  
-     </div>
- </div>           
-  <h3 href="<?php echo base_url()?>index.php/pgd/gridrf/ep_pgd_perencanaan_anggaran">MATA ANGGARAN</h3>          
+  
+  </div>           
+  <h3 href="<?php echo base_url() . "index.php/pgd/gridrf/ep_pgd_perencanaan_anggaran?KODE_PERENCANAAN=" . $KODE_PERENCANAAN . "&KODE_KANTOR_PERENCANAAN=" . $KODE_KANTOR; ?>"   >MATA ANGGARAN</h3>          
     <div>        
      
       <button type="button" id="btnAddMataAnggaran">TAMBAH MATA ANGGARAN</button>   
       <button type="button" id="btnDeleteMataAnggaran">HAPUS MATA ANGGARAN</button> 
       <div id="list_perencanaan_anggaran" ></div>   
-    </div>             
-</div>           
+    </div>     
+     
+  <h3>KOMENTAR</h3>
+           
+            <div   >
+			<fieldset>
+			<form id="frmKomentar" action="<?php echo base_url() . "index.php/pgd/komentar_perencanaan/update" ?>"  method="POST" >
+			<p>                   
+               <textarea  style="width:100%" id="commentar" name="commentar" ></textarea>
+			</p>
+	<input type="hidden" name="kode_alurkerja" id="KODE_ALURKERJA" value="<?php echo $kode_alurkerja ; ?>" />
+			<input type="hidden" name="kode_komentar" id="kode_komentar" value="<?php echo $kode_komentar; ?>" />
+<input type="hidden" name="kode_transisi" value="10" />
+                        <p>
+			  
+			<input type="hidden" id="kode_transisi"  name="kode_transisi"  value="<?php echo $kode_transisi; ?>"  /> 
+			   
+			</p>
+<input type="hidden" name="KODE_TENDER" id="KODE_TENDER" value="<?php echo $KODE_PERENCANAAN ; ?>" />
+<input type="hidden" name="KODE_KANTOR" id="KODE_KANTOR" value="<?php echo $KODE_KANTOR ; ?>" />						
+<input type="hidden" id="komentar"  name="komentar" /> 			
+			</form>
+			</fieldset>
+<br/> 
+<button type="button" id="btnSubmit"   >Submit</button>
+<button type="button" id="btnCancel"    >Cancel</button> 
+<div id="trace" ></div>
+  </div>
+  <script>
+     tinyMCE.init({
+		mode : "textareas",
+		theme : "simple"
+	});
+      
+      var validatorKomentar;
+     
+    $(document).ready(function(){
+
+
+         validatorKomentar = $("#frmKomentar").validate({
+            meta: "validate",
+            submitHandler: function(form) {
+                jQuery(form).ajaxSubmit();
+            }
+        });
+
+
+        $("#btnSubmit").click(function(){ 
+           //  alert("btnSubmit");
+             $('#komentar').val(tinyMCE.get('commentar').getContent());
+            
+            
+
+             
+                       if(validatorKomentar.form()) {
+                          $("#frmKomentar").ajaxSubmit({
+                                      //clearForm: false,
+                                      success: function(msg){
+                                        //    alert(msg);
+                                         //  $("#trace").html(msg);
+                                         // alert(msg);
+                                          //reload grid
+                                            window.location = "<?php echo base_url() ."index.php/perencanaan/rekap_perencanaan"; ?>";    
+
+                                      },
+                                      error: function(){
+                                          alert('Data gagal disimpan')
+                                      }
+                                  });
+
+                       } 
+ 
+  
+      }); 
+        
+  
+
+    });
+        
+ </script>    
+      
+ 
+     </div>   
 
 
 <script>
@@ -224,9 +325,9 @@
                     if(uri != '' && uri != '#'){
                         //var ctn = $("#list") ;
                         
-                        alert(uri);
+                       //  alert(uri);
                         
-                        var ctn =  $(this).next().children("#list");   
+                        var ctn =  $(this).next().children("#list_perencanaan_anggaran");   
 
                         //alert($(ctn).width());
                         //alert(uri);

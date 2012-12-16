@@ -57,7 +57,7 @@ class Ep_pgd_pekerjaan extends MY_Model {
 		FROM EP_PGD_KOMENTAR_TENDER P
 		LEFT JOIN MS_KANTOR K ON P.KODE_KANTOR = K.KODE_KANTOR
 		LEFT JOIN EP_PGD_TENDER T ON P.KODE_TENDER = T.KODE_TENDER AND P.KODE_KANTOR = T.KODE_KANTOR 
-                WHERE TGL_BERAKHIR IS NULL  
+                WHERE KODE_ALURKERJA = 5 AND TGL_BERAKHIR IS NULL  
                 )";
      
     function __construct() {

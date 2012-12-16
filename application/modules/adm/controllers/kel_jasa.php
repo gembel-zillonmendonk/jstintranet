@@ -26,7 +26,7 @@ class Kel_jasa extends MY_Controller {
 			 if ($this->db->simple_query($sql)) {
 				$this->urut->set_plus( "ALL","KELOMPOKJASA") ;
 			 }
-			 redirect(base_url() . "index.php/kel_jasa");
+			 redirect(base_url() . "index.php/adm/kel_jasa");
 			  
 		}
 	
@@ -73,7 +73,7 @@ class Kel_jasa extends MY_Controller {
 			$sql .= " WHERE KODE_KEL_JASA = '" . $this->input->get("KODE_KEL_JASA") . "' ";
 		 
 			$this->db->simple_query($sql);
-			redirect(base_url() . "index.php/kel_jasa");
+			redirect(base_url() . "index.php/adm/kel_jasa");
 		 
 		}
 	}	

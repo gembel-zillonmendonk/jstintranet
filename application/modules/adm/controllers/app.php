@@ -28,7 +28,7 @@ class App extends MX_Controller {
 			 echo $this->session->userdata("menu");
 			 echo strlen($this->session->userdata("menu"));
 			 
-			 $this->session->set_userdata("kode_user", "xxx");
+			 $this->session->set_userdata("sesi", "xxx");
 			 // die();
 			 
 			 

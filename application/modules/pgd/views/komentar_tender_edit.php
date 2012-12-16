@@ -36,7 +36,25 @@
   <script>
      tinyMCE.init({
 		mode : "textareas",
-		theme : "simple"
+		theme : "simple", 
+                setup : function(ed) {
+               
+                    ed.onChange.add(function(ed, evt) {
+
+
+
+                        //$(ed.getBody()).find('p').addClass('headline');
+
+                        // get content from edito
+                        var content = ed.getContent().toUpperCase();
+
+                        // tagname to toUpperCase
+                        // content = content.replace(/< *\/?(\w+)/g,function(w){return w.toUpperCase()});
+                       ed.setContent(content);
+                        // write content to html source element (usually a textarea)
+                        // $(ed.id).html(content );
+                    });
+                }
 	});
       
       var validatorKomentar;
@@ -51,7 +69,8 @@
             }
         });
 
-
+        
+        
         $("#btnSubmit").click(function(){ 
             alert("btnSubmit");
              $('#komentar').val(tinyMCE.get('commentar').getContent());

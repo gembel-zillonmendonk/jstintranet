@@ -181,8 +181,8 @@
                     $("#frmKomentar").ajaxSubmit({
                                 //clearForm: false,
                                 success: function(msg){
-                                      alert(msg);
-                                      $("#trace").html(msg);
+                                    //  alert(msg);
+                                    //  $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
                                     
@@ -222,7 +222,7 @@
             if (kode_tender == 0) {
                 //alert("Header Tender Belum Tersimpan");
                             fnHeaderSubmit();
-             // alert(kode_tender);
+               
                 if (kode_tender > 0) {
              
                 strurl = "<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_item_tender?KODE_TENDER=" + kode_tender + "&KODE_KANTOR=<?php echo $this->session->userdata("kode_kantor"); ?>";
@@ -261,7 +261,12 @@
                             });
 
                  }
-            }     
+            }    
+            
+            
+            strurl = "<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_item_tender?KODE_TENDER=" + kode_tender + "&KODE_KANTOR=<?php echo $this->session->userdata("kode_kantor"); ?>";
+            fnShowItemTender(strurl); 
+
         });
         
         $("#btnResetBarangJasa").click(function() {
@@ -402,7 +407,7 @@
  
  function fnShowItemTender(strurl) {
      var uri = strurl + "&r=" + Math.random();
-                  //  alert(uri);
+                     alert(uri);
                      
                     if(uri != '' && uri != '#'){
                         var ctn = $("#list_itemtender") ;
