@@ -1,0 +1,28 @@
+digraph G { 
+    node    ["shape"="box","fontcolor"="blue","fontsize"="9.0","fixedsize"="false"];
+    edge    ["fontcolor"="black","fontsize"="7.0"];
+    graph    ["splines"="polyline","label"="Pembuatan Work Order","rankdir"="TB","ratio"="auto"];
+    644    ["label"="644\nPersetujuan Update Progress (User)","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    645    ["label"="645\nPersetujuan Update Progress (Pengelola Kontrak)","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    646    ["label"="646\nVerifikasi Pengiriman Pekerjaan","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    647    ["label"="647\nPembuatan BASTP\/B","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    648    ["label"="648\nKontrak telah Selesai","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    640    ["label"="640\nStart","shape"="doublecircle","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    641    ["label"="641\nPersetujuan Kadiv User","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    642    ["label"="642\nPersetujuan Pengelola Kontrak","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    643    ["label"="643\nMenunggu Update Progress Pekerjaan","shape"="box","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    649    ["label"="649\nFinish","shape"="circle","fontcolor"="blue","fontsize"="8.0","fixedsize"="false"];
+    "640" -> "641" [ label="6401\nLanjutkan Persetujuan Kadiv User",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS = &apos;W1&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "641" -> "642" [ label="6411\nLanjutkan Persetujuan Pengelola Kontrak",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS = &apos;W2&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "642" -> "643" [ label="6421\nLanjutkan ke Progress WO",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS = &apos;A&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "643" -> "644" [ label="6431\nLanjutkan Persetujuan User",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_PERKEMBANGAN = &apos;W&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "644" -> "645" [ label="6441\nLanjutkan Persetujuan Pengelola Kontrak",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_PERKEMBANGAN = &apos;W2&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "644" -> "643" [ label="6442\nRevisi Progress WO",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_PERKEMBANGAN = &apos;R&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "645" -> "646" [ label="6451\nLanjutkan ke Verifikasi Pekerjaan",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_PERKEMBANGAN = &apos;W3&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "645" -> "643" [ label="6452\nRevisi Progress WO",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_PERKEMBANGAN = &apos;R&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "646" -> "647" [ label="6461\nLanjutkan ke Pembuatan BASTP/B",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set PERSENTASI_PERKEMBANGAN = &apos;100&apos;, STATUS_PERKEMBANGAN = &apos;A&apos;, STATUS_BASTP = &apos;BC&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "647" -> "648" [ label="6471\nLanjutkan ke Penyelesaian Kontrak",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_BASTP = &apos;BW&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "648" -> "649" [ label="6481\nKontrak Telah Selesai",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_BASTP = &apos;A&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "648" -> "649" [ label="6482\nKontrak Belum Selesai",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_BASTP = &apos;A&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+    "648" -> "647" [ label="6483\nRevisi BASTP/B",shape=doublecircle,style=filled,tooltip="&lt;BR&gt;sql=update ep_ktr_po set STATUS_BASTP = &apos;BR&apos; where KODE_PO = &apos;@@KODE_PO@@&apos; and KODE_KONTRAK = &apos;@@KODE_KONTRAK@@&apos; and KODE_KANTOR = &apos;@@KODE_KANTOR@@&apos;" ];
+}
