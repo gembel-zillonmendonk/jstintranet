@@ -15,6 +15,13 @@ class invoice extends MY_Controller
     public $rules;
     public $where;
 
+    public function detail(){
+        if($this->_is_ajax_request())
+            $this->load->view('contract/invoice/detail');
+        else
+            $this->layout->view('contract/invoice/detail');
+    }
+    
     public function create_draft(){
         if($this->_is_ajax_request())
             $this->load->view('contract/invoice/draft');

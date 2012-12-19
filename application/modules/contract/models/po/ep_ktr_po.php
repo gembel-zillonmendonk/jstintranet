@@ -5,7 +5,7 @@ class ep_ktr_po extends MY_Model {
     public $table = 'EP_KTR_PO';
     public $elements_conf = array(
 //        'KODE_PO',
-//        'KODE_KONTRAK',
+        'KODE_KONTRAK',
 //        'KODE_KANTOR',
         'NAMA_PEMBUAT',
 //        'NAMA_LENGKAP_PEMBUAT',
@@ -40,14 +40,14 @@ class ep_ktr_po extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
-
+        
         if (isset($_REQUEST['KODE_KONTRAK']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])) {
             $this->attributes['KODE_KONTRAK'] = $_REQUEST['KODE_KONTRAK'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];
 
             // copy default value from ep_ktr_kontrak
-            $sql = "select a.nama_vendor, a.nilai_kontrak, a.kode_kontrak, a.kode_kantor, b.kode_po, coalesce(b.nilai_wo, 0) as nilai_wo, a.nilai_kontrak - coalesce(b.nilai_wo, 0) as sisa_nilai_kontrak
+            $sql = "select a.nama_vendor, a.nilai_kontrak, a.kode_tender, a.kode_vendor, a.kode_kontrak, a.kode_kantor, b.kode_po, coalesce(b.nilai_wo, 0) as nilai_wo, a.nilai_kontrak - coalesce(b.nilai_wo, 0) as sisa_nilai_kontrak
                     from ep_ktr_kontrak a
                     left join (
                         select x.kode_po, x.kode_kontrak, x.kode_kantor, sum(harga * QTY) as nilai_wo
@@ -70,6 +70,12 @@ class ep_ktr_po extends MY_Model {
                 $this->attributes['NILAI_KONTRAK'] = $row['NILAI_KONTRAK'];
                 $this->attributes['NILAI_WO'] = $row['NILAI_WO'];
                 $this->attributes['SISA_NILAI_KONTRAK'] = $row['SISA_NILAI_KONTRAK'];
+                
+                // popup detail kontrak
+                $this->elements_conf['KODE_KONTRAK'] = array(
+                    'type'=>'anchor_popup'
+                    , 'url' => site_url('contract/contract/view_popup?KODE_KONTRAK=' . $row['KODE_KONTRAK'] .'&KODE_KANTOR=' .$row['KODE_KANTOR']. '&KODE_VENDOR=' . $row['KODE_VENDOR']. '&KODE_TENDER=' . $row['KODE_TENDER']));
+
             }
         }
 

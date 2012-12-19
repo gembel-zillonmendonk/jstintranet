@@ -9,7 +9,7 @@ class MY_Controller extends MX_Controller {
         parent::__construct();
         // check login session
         $user_id = $this->session->userdata('kode_user');
-        if(!$user_id)
+        if (!$user_id)
             redirect('adm/app');
 
         //$this->output->enable_profiler(TRUE);
@@ -31,337 +31,257 @@ class MY_Controller extends MX_Controller {
 //        print_r($model);
     }
 
-	public function gridr($model = null)
-    {
+    public function gridr($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridr', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridr', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
 
-    public function gridpopup_jasa($model = null)
-    {
+    public function gridpopup_jasa($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup_jasa', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup_jasa', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
 
-    public function gridpopup_anggaran($model = null)
-    {
+    public function gridpopup_anggaran($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup_anggaran', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup_anggaran', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
 
-    public function gridpopup_perencanaan($model = null)
-    {
+    public function gridpopup_perencanaan($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup_perencanaan', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup_perencanaan', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
 
-	public function gridpopup_evaluasi($model = null)
-    {
+    public function gridpopup_evaluasi($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup_evaluasi', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup_evaluasi', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
-	
-    
-    
-public function gridpopup_barang($model = null)
-    {
+
+    public function gridpopup_barang($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup_barang', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup_barang', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
-	
-    
-public function gridpopup_barang_jasa($model = null)
-    {
+
+    public function gridpopup_barang_jasa($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup_barang_jasa', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup_barang_jasa', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
-	
-    	public function gridpopup($model = null)
-    {
+
+    public function gridpopup($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridpopup', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridpopup', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
-    
-    
-    public function gridrf($model = null)
-    {
+
+    public function gridrf($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
                 $this->load->view('crud/gridrf', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridrf', array(
                 'grid' => new MY_Grid($model),
             ));
         }
-
-
-
-
-
     }
-	
-	public function gridrf_vendor($model = null)
-    {
+
+    public function gridrf_vendor($model = null) {
         // check and load model
         $model = $this->_load_model($model);
         $query = $this->_grid_data($model);
-		
-        if ($this->_is_ajax_request())
-        {
-		
-            if (isset($_REQUEST['oper']))
-            {
-			
+
+        if ($this->_is_ajax_request()) {
+
+            if (isset($_REQUEST['oper'])) {
+
                 echo json_encode($query);
 
                 exit();
-            }
-            else
-            {
+            } else {
 
 
                 $this->load->view('crud/gridrf_vendor', array(
                     'grid' => new MY_Grid($model),
                 ));
             }
-        }
-        else
-        {
+        } else {
             $this->layout->view('crud/gridrf_vendor', array(
                 'grid' => new MY_Grid($model),
             ));
         }
     }
-	
-	
+
     public function _load_model($model, $type = 'grid', $return = true) {
 
         $model = str_replace(".", "/", strtolower($model));
@@ -427,7 +347,7 @@ public function gridpopup_barang_jasa($model = null)
             $src = $model->table;
             preg_match("/select/i", $model->sql_select, $matches);
             if (count($matches) > 0) {
-                $src = " ( select x.* from " .$model->sql_select. " x )";
+                $src = " ( select x.* from " . $model->sql_select . " x )";
                 $read_only = true;
             }
 
@@ -437,28 +357,27 @@ public function gridpopup_barang_jasa($model = null)
 //                $this->db->where($filter);
 //            $this->db->stop_cache();
 
-            
+
             $query = $this->db->get_where($src, $filter);
             $count = $query->num_rows();
-            
+
             $count > 0 ? $total_pages = ceil($count / $rows) : $total_pages = 0;
             if ($page > $total_pages)
                 $page = $total_pages;
 
             // build data
             if ($page < 2) {
-                
-                $limit = ($rows  + 1  );
+
+                $limit = ($rows + 1 );
                 $offset = 0;
             } else {
-                
+
                 $limit = $rows;
-                $offset = (($page-1) * $rows) + 1;
+                $offset = (($page - 1) * $rows) + 1;
             }
-            
-            $this->db->limit(  $limit ,   $offset   );
+
+            $this->db->limit($limit, $offset);
 //            $this->db->limit($rows, $page);
-            
 //            $query = $this->db->get();
             $query = $this->db->get_where($src, $filter, $limit, $offset);
 //echo $this->db->last_query();
@@ -743,6 +662,27 @@ public function gridpopup_barang_jasa($model = null)
             $this->layout->view($model->grid_view, array(
                 'grid' => new MY_Grid($model),
                 'read_only' => true,
+            ));
+        }
+    }
+
+    public function cache_grid_form($model = null) {
+        // check and load model
+        $model = $this->_load_model($model);
+        $model->grid_view = 'crud/cache_grid_form';
+        $query = $this->_grid_data($model);
+        if ($this->_is_ajax_request()) {
+            if (isset($_REQUEST['oper'])) {
+                echo json_encode($query);
+                exit();
+            } else {
+                $this->load->view($model->grid_view, array(
+                    'grid' => new MY_Grid($model),
+                ));
+            }
+        } else {
+            $this->layout->view($model->grid_view, array(
+                'grid' => new MY_Grid($model),
             ));
         }
     }

@@ -66,7 +66,7 @@ class monitoring extends MY_Model {
                                 "&KODE_INVOICE=" + data[\'KODE_INVOICE\'] + 
                                 "&KODE_KANTOR=" + data[\'KODE_KANTOR\'];
                                 
-                    var href = $site_url + "/contract/invoice/create_draft?" + param;
+                    var href = $site_url + "/contract/invoice/detail?" + param;
                     
                     be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">LIHAT DETAIL</span></button>";
                     jQuery(\'#grid_' . strtolower(get_class($this)) . '\').jqGrid(\'setRowData\',ids[i],{ACT:be});

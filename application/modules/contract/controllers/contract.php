@@ -23,6 +23,11 @@ class contract extends MY_Controller
         $this->layout->view('contract/contract/view');
     }
     
+    public function view_popup() {
+        $this->layout->setLayout('layout_popup');
+        $this->layout->view('contract/contract/view');
+    }
+    
     public function monitoring() {
         $this->layout->view('contract/contract/monitoring');
     }

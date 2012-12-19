@@ -4,7 +4,7 @@ class monitoring extends MY_Model {
 
     public $table = 'EP_KTR_PO';
     
-    public $sql_select = "( select * from EP_KTR_PO )";
+    public $sql_select = "( select a.*, '' as act from EP_KTR_PO a )";
     
     public $columns_conf = array(
         'KODE_PO',
@@ -14,6 +14,7 @@ class monitoring extends MY_Model {
         'NAMA_VENDOR',
         'CATATAN_PO',
         'STATUS',
+        'ACT',
     );
     public $dir = 'po';
     
@@ -30,10 +31,10 @@ class monitoring extends MY_Model {
                     
                     //alert(data[\'KODE_PROSES\']);
                     
-                    var param = "referer_url=/contract/todo&kode_proses=" + data[\'KODE_PROSES\'] + data[\'URL\'];
-                    var href = $site_url + "/wkf/run?" + param;
+                    var param = "referer_url=/contract/po/monitoring&KODE_KONTRAK=" + data[\'KODE_KONTRAK\'] + "&KODE_VENDOR=" + data[\'KODE_VENDOR\'] + "&KODE_KANTOR=" + data[\'KODE_KANTOR\'] + "&KODE_PO=" + data[\'KODE_PO\'];
+                    var href = $site_url + "/contract/po/detail?" + param;
                     
-                    be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">PROSES</span></button>";
+                    be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">LIHAT DETAIL</span></button>";
                     jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{ACT:be});
 		}';
     }

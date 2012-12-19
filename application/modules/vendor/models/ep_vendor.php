@@ -16,13 +16,13 @@ class Ep_vendor extends MY_Model {
     public $table = "EP_VENDOR";
     //public $table = "EP_NOMORURUT";
     
-    public $elements_conf = array('KODE_VENDOR', 'NAMA_VENDOR', 'KODE_LOGIN','ALAMAT_EMAIL');
+    public $elements_conf = array('KODE_VENDOR', 'NAMA_VENDOR', 'KODE_LOGIN', 'ALAMAT_EMAIL',);
     public $columns_conf = array(
-        'NAMA_VENDOR'=>array('hidden'=>false, 'width'=>20), 
-        'KODE_LOGIN'=>array('hidden'=>false, 'width'=>10),
-        'ACT'=>array('hidden'=>false, 'width'=>10), 
-        'xxx'=>array('hidden'=>false, 'width'=>10), 
-        'NAMA_STATUS_REG'=>array('hidden'=>false, 'width'=>20, 'formatter'=>'showlink', 'formatoptions'=>array('baseLinkUrl'=>'someurl.php', 'addParam'=> '&action=edit'))
+        'KODE_VENDOR'=>array('editable'=>true), 
+        'NAMA_VENDOR'=>array('editable'=>true), 
+        'KODE_LOGIN'=>array('editable'=>true),
+        'ALAMAT_EMAIL'=>array('editable'=>true),
+        //'NAMA_STATUS_REG'=>array('hidden'=>false, 'width'=>20, 'formatter'=>'showlink', 'formatoptions'=>array('baseLinkUrl'=>'someurl.php', 'addParam'=> '&action=edit'))
         );
     public $sql_select = "(
                 select KODE_VENDOR, KODE_VENDOR as \"xxx\", NAMA_VENDOR, KODE_LOGIN, NAMA_STATUS_REG, '' as \"ACT\"

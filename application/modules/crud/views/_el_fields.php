@@ -69,6 +69,9 @@ foreach ($form->model->primary_keys as $v) {
                         case 'label':
                             echo form_label($v['value'], $v['id'], array("class" => "checkbox inline"));
                             break;
+                        case 'anchor_popup':
+                            echo anchor_popup($v['url'], $v['value'], array_merge( $v, array("class" => "checkbox inline")));
+                            break;
                         default:
                             echo form_input($v);
                     }
