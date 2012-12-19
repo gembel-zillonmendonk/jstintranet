@@ -20,6 +20,8 @@ if (count($_REQUEST) > 0) {
         <h3 href="<?php echo site_url('/contract/invoice/view_form/invoice.ep_ktr_invoice' . $params) ?>">HEADER</h3>
         <div></div>
     <?php endif; ?>
+    <h3 href="<?php echo site_url('/wkf/list_history' . $params) ?>">MONITORING PROSES</h3>
+    <div></div>
 </div>
 <script>
     $(".accordion").each(function(){

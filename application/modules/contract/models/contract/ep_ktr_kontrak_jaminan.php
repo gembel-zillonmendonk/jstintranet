@@ -35,7 +35,7 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
         'NO_JAMINAN',
         'TGL_MULAI_JAMINAN',
         'TGL_AKHIR_JAMINAN',
-        'LAMPIRAN_JAMINAN',
+        'LAMPIRAN_JAMINAN'=>array('type'=>'file'),
 //        'UM_PERSENTASI',
 //        'UM_NILAI',
 //        'JABATAN_PEMBUAT',

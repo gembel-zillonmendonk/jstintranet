@@ -4,7 +4,7 @@ class monitoring extends MY_Model {
 
     public $table = 'EP_KTR_KONTRAK';
     
-    public $sql_select = "( select a.*, '' as ACT from EP_KTR_KONTRAK a)";
+    public $sql_select = null;
     
     public $columns_conf = array(
         'KODE_KONTRAK',
@@ -20,6 +20,7 @@ class monitoring extends MY_Model {
         'TGL_AKHIR',
         'NILAI_KONTRAK',
         'STATUS',
+        'KODE_PROSES',
         'ACT',
     );
     public $dir = 'contract';
@@ -27,6 +28,18 @@ class monitoring extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
+        
+        $wkf = new Workflow();
+        $kode_wkf = 6; //kontrak
+        $pivot_query = $wkf->get_pivot_query("kode_wkf = $kode_wkf");
+        
+        $this->sql_select = "(
+            select a.*, x.kode_proses, '' as ACT 
+            from EP_KTR_KONTRAK a
+            inner join (
+                $pivot_query
+            ) x on x.kode_kontrak = a.kode_kontrak and x.kode_tender = a.kode_tender and x.kode_kantor = a.kode_kantor and x.kode_vendor = a.kode_vendor
+        )";
         
         $this->js_grid_completed = '
                 var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
@@ -37,7 +50,7 @@ class monitoring extends MY_Model {
                     
                     //alert(data[\'KODE_PROSES\']);
                     
-                    var param = "referer_url=/contract/monitoring&KODE_KONTRAK=" + data[\'KODE_KONTRAK\'] + "&KODE_KANTOR=" + data[\'KODE_KANTOR\'] + "&KODE_TENDER=" + data[\'KODE_TENDER\'] + "&KODE_VENDOR=" + data[\'KODE_VENDOR\'];
+                    var param = "referer_url=/contract/monitoring&KODE_PROSES=" + data[\'KODE_PROSES\'] + "&KODE_KONTRAK=" + data[\'KODE_KONTRAK\'] + "&KODE_KANTOR=" + data[\'KODE_KANTOR\'] + "&KODE_TENDER=" + data[\'KODE_TENDER\'] + "&KODE_VENDOR=" + data[\'KODE_VENDOR\'];
                     var href = $site_url + "/contract/view?" + param;
                     
                     be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">LIHAT</span></button>";

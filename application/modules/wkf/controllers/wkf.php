@@ -135,6 +135,23 @@ class Wkf extends MX_Controller {
             ));
     }
 
+    public function list_history() {
+        $this->load->library('workflow');
+
+        $kode_proses = isset($_REQUEST['kode_proses']) ? $_REQUEST['kode_proses'] : null;
+        $kode_proses = isset($_REQUEST['KODE_PROSES']) ? $_REQUEST['KODE_PROSES'] : $kode_proses;
+        $history = $this->workflow->getHistory($kode_proses);
+        
+        if ($this->_is_ajax_request())
+            $this->load->view('list_history', array(
+                'history' => $history,
+            ));
+        else
+            $this->layout->view('list_history', array(
+                'history' => $history,
+            ));
+    }
+    
     public function graph() {
 
         $this->load->library('workflowGraphViz');

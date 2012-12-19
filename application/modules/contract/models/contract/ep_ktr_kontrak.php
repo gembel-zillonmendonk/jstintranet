@@ -6,7 +6,7 @@ class ep_ktr_kontrak extends MY_Model {
     public $elements_conf = array(
 //        'KODE_KONTRAK',
 //        'KODE_KANTOR',
-//        'KODE_TENDER',
+        'KODE_TENDER',
 //        'NO_KONTRAK',
 //        'USER_PEMINTA',
 //        'JABATAN_PEMINTA',
@@ -51,6 +51,8 @@ class ep_ktr_kontrak extends MY_Model {
 //        'PETUGAS_REKAM',
 //        'TGL_UBAH',
 //        'PETUGAS_UBAH',
+        'TGL_PENETAPAN_PEMENANG',
+        'NILAI_HPS',
     );
     public $columns_conf = array(
         'KODE_KONTRAK',

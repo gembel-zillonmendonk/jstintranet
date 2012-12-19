@@ -418,7 +418,7 @@ class Workflow {
             ) where rn = 1    
         ";
         
-        $row = $this->db->query($sql)->row_result();
+        $row = $this->db->query($sql)->row_array();
         return count($row) ? $row : false;
     }
     

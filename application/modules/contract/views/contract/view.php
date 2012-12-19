@@ -29,6 +29,8 @@ if (count($_REQUEST) > 0) {
         <div></div>
     <?php endif; ?>
 
+    <h3 href="<?php echo site_url('/wkf/list_history' . $params) ?>">MONITORING PROSES</h3>
+    <div></div>
     <p>
         <button type="button" id="selesai">TUTUP KONTRAK</button>
     </p>

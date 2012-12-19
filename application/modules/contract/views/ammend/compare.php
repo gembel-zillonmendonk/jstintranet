@@ -17,6 +17,8 @@ if (count($_REQUEST) > 0) {
     <div></div>
     <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
     <div></div>    
+    <h3 href="<?php echo site_url('/wkf/list_history' . $params) ?>">MONITORING PROSES</h3>
+    <div></div>
 
 </div>
 <div style="display: inline-block; width: 100%;">
