@@ -111,22 +111,29 @@ if (count($_REQUEST) > 0) {
                             validator.prepareForm();
                             validator.hideErrors();
                             
-                            var kode_po = $("input[name='EP_KTR_PO[KODE_PO]']", data).val();
-                            var kode_kontrak = $("input[name='EP_KTR_PO[KODE_KONTRAK]']", data).val();
-                            var kode_kantor = $("input[name='EP_KTR_PO[KODE_KANTOR]']", data).val();
-                            var kode_vendor = $("input[name='EP_KTR_PO[KODE_VENDOR]']", data).val();
+                            var KODE_PO = $("input[name='EP_KTR_PO[KODE_PO]']", data).val();
+                            var KODE_KONTRAK = $("input[name='EP_KTR_PO[KODE_KONTRAK]']", data).val();
+                            var KODE_KANTOR = $("input[name='EP_KTR_PO[KODE_KANTOR]']", data).val();
+                            var KODE_VENDOR = $("input[name='EP_KTR_PO[KODE_VENDOR]']", data).val();
                             $("#id_form_ep_ktr_po").replaceWith(data);
                             f = data;
                             
-                            var params = "KODE_PO="+kode_po
-                                +"&KODE_KONTRAK="+kode_kontrak
-                                +"&KODE_KANTOR="+kode_kantor
-                                +"&KODE_VENDOR="+kode_vendor;
+                            var params = "KODE_PO="+KODE_PO
+                                +"&KODE_KONTRAK="+KODE_KONTRAK
+                                +"&KODE_KANTOR="+KODE_KANTOR
+                                +"&KODE_VENDOR="+KODE_VENDOR;
                             
                             alert(params);
                             //reload page
                             //window.location = $site_url +"/contract/create_draft?" + params;
-                            window.location = '<?php echo site_url('/wkf/start?kode_wkf=64&referer_url=/contract/todo&') ?>' + params;
+                            //window.location = '<?php echo site_url('/wkf/start?kode_wkf=64&referer_url=/contract/todo&') ?>' + params;
+                            
+                            var newURL = window.location.href
+                            newURL = updateURLParameter(newURL, 'KODE_KONTRAK', KODE_KONTRAK);
+                            newURL = updateURLParameter(newURL, 'KODE_KANTOR', KODE_KANTOR);
+                            newURL = updateURLParameter(newURL, 'KODE_VENDOR', KODE_VENDOR);
+                            newURL = updateURLParameter(newURL, 'KODE_PO', KODE_PO);
+                            window.location = newURL;   
                         },
                         error: function(){
                             alert('Data gagal disimpan')
@@ -136,4 +143,27 @@ if (count($_REQUEST) > 0) {
             });
         }
     });
+    
+    /**
+     * http://stackoverflow.com/a/10997390/11236
+     */
+    function updateURLParameter(url, param, paramVal){
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+            tempArray = additionalURL.split("&");
+            for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        }
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
 </script>

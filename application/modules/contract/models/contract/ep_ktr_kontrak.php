@@ -118,16 +118,25 @@ class ep_ktr_kontrak extends MY_Model {
             $sql = "SELECT a.KODE_TENDER, a.KODE_KANTOR, a.JUDUL_PEKERJAAN
                     , a.LINGKUP_PEKERJAAN, a.TIPE_KONTRAK, c.KODE_VENDOR, c.NAMA_VENDOR  
                     , x.TOTAL_HARGA
+                    , y.TOTAL_HARGA_HPS
                 FROM EP_PGD_TENDER a
                 INNER JOIN EP_PGD_TENDER_VENDOR_STATUS b ON a.KODE_TENDER = b.KODE_TENDER
                 INNER JOIN EP_VENDOR c ON b.KODE_VENDOR = c.KODE_VENDOR
                 INNER JOIN (  
                         SELECT KODE_VENDOR,
                                 KODE_TENDER,
+                                KODE_KANTOR,
                                 SUM (HARGA * JUMLAH) AS TOTAL_HARGA
                         FROM EP_PGD_ITEM_PENAWARAN
-                        GROUP BY KODE_VENDOR, KODE_TENDER
-                ) x ON b.KODE_VENDOR = x.KODE_VENDOR AND x.KODE_TENDER = b.KODE_TENDER
+                        GROUP BY KODE_VENDOR, KODE_TENDER, KODE_KANTOR
+                ) x ON b.KODE_VENDOR = x.KODE_VENDOR AND x.KODE_TENDER = b.KODE_TENDER AND x.KODE_KANTOR = b.KODE_KANTOR
+                INNER JOIN (  
+                        SELECT KODE_KANTOR,
+                                KODE_TENDER,
+                                SUM (HARGA * JUMLAH) AS TOTAL_HARGA_HPS
+                        FROM EP_PGD_ITEM_TENDER
+                        GROUP BY KODE_KANTOR, KODE_TENDER
+                ) y ON a.KODE_KANTOR = y.KODE_KANTOR AND y.KODE_TENDER = a.KODE_TENDER
                 LEFT OUTER JOIN EP_KTR_KONTRAK d ON a.KODE_TENDER = d.KODE_TENDER
                 WHERE COALESCE (b.pemenang, '0') = '1'
                 AND COALESCE (a.pembuatan_kontrak, '0') = '0'
@@ -149,6 +158,7 @@ class ep_ktr_kontrak extends MY_Model {
                 $this->attributes['LINGKUP_KERJA'] = $row['LINGKUP_PEKERJAAN'];
                 $this->attributes['TIPE_KONTRAK'] = $row['TIPE_KONTRAK'];
                 $this->attributes['NILAI_KONTRAK'] = $row['TOTAL_HARGA'];
+                $this->attributes['NILAI_HPS'] = $row['TOTAL_HARGA_HPS'];
             }
 //            print_r($this->attributes);
         }

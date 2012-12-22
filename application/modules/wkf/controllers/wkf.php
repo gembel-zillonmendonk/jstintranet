@@ -138,8 +138,8 @@ class Wkf extends MX_Controller {
     public function list_history() {
         $this->load->library('workflow');
 
-        $kode_proses = isset($_REQUEST['kode_proses']) ? $_REQUEST['kode_proses'] : null;
-        $kode_proses = isset($_REQUEST['KODE_PROSES']) ? $_REQUEST['KODE_PROSES'] : $kode_proses;
+        $kode_proses = isset($_REQUEST['KODE_PROSES']) ? $_REQUEST['KODE_PROSES'] : null;
+        $kode_proses = isset($_REQUEST['kode_proses']) ? $_REQUEST['kode_proses'] : $kode_proses;
         $history = $this->workflow->getHistory($kode_proses);
         
         if ($this->_is_ajax_request())

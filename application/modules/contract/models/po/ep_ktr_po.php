@@ -73,7 +73,7 @@ class ep_ktr_po extends MY_Model {
                 $this->attributes['SISA_NILAI_KONTRAK'] = $row['SISA_NILAI_KONTRAK'];
                 
                 // popup detail kontrak
-                $this->attributes['DETAIL_KONTRAK'] = $row['KODE_KONTRAK'] . "&nbsp;&nbsp;&nbsp;<button href='".(site_url('contract/contract/view_popup?KODE_KONTRAK=' . $row['KODE_KONTRAK'] .'&KODE_KANTOR=' .$row['KODE_KANTOR']. '&KODE_VENDOR=' . $row['KODE_VENDOR']. '&KODE_TENDER=' . $row['KODE_TENDER']))."' onclick='window.open($(this).attr(\"href\"), \"xx\", \"width=800,height=500\");'> [lihat detail] </button>";
+                $this->attributes['DETAIL_KONTRAK'] = $row['KODE_KONTRAK'] . "&nbsp;&nbsp;&nbsp;<button href='".(site_url('contract/contract/view_popup?KODE_PROSES='. (isset($_REQUEST['KODE_PROSES']) ? $_REQUEST['KODE_PROSES'] : 0) .'&KODE_KONTRAK=' . $row['KODE_KONTRAK'] .'&KODE_KANTOR=' .$row['KODE_KANTOR']. '&KODE_VENDOR=' . $row['KODE_VENDOR']. '&KODE_TENDER=' . $row['KODE_TENDER'] .'&'))."' onclick='window.open($(this).attr(\"href\") + window.location.search.substring(1), \"xx\", \"width=800,height=500\"); return false;'> [lihat detail] </button>";
 //                $this->elements_conf['LABEL_KODE_KONTRAK'] = array(
 //                    'type'=>'anchor_popup'
 //                    , 'value' => 'xxx'

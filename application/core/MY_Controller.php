@@ -669,19 +669,43 @@ class MY_Controller extends MX_Controller {
     public function cache_grid_form($model = null) {
         // check and load model
         $model = $this->_load_model($model);
+        
+        if ($this->_is_ajax_request() && isset($_REQUEST[$model->table]) && count($_REQUEST[$model->table]) > 0) {
+//            echo "<pre>";
+            foreach($_REQUEST[$model->table] as $data){
+                $model->attributes = isset($model->attributes) ? array_merge($model->attributes, $data) : $data;
+//                print_r($model->attributes);
+                $model->save();
+            }
+//            die();
+            $model->attributes = array();
+        }
+        
         $model->grid_view = 'crud/cache_grid_form';
         $query = $this->_grid_data($model);
+        
+        $form = new MY_Form($model);
+        $el_fields = $this->load->view('crud/_el_fields', array('form' => $form,), true);
+        $el_buttons = $this->load->view('crud/_el_buttons', array('form' => $form,), true);
+        
         if ($this->_is_ajax_request()) {
             if (isset($_REQUEST['oper'])) {
                 echo json_encode($query);
                 exit();
             } else {
                 $this->load->view($model->grid_view, array(
+                    'model'=> $model,
+                    'el_fields' => $el_fields,
+                    'form' => $form,
                     'grid' => new MY_Grid($model),
                 ));
             }
         } else {
             $this->layout->view($model->grid_view, array(
+                'model'=> $model,
+                'el_fields' => $el_fields,
+                'el_buttons' => $el_buttons,
+                'form' => $form,
                 'grid' => new MY_Grid($model),
             ));
         }

@@ -16,7 +16,12 @@ class Ep_vendor extends MY_Model {
     public $table = "EP_VENDOR";
     //public $table = "EP_NOMORURUT";
     
-    public $elements_conf = array('KODE_VENDOR', 'NAMA_VENDOR', 'KODE_LOGIN', 'ALAMAT_EMAIL',);
+    public $elements_conf = array(
+        'KODE_VENDOR', 
+        'NAMA_VENDOR', 
+        'KODE_LOGIN' => array('type' => 'dropdown', 'options' => array('x' => 'xaaaa', 'z' => 'zaaaa')), 
+        'ALAMAT_EMAIL' => array('type'=>'checkbox'),
+    );
     public $columns_conf = array(
         'KODE_VENDOR'=>array('editable'=>true), 
         'NAMA_VENDOR'=>array('editable'=>true), 
@@ -25,7 +30,7 @@ class Ep_vendor extends MY_Model {
         //'NAMA_STATUS_REG'=>array('hidden'=>false, 'width'=>20, 'formatter'=>'showlink', 'formatoptions'=>array('baseLinkUrl'=>'someurl.php', 'addParam'=> '&action=edit'))
         );
     public $sql_select = "(
-                select KODE_VENDOR, KODE_VENDOR as \"xxx\", NAMA_VENDOR, KODE_LOGIN, NAMA_STATUS_REG, '' as \"ACT\"
+                select KODE_VENDOR, KODE_VENDOR as \"xxx\", NAMA_VENDOR, KODE_LOGIN, NAMA_STATUS_REG, ALAMAT_EMAIL, '' as \"ACT\"
                 from EP_VENDOR a
                 left join EP_VENDOR_STATUS_REGISTRASI b on a.KODE_STATUS_REG = b.KODE_STATUS_REG 
                 order by a.NAMA_VENDOR

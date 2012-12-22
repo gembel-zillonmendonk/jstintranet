@@ -111,7 +111,16 @@ if (count($_REQUEST) > 0) {
                             alert(params);
                             //reload page
                             //window.location = $site_url +"/contract/create_draft?" + params;
-                            window.location = '<?php echo site_url('/wkf/start?kode_wkf=6&referer_url=/contract/todo&') ?>' + params;
+                            //window.location = '<?php echo site_url('/wkf/start?kode_wkf=6&referer_url=/contract/todo&') ?>' + params;
+                            
+                            var newURL = window.location.href
+                            newURL = updateURLParameter(newURL, 'KODE_KONTRAK', KODE_KONTRAK);
+                            newURL = updateURLParameter(newURL, 'KODE_KANTOR', KODE_KANTOR);
+                            newURL = updateURLParameter(newURL, 'KODE_VENDOR', KODE_VENDOR);
+                            newURL = updateURLParameter(newURL, 'KODE_TENDER', KODE_TENDER);
+                            newURL = updateURLParameter(newURL, 'TIPE_KONTRAK', TIPE_KONTRAK);
+                            newURL = updateURLParameter(newURL, 'JENIS_KONTRAK', JENIS_KONTRAK);
+                            window.location = newURL;  
                         },
                         error: function(){
                             alert('Data gagal disimpan')
@@ -135,4 +144,26 @@ if (count($_REQUEST) > 0) {
     //        });
     //    });
     
+    /**
+     * http://stackoverflow.com/a/10997390/11236
+     */
+    function updateURLParameter(url, param, paramVal){
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+            tempArray = additionalURL.split("&");
+            for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        }
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
 </script>

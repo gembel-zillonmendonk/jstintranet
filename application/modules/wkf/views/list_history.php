@@ -7,8 +7,8 @@
                 <tr>
                     <th>No.</th>
                     <?php
-                    $cols = $history[0];
                     $col_cnt = count($history);
+                    $cols = $col_cnt > 0 ? $history[0] : array();
                     foreach ($cols as $key => $val) :
                         ?>
                         <th>
@@ -19,6 +19,7 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if(count($history) > 0) ?>
                 <?php foreach ($history as $key => $val) : ?>
                     <tr>
                         <td>

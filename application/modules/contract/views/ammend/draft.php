@@ -87,16 +87,28 @@ if (count($_REQUEST) > 0) {
             $(el).click(function() {
                 if(validator.form()) {
                     jQuery(f).ajaxSubmit({
-                        success: function(){
+                        success: function(data){
                             validator.prepareForm();
                             validator.hideErrors();
+                            
+                            var KODE_PERUBAHAN = $("input[name='EP_KTR_PERUBAHAN[KODE_PERUBAHAN]']", data).val();
+                            var KODE_KONTRAK = $("input[name='EP_KTR_PERUBAHAN[KODE_KONTRAK]']", data).val();
+                            var KODE_KANTOR = $("input[name='EP_KTR_PERUBAHAN[KODE_KANTOR]']", data).val();
+                            $("#id_form_ep_ktr_perubahan").replaceWith(data);
+                            f = data;
                             
                             var params = "KODE_KONTRAK="+$("#id_ep_ktr_perubahan_kode_kontrak", f).val()
                                 +"&KODE_PERUBAHAN="+$("#id_ep_ktr_perubahan_kode_perubahan", f).val()
                                 +"&KODE_KANTOR="+$("#id_ep_ktr_perubahan_kode_kantor", f).val();
                             
                             //reload page
-                            window.location = '<?php echo site_url('/wkf/start?kode_wkf=63&') ?>' + params;
+                            //window.location = '<?php echo site_url('/wkf/start?kode_wkf=63&') ?>' + params;
+                            
+                            var newURL = window.location.href
+                            newURL = updateURLParameter(newURL, 'KODE_KONTRAK', KODE_KONTRAK);
+                            newURL = updateURLParameter(newURL, 'KODE_KANTOR', KODE_KANTOR);
+                            newURL = updateURLParameter(newURL, 'KODE_PERUBAHAN', KODE_PERUBAHAN);
+                            window.location = newURL;  
                         },
                         error: function(){
                             alert('Data gagal disimpan')
@@ -106,4 +118,27 @@ if (count($_REQUEST) > 0) {
             });
         }
     });
+    
+    /**
+     * http://stackoverflow.com/a/10997390/11236
+     */
+    function updateURLParameter(url, param, paramVal){
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+            tempArray = additionalURL.split("&");
+            for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        }
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
 </script>

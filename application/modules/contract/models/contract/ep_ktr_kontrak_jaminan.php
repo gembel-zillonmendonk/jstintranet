@@ -112,6 +112,20 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
             $this->attributes['KODE_TENDER'] = $_REQUEST['KODE_TENDER'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];
+            
+            $sql = "SELECT KODE_VENDOR,
+                                KODE_TENDER,
+                                KODE_KANTOR,
+                                SUM (HARGA * JUMLAH) * 0.05 AS TOTAL_JAMINAN
+                        FROM EP_PGD_ITEM_PENAWARAN
+                        WHERE KODE_VENDOR = '".$_REQUEST['KODE_VENDOR']."' 
+                            AND KODE_TENDER = '".$_REQUEST['KODE_TENDER']."' 
+                            AND KODE_KANTOR = '".$_REQUEST['KODE_KANTOR']."' 
+                        GROUP BY KODE_VENDOR, KODE_TENDER, KODE_KANTOR";
+            
+            $row = $this->db->query($sql)->row_array();
+            
+            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
         }
     }
 

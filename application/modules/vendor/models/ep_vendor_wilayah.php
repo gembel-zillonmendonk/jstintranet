@@ -22,7 +22,7 @@ class Ep_vendor_wilayah extends MY_Model
         'KODE_WILAYAH',
         'WILAYAH',
     );
-    public $sql_select = "(select KODE_WILAYAH, (case kode_wilayah
+    public $sql_select = "(select KODE_WILAYAH, KODE_VENDOR, (case kode_wilayah
 when 1 then 'JAKARTA'
 when 2 then 'DEPOK'
 when 3 then 'TANGERANG'

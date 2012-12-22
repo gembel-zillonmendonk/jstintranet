@@ -115,11 +115,11 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
 
     <div id="tabs-10">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_principal') ?>">PRINCIPAL</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_principal') ?>">PRINCIPAL</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_subkontraktor') ?>">SUBKONTRAKTOR</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_subkontraktor') ?>">SUBKONTRAKTOR</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_afiliasi') ?>">PERUSAHAAN AFILIASI</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_afiliasi') ?>">PERUSAHAAN AFILIASI</h3>
             <div></div>
         </div>
     </div>

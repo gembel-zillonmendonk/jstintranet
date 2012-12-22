@@ -7,7 +7,7 @@
 
 class Ep_vendor_laporan_keuangan extends MY_Model
 {
-    public $table = "EP_VENDOR_LAPORAN_KEUANGAN";
+    public $table = "EP_VENDOR_LAP_KEUANGAN";
     public $elements_conf = array(
         'TAHUN',
         'TIPE'=>array('type'=>'dropdown', 'options'=>array('AUDIT'=>'AUDIT', 'NON AUDIT'=>'NON AUDIT')),
@@ -38,7 +38,7 @@ class Ep_vendor_laporan_keuangan extends MY_Model
         'LABA_BERSIH',
         'KELAS',
     );
-    public $sql_select = "(select * from EP_VENDOR_LAPORAN_KEUANGAN)";
+    public $sql_select = "(select * from EP_VENDOR_LAP_KEUANGAN)";
 
     function __construct()
     {

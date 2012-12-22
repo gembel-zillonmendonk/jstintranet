@@ -25,7 +25,7 @@ class contract extends MY_Controller
     
     public function view_popup() {
         $this->layout->setLayout('layout_popup');
-        $this->layout->view('contract/contract/view');
+        $this->layout->view('contract/contract/view_popup');
     }
     
     public function monitoring() {

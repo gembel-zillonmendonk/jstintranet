@@ -151,6 +151,7 @@ foreach ($form->model->primary_keys as $v) {
                             alert('Data berhasil disimpan');
                             //reload grid
                             $('#grid_<?php echo strtolower(get_class($form->model)); ?>').trigger("reloadGrid");
+                            window.location = $site_url + '/contract/monitoring';
                         },
                         error: function(){
                             alert('Data gagal disimpan')

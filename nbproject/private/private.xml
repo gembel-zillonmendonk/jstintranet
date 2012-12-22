@@ -2,4 +2,29 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/D:/www/jstintranet/application/modules/crud/views/cache_grid_form.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/models/contract/monitoring.php</file>
+        <file>file:/D:/www/jstintranet/application/core/MY_Controller.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/vendor/models/ep_vendor.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/models/contract/ep_ktr_kontrak.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/models/contract/ep_ktr_kontrak_jaminan.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/po/draft.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/contract/draft.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/ammend/draft.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/models/po/ep_ktr_po.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/models/po/ep_ktr_po_perkembangan.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/models/po/monitoring.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/contract/view.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/controllers/contract.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/contract/view_popup.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/wkf/views/list_history.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/wkf/controllers/wkf.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/contract/final_review.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/contract/views/contract/ep_ktr_kontrak_termination.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/vendor/models/ep_vendor_laporan_keuangan.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/vendor/models/ep_vendor_wilayah.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/vendor/views/view_data_vendor.php</file>
+        <file>file:/D:/www/jstintranet/application/modules/vendor/views/_view.php</file>
+    </open-files>
 </project-private>

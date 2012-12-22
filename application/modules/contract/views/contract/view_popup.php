@@ -29,11 +29,8 @@ if (count($_REQUEST) > 0) {
         <div></div>
     <?php endif; ?>
 
-    <h3 href="<?php echo site_url('/wkf/list_history' . $params) ?>">MONITORING PROSES</h3>
-    <div></div>
-    <p>
-        <button type="button" id="selesai">TUTUP KONTRAK</button>
-    </p>
+<!--    <h3 href="<?php echo site_url('/wkf/list_history' . $params) ?>">MONITORING PROSES</h3>
+    <div></div>-->
 </div>
 <script>
     // stylish button and input date
@@ -71,9 +68,9 @@ if (count($_REQUEST) > 0) {
         $('#selesai').live('click', function(){
             var f = $("#id_form_ep_ktr_kontrak");
             var params = "KODE_KONTRAK="+$("input[name='EP_KTR_KONTRAK[KODE_KONTRAK]']", f).val()
-                +"&KODE_KANTOR="+$("input[name='EP_KTR_KONTRAK[KODE_KANTOR]']", f).val()
-                +"&KODE_TENDER="+$("input[name='EP_KTR_KONTRAK[KODE_TENDER]']", f).val()
-                +"&KODE_VENDOR="+$("input[name='EP_KTR_KONTRAK[KODE_VENDOR]']", f).val();
+                +"&KODE_KANTOR="+$("#id_ep_ktr_kontrak_kode_kantor", f).val()
+                +"&KODE_TENDER="+$("#id_ep_ktr_kontrak_kode_tender", f).val()
+                +"&KODE_VENDOR="+$("#id_ep_ktr_kontrak_kode_vendor", f).val();
                 
             if(params.length > 0)
                 window.location = '<?php echo site_url('/contract/final_review?referer_url=/contract/monitoring&') ?>' + params;
