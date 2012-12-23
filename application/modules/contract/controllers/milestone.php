@@ -27,6 +27,14 @@ class milestone extends MY_Controller
             $this->layout->view('milestone/draft');
     }
     
+    public function detail(){
+        
+        if($this->_is_ajax_request())
+            $this->load->view('milestone/detail');
+        else
+            $this->layout->view('milestone/detail');
+    }
+    
     public function update_bastp(){
         
         if($this->_is_ajax_request())

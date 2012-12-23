@@ -41,14 +41,18 @@ class ep_ktr_po extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
-        
+
         if (isset($_REQUEST['KODE_KONTRAK']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])) {
             $this->attributes['KODE_KONTRAK'] = $_REQUEST['KODE_KONTRAK'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];
 
+            $wkf = new Workflow();
+            $kode_wkf = 6; //contract flow
+            $pivot_query = $wkf->get_pivot_query("kode_wkf = $kode_wkf");
+
             // copy default value from ep_ktr_kontrak
-            $sql = "select a.nama_vendor, a.nilai_kontrak, a.kode_tender, a.kode_vendor, a.kode_kontrak, a.kode_kantor, b.kode_po, coalesce(b.nilai_wo, 0) as nilai_wo, a.nilai_kontrak - coalesce(b.nilai_wo, 0) as sisa_nilai_kontrak
+            $sql = "select x.kode_proses, a.nama_vendor, a.nilai_kontrak, a.kode_tender, a.kode_vendor, a.kode_kontrak, a.kode_kantor, b.kode_po, coalesce(b.nilai_wo, 0) as nilai_wo, a.nilai_kontrak - coalesce(b.nilai_wo, 0) as sisa_nilai_kontrak
                     from ep_ktr_kontrak a
                     left join (
                         select x.kode_po, x.kode_kontrak, x.kode_kantor, sum(harga * QTY) as nilai_wo
@@ -58,7 +62,10 @@ class ep_ktr_po extends MY_Model {
                             and x.kode_kantor = '" . $this->attributes['KODE_KANTOR'] . "'
                             and x.status = 'O'
                         group by x.kode_po, x.kode_kontrak, x.kode_kantor
-                    ) b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor "
+                    ) b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor 
+                    inner join (
+                        $pivot_query
+                    ) x on x.KODE_KONTRAK = a.KODE_KONTRAK and x.KODE_TENDER = a.KODE_TENDER and x.kode_kantor = a.kode_kantor and x.kode_vendor = a.kode_vendor "
                     . " where a.kode_kontrak = '" . $this->attributes['KODE_KONTRAK'] . "'"
                     . " and a.kode_kantor = '" . $this->attributes['KODE_KANTOR'] . "'"
                     . " and a.kode_vendor = '" . $this->attributes['KODE_VENDOR'] . "'";
@@ -71,14 +78,13 @@ class ep_ktr_po extends MY_Model {
                 $this->attributes['NILAI_KONTRAK'] = $row['NILAI_KONTRAK'];
                 $this->attributes['NILAI_WO'] = $row['NILAI_WO'];
                 $this->attributes['SISA_NILAI_KONTRAK'] = $row['SISA_NILAI_KONTRAK'];
-                
+
                 // popup detail kontrak
-                $this->attributes['DETAIL_KONTRAK'] = $row['KODE_KONTRAK'] . "&nbsp;&nbsp;&nbsp;<button href='".(site_url('contract/contract/view_popup?KODE_PROSES='. (isset($_REQUEST['KODE_PROSES']) ? $_REQUEST['KODE_PROSES'] : 0) .'&KODE_KONTRAK=' . $row['KODE_KONTRAK'] .'&KODE_KANTOR=' .$row['KODE_KANTOR']. '&KODE_VENDOR=' . $row['KODE_VENDOR']. '&KODE_TENDER=' . $row['KODE_TENDER'] .'&'))."' onclick='window.open($(this).attr(\"href\") + window.location.search.substring(1), \"xx\", \"width=800,height=500\"); return false;'> [lihat detail] </button>";
+                $this->attributes['DETAIL_KONTRAK'] = $row['KODE_KONTRAK'] . "&nbsp;&nbsp;&nbsp;<button href='" . (site_url('contract/contract/view_popup?KODE_PROSES=' . $row['KODE_PROSES'] . '&KODE_KONTRAK=' . $row['KODE_KONTRAK'] . '&KODE_KANTOR=' . $row['KODE_KANTOR'] . '&KODE_VENDOR=' . $row['KODE_VENDOR'] . '&KODE_TENDER=' . $row['KODE_TENDER'] . '&')) . "' onclick='window.open($(this).attr(\"href\"), \"xx\", \"width=800,height=500\"); return false;'> [lihat detail] </button>";
 //                $this->elements_conf['LABEL_KODE_KONTRAK'] = array(
 //                    'type'=>'anchor_popup'
 //                    , 'value' => 'xxx'
 //                    , 'url' => site_url('contract/contract/view_popup?KODE_KONTRAK=' . $row['KODE_KONTRAK'] .'&KODE_KANTOR=' .$row['KODE_KANTOR']. '&KODE_VENDOR=' . $row['KODE_VENDOR']. '&KODE_TENDER=' . $row['KODE_TENDER']));
-
             }
         }
 
@@ -138,24 +144,36 @@ class ep_ktr_po extends MY_Model {
     public function _after_insert() {
         parent::_after_insert();
 
+        $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_KTR_PO'");
+    }
+    
+    public function _after_save() {
+        parent::_after_save();
+        
         if (isset($this->attributes['KODE_PO']) != "" &&
                 isset($this->attributes['KODE_KANTOR']) != "" &&
                 isset($this->attributes['KODE_KONTRAK']) != "") {
 
+            $this->db->delete("ep_ktr_po_item", array(
+                'KODE_PO' => $this->attributes['KODE_PO'],
+                'KODE_KANTOR' => $this->attributes['KODE_KANTOR'],
+                'KODE_KONTRAK' => $this->attributes['KODE_KONTRAK'],
+            ));
+
             $sel_items = $_REQUEST['selected_items'];
             $sel_qty = $_REQUEST['selected_qty'];
             foreach ($sel_items as $k => $v) {
-                
+
                 parse_str($v, $output); // $v is querystring format
-                
+
                 $sql = "SELECT KODE_KONTRAK, KODE_KANTOR, KODE_BARANG_JASA, KODE_SUB_BARANG_JASA, KETERANGAN, HARGA, SATUAN, SUB_TOTAL, KETERANGAN_LENGKAP 
                     FROM EP_KTR_KONTRAK_ITEM
                     WHERE KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'
                         AND KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "'
-                        AND ( KODE_BARANG_JASA = '".$output['KODE_BARANG_JASA']."' AND KODE_SUB_BARANG_JASA = '".$output['KODE_SUB_BARANG_JASA']."' )";
+                        AND ( KODE_BARANG_JASA = '" . $output['KODE_BARANG_JASA'] . "' AND KODE_SUB_BARANG_JASA = '" . $output['KODE_SUB_BARANG_JASA'] . "' )";
 
                 $data = $this->db->query($sql)->row_array();
-                if(count($data) > 0){
+                if (count($data) > 0) {
                     $row = $this->db->query("select nomorurut + 1 as NEXT_ID 
                                 from ep_nomorurut 
                                 where kode_nomorurut = 'EP_KTR_PO_ITEM'")->row_array();
@@ -164,7 +182,7 @@ class ep_ktr_po extends MY_Model {
                     $data['KODE_PO'] = $this->attributes['KODE_PO'];
                     $data['QTY'] = $sel_qty[$k];
                     $data['SUB_TOTAL'] = $data['QTY'] * $data['HARGA'];
-                    
+
                     $this->db->insert("ep_ktr_po_item", $data);
                     $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_KTR_PO_ITEM'");
                 }
@@ -192,8 +210,6 @@ class ep_ktr_po extends MY_Model {
 //                }
 //            }
         }
-
-        $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_KTR_PO'");
     }
 
 }

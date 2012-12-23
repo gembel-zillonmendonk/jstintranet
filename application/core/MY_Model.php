@@ -693,6 +693,7 @@ class MY_Grid
     public $view = 'crud/grid';
     public $module = '';
     public $params = '';
+    public $toolbar = false;
     
     function __construct($model)
     {
@@ -723,6 +724,8 @@ class MY_Grid
         $this->module = $model->router->fetch_module();
         
         $this->view = $model->grid_view;
+        
+        $this->toolbar = isset($model->toolbar) ? $model->toolbar : false;
         
         $model->sql_select = $model->sql_select == $model->table ? "(select * from ".$model->table.")" : "(select x.* from (".$model->sql_select .") x)";
         if(isset($model->sql_select))

@@ -37,14 +37,16 @@ $form_id = 'modal_form_' . $grid->id;
             "rownumWidth": 40,
             "rowNum": 15,
             "height": 'auto',
-
+            "footer": true,
+            
             "width": 500,
             "rowList": [10, 20, 50],
             "altRows": true,
             "sortable": true,
             "datatype": "json",
             "colModel": <?php echo json_encode(array_values($grid->columns)) ?>,
-            "toolbar" : [false,"top"],
+//            "toolbar" : [false,"top"],
+            "toolbar": [<?php echo $grid->toolbar ?>,"bottom"],
             "postData": {
                 "oper": "grid"
             },

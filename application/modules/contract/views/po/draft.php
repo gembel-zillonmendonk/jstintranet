@@ -13,13 +13,15 @@ if (count($_REQUEST) > 0) {
 <div class="accordion">
     <h3 href="<?php echo site_url('/contract/po/form/po.ep_ktr_po' . $params) ?>">HEADER</h3>
     <div></div>
-
+    
+    <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_kontrak_item_editor' . $params) ?>">ITEM</h3>
+    <div></div>
     <?php if (isset($_REQUEST['KODE_PO']) && $_REQUEST['KODE_PO'] > 0): ?>
-        <h3 href="<?php echo site_url('/contract/po/grid_form/po.ep_ktr_po_item' . $params) ?>">ITEM</h3>
-        <div></div>
+<!--        <h3 href="<?php echo site_url('/contract/po/grid_form/po.ep_ktr_po_item' . $params) ?>">ITEM</h3>
+        <div></div>-->
     <?php else: ?>
-        <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_kontrak_item_editor' . $params) ?>">ITEM</h3>
-        <div></div>
+<!--        <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_kontrak_item_editor' . $params) ?>">ITEM</h3>
+        <div></div>-->
     <?php endif; ?>
 </div>
 <!--<div class="accordion">
