@@ -38,6 +38,13 @@ class po extends MY_Controller
             $this->layout->view('po/detail');
     }
     
+    public function detail_bastp(){        
+        if($this->_is_ajax_request())
+            $this->load->view('po/detail_bastp');
+        else
+            $this->layout->view('po/detail_bastp');
+    }
+    
     public function todo(){
         $this->layout->view('po/todo');
     }

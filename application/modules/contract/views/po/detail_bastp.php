@@ -1,23 +1,26 @@
-
 <?php
 $params = '';
 if (count($_REQUEST) > 0) {
     foreach ($_REQUEST as $key => $value) {
-        $params .= $key . '=' . $value . '&';
+        $params .= $key . '=' . rawurlencode($value) . '&';
     }
 
     if (strlen($params) > 0)
         $params = '?' . $params;
 }
+
 ?>
-<div class="accordion-chklist">
-    <h3 href="<?php echo site_url('/vendor/form/ep_vendor_dokumen'.$params) ?>">CHECKLIST DOKUMEN</h3>
+
+<div class="accordion">
+    <h3 href="<?php echo site_url('/contract/po/view_form/po.ep_ktr_po' . $params) ?>">HEADER</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid_form/ep_vendor_dokumen_pendukung'.$params) ?>">DOKUMEN PENDUKUNG</h3>
+    <h3 href="<?php echo site_url('/contract/po/view_grid/po.ep_ktr_po_item' . $params) ?>">ITEM</h3>
+    <div></div>
+    <h3 href="<?php echo site_url('/contract/po/view_form/po.ep_ktr_po_bastp' . $params) ?>">BASTP/B</h3>
     <div></div>
 </div>
 <script>
-    $(".accordion-chklist").each(function(){
+    $(".accordion").each(function(){
         //alert("test");
                 
         $('h3', $(this)).each(function(){
@@ -32,7 +35,7 @@ if (count($_REQUEST) > 0) {
         });
     });
     
-    $(".accordion-chklist")
+    $(".accordion")
     .addClass("ui-accordion ui-widget ui-helper-reset")
     //.css("width", "auto")
     .find('h3')

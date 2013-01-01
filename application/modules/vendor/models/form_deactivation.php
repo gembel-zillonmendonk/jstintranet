@@ -14,12 +14,12 @@ class form_deactivation extends MY_Model {
 
     public $table = "EP_VENDOR_WILAYAH";
     public $elements_conf = array(
-        'KODE_VENDOR',
+        'KODE_VENDOR'=>array('type'=>'hidden'),
         'NAMA_VENDOR',
         'ALAMAT',
-        'KODE_WILAYAH',
-        'WILAYAH',
-        'STATUS_AKTIF',
+        'KODE_WILAYAH'=>array('type'=>'hidden'),
+//        'WILAYAH',
+        'STATUS_AKTIF'=>array('type'=>'dropdown', 'options'=>array('0'=>'NON AKTIF', '1'=>'AKTIF')),
     );
 
     //public $sql_select = "select b.*, a.nama_vendor, b.alamat from ep_vendor a inner join EP_VENDOR_WILAYAH b on a.kode_vendor = b.kode_vendor";

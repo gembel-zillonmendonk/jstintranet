@@ -1,6 +1,6 @@
 <?php
 
-class ep_ktr_kontrak extends MY_Model {
+class ep_ktr_kontrak_view extends MY_Model {
 
     public $table = 'EP_KTR_KONTRAK';
     public $elements_conf = array(
@@ -105,10 +105,6 @@ class ep_ktr_kontrak extends MY_Model {
     );
     public $dir = 'contract';
 
-    public $validation = array(
-        'NILAI_JAMINAN' => array('required'=>'true'),
-        );
-    
     function __construct() {
         parent::__construct();
         $this->init();
@@ -143,8 +139,6 @@ class ep_ktr_kontrak extends MY_Model {
                 ) y ON a.KODE_KANTOR = y.KODE_KANTOR AND y.KODE_TENDER = a.KODE_TENDER
                 LEFT OUTER JOIN EP_KTR_KONTRAK d ON a.KODE_TENDER = d.KODE_TENDER
                 WHERE COALESCE (b.pemenang, '0') = '1'
-                AND COALESCE (a.pembuatan_kontrak, '0') = '0'
-                AND d.KODE_TENDER IS NULL 
                 AND a.KODE_TENDER = '" . $this->attributes['KODE_TENDER'] . "'" .
                     " and a.KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'" .
                     " and b.KODE_VENDOR = " . $this->attributes['KODE_VENDOR'];
@@ -164,44 +158,11 @@ class ep_ktr_kontrak extends MY_Model {
                 $this->attributes['NILAI_KONTRAK'] = $row['TOTAL_HARGA'];
                 $this->attributes['NILAI_HPS'] = $row['TOTAL_HARGA_HPS'];
                 $this->attributes['TGL_PENETAPAN_PEMENANG'] = $row['TGL_SELESAI'];
-                
+                        
             }
 //            print_r($this->attributes);
         }
     }
-
-    public function _before_insert() {
-        parent::_before_insert();
-        // set auto increament
-        if ($this->attributes['KODE_KONTRAK'] == 0) {
-            $row = $this->db->query("select nomorurut + 1 as NEXT_ID 
-                from ep_nomorurut 
-                where kode_nomorurut = 'EP_KTR_KONTRAK'")->row_array();
-            $this->attributes['KODE_KONTRAK'] = $row['NEXT_ID'];
-        }
-    }
-    
-    public function _after_insert() {
-        parent::_after_insert();
-
-        if (isset($this->attributes['KODE_TENDER']) != "" &&
-                isset($this->attributes['KODE_KANTOR']) != "" &&
-                isset($this->attributes['KODE_VENDOR']) != "") {
-
-            $sql = "INSERT INTO EP_KTR_KONTRAK_ITEM  (KODE_KONTRAK, KODE_KANTOR, KODE_BARANG_JASA, KODE_SUB_BARANG_JASA, KETERANGAN, HARGA, JUMLAH)
-                    SELECT '".$this->attributes['KODE_KONTRAK']."' as \"KODE_KONTRAK\", KODE_KANTOR, KODE_BARANG_JASA, KODE_SUB_BARANG_JASA, KETERANGAN, HARGA, JUMLAH  
-                    FROM EP_PGD_ITEM_PENAWARAN
-                    WHERE 
-                        KODE_TENDER = '" . $this->attributes['KODE_TENDER'] . "'
-                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'
-                        AND KODE_VENDOR = " . $this->attributes['KODE_VENDOR'];
-            
-            $query = $this->db->query($sql);
-        }
-        
-        $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_KTR_KONTRAK'");
-    }
-
 }
 
 ?>

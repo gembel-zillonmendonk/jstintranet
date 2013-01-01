@@ -11,7 +11,7 @@ if (count($_REQUEST) > 0) {
 ?>
 
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/view_form/contract.ep_ktr_kontrak' . $params) ?>">HEADER</h3>
+    <h3 href="<?php echo site_url('/contract/view_form/contract.ep_ktr_kontrak_view' . $params) ?>">HEADER</h3>
     <div></div>
     <h3 href="<?php echo site_url('/contract/view_form/contract.ep_ktr_kontrak_jaminan' . $params) ?>">JAMINAN PELAKSANAAN</h3>
     <div></div>
@@ -67,14 +67,14 @@ if (count($_REQUEST) > 0) {
     .css('overflow','visible')
     //.css("width", "auto");
     
-    $(document).ready(function(){
+    $(document).ajaxComplete(function(){        
         $('#selesai').live('click', function(){
-            var f = $("#id_form_ep_ktr_kontrak");
+            var f = $("#id_form_ep_ktr_kontrak_view");
             var params = "KODE_KONTRAK="+$("input[name='EP_KTR_KONTRAK[KODE_KONTRAK]']", f).val()
                 +"&KODE_KANTOR="+$("input[name='EP_KTR_KONTRAK[KODE_KANTOR]']", f).val()
                 +"&KODE_TENDER="+$("input[name='EP_KTR_KONTRAK[KODE_TENDER]']", f).val()
                 +"&KODE_VENDOR="+$("input[name='EP_KTR_KONTRAK[KODE_VENDOR]']", f).val();
-                
+            
             if(params.length > 0)
                 window.location = '<?php echo site_url('/contract/final_review?referer_url=/contract/monitoring&') ?>' + params;
         });

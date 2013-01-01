@@ -35,6 +35,7 @@ class list_update_number_smk extends MY_Model {
                     
                     var param = "referer_url=/vendor/list_update_number_smk&KODE_VENDOR=" + data[\'KODE_VENDOR\'] + "&KODE_WILAYAH=" + data[\'KODE_WILAYAH\'];
                     var href = $site_url + "/vendor/form/form_update_smk?" + param;
+                    var href = $site_url + "/vendor/form_update_smk?" + param;
                     
                     be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">UPDATE</span></button>";
                     jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{ACT:be});

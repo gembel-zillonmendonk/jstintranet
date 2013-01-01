@@ -16,6 +16,9 @@ if (count($_REQUEST) > 0) {
         <div></div>
         <h3 href="<?php echo site_url('/contract/invoice/grid_form/invoice.ep_ktr_invoice_item_verifikasi' . $params) ?>">ITEM</h3>
         <div></div>
+        
+        <h3 href="<?php echo site_url('/contract/invoice/grid_form/invoice.ep_ktr_invoice_dok' . $params) ?>">LAMPIRAN DOKUMEN</h3>
+        <div></div>
     <?php else: ?>
         <h3 href="<?php echo site_url('/contract/invoice/form/invoice.ep_ktr_invoice' . $params) ?>">HEADER</h3>
         <div></div>

@@ -31,6 +31,7 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 //        'JUMLAH_PERUBAHAN',
 //        'TGL_AKHIR_PENAWARAN',
         'NILAI_JAMINAN',
+        'NILAI_MINIMAL_JAMINAN',
         'BANK_JAMINAN',
         'NO_JAMINAN',
         'TGL_MULAI_JAMINAN',
@@ -51,7 +52,13 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 //        'PETUGAS_REKAM',
 //        'TGL_UBAH',
 //        'PETUGAS_UBAH',
+        
     );
+    
+    public $validation = array(
+        'NILAI_JAMINAN' => array('required'=>'true'),
+        );
+    
     public $columns_conf = array(
         'KODE_KONTRAK',
         'KODE_KANTOR',
@@ -125,7 +132,9 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
             
             $row = $this->db->query($sql)->row_array();
             
-            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
+//            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
+            $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
+            $this->validation['NILAI_JAMINAN']['min'] = $row['TOTAL_JAMINAN'] * 1;
         }
     }
 

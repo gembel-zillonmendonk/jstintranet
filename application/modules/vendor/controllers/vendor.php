@@ -216,7 +216,22 @@ class vendor extends MY_Controller
     
     public function list_performance()
     {
-        $this->layout->view('vendor/list_performance');
+        $rows = $this->db->query("
+                select a.* from (
+                    select kode_barang as kode_kel_barang_jasa, nama_subkelompok as nama_kel_barang_jasa from ms_subkelompok_barang
+                    union all
+                    select kode_kel_jasa, nama_kel_jasa from ep_kom_kelompok_jasa
+                ) a
+                order by nama_kel_barang_jasa
+                ")->result_array();
+        $grup_barang = array();
+        foreach ($rows as $v) {
+            $grup_barang[$v['KODE_KEL_BARANG_JASA']] = $v['NAMA_KEL_BARANG_JASA'];
+        }
+        
+        $this->layout->view('vendor/list_performance', array(
+            'grup_barang'=>$grup_barang,
+        ));
     }
     
     public function view_performance()
@@ -415,6 +430,11 @@ class vendor extends MY_Controller
             $this->layout->view('vendor/view_data_vendor');
     }
 
+    public function view_checklist_doc()
+    {
+        $this->load->view('vendor/view_checklist_doc');
+    }
+    
     public function _view()
     {
         $this->load->view('vendor/_view');

@@ -13,11 +13,35 @@ class ep_ktr_po_item_perkembangan extends MY_Model {
 //        'QTY_PERKEMBANGAN',
         'QTY_DISETUJUI',
     );
+    
+    public $columns_conf = array(
+//        'KODE_ITEM_PERKEMBANGAN'=>array('hidden'=>'true'),
+//        'KODE_PERKEMBANGAN'=>array('hidden'=>'true'),
+//        'KODE_PO'=>array('hidden'=>'true'),
+//        'KODE_KONTRAK'=>array('hidden'=>'true'),
+//        'KODE_KANTOR'=>array('hidden'=>'true'),
+//        'KODE_PO_ITEM'=>array('hidden'=>'true'),
+        'KODE_BARANG_JASA',
+        'NAMA_BARANG_JASA',
+        'JUMLAH_PO',
+        'QTY_PERKEMBANGAN',
+//        'QTY_DISETUJUI',
+    );
     public $dir = 'po';
 
     function __construct() {
         parent::__construct();
         $this->init();
+        
+        $this->sql_select = "(
+            select a.*, b.qty as jumlah_po, b.kode_barang_jasa, b.keterangan as nama_barang_jasa
+            from EP_KTR_PO_ITEM_PERKEMBANGAN a
+            right join EP_KTR_PO_ITEM b on 
+                    a.kode_po_item = b.kode_po_item
+                and a.kode_po = b.kode_po
+                and a.kode_kontrak = b.kode_kontrak
+                and a.kode_kantor = b.kode_kantor
+        )";
     }
 
     function _default_scope() {

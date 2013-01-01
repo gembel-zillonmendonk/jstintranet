@@ -10,7 +10,7 @@ class ep_ktr_invoice_item extends MY_Model {
         'KODE_KANTOR',
         'KODE_VENDOR',
         'NO_BASTP' => array('type'=>'dropdown', 'options'=>array()),
-        'NILAI_BASTP',
+//        'NILAI_BASTP',
 //        'MATA_UANG_BASTP',
 //        'PENALTI_BASTP',
 //        'PPH23_BASTP',
@@ -74,13 +74,13 @@ class ep_ktr_invoice_item extends MY_Model {
     function _before_save() {
         parent::_before_save();
 
-        $row = $this->db->query("select mata_uang, persentasi, nilai_kontrak, (persentasi / 100) * nilai_kontrak as total
-                    from ep_ktr_jangka_kontrak a 
-                    inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak
-                    where a.no_bastp = '" . $this->attributes['NO_BASTP'] ."'")->row_array();
-        
-        $this->attributes['NILAI_BASTP'] = $row['TOTAL'];
-        $this->attributes['MATA_UANG_BASTP'] = $row['MATA_UANG'];
+//        $row = $this->db->query("select mata_uang, persentasi, nilai_kontrak, (persentasi / 100) * nilai_kontrak as total
+//                    from ep_ktr_jangka_kontrak a 
+//                    inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak
+//                    where a.no_bastp = '" . $this->attributes['NO_BASTP'] ."'")->row_array();
+//        
+//        $this->attributes['NILAI_BASTP'] = $row['TOTAL'];
+//        $this->attributes['MATA_UANG_BASTP'] = $row['MATA_UANG'];
         
     }
     

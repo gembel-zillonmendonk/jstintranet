@@ -32,6 +32,7 @@ class list_for_deactivation extends MY_Model {
                     
                     var param = "referer_url=/vendor/list_for_deactivation&KODE_VENDOR=" + data[\'KODE_VENDOR\'] + "&KODE_WILAYAH="  + data[\'KODE_WILAYAH\'];
                     var href = $site_url + "/vendor/form/form_deactivation?" + param;
+                    var href = $site_url + "/vendor/form_deactivation?" + param;
                     //var href = $site_url + "/wkf/start?kode_wkf=53&" + param;
                     
                     be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">AKTIFKAN</span></button>";

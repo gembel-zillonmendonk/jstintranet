@@ -9,7 +9,8 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
 //        'KODE_KONTRAK',
 //        'KODE_KANTOR',
 //        'KODE_VENDOR',
-        'NO_BASTP',
+        'NO_BASTP'=>array('type'=>'hidden'),
+        'KETERANGAN_BASTP'=>array('type'=>'label'),
 //        'NILAI_BASTP',
 //        'MATA_UANG_BASTP',
         'PENALTI_BASTP',
@@ -21,12 +22,13 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
 //        'KOMENTAR_BASTP',
     );
     public $columns_conf = array(
-        'KODE_ITEM',
-        'KODE_INVOICE',
-        'KODE_KONTRAK',
-        'KODE_KANTOR',
-        'KODE_VENDOR',
+//        'KODE_ITEM' => array('hidden' => true),
+//        'KODE_INVOICE' => array('hidden' => true),
+//        'KODE_KONTRAK' => array('hidden' => true),
+//        'KODE_KANTOR' => array('hidden' => true),
+//        'KODE_VENDOR' => array('hidden' => true),
         'NO_BASTP',
+        'KETERANGAN_BASTP',
         'NILAI_BASTP',
 //        'MATA_UANG_BASTP',
         'PENALTI_BASTP',
@@ -34,7 +36,6 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
         'PPN_BASTP',
 //        'DP_BASTP',
 //        'SUBTOTAL_BASTP',
-//        'KETERANGAN_BASTP',
 //        'KOMENTAR_BASTP',
     );
     public $dir = 'invoice';
@@ -48,7 +49,7 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
             $this->attributes['KODE_KONTRAK'] = $_REQUEST['KODE_KONTRAK'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];
-            
+
 //            $sql = "select distinct b.no_bastp
 //                    from ep_ktr_kontrak a
 //                    inner join ep_ktr_jangka_kontrak b on a.kode_kontrak = b.kode_kontrak
@@ -70,26 +71,25 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
 //            $this->elements_conf['NO_BASTP']['options'] = $options;
         }
     }
-    
+
     function _before_save() {
         parent::_before_save();
 
-        $row = $this->db->query("select mata_uang, persentasi, nilai_kontrak, (persentasi / 100) * nilai_kontrak as total
-                    from ep_ktr_jangka_kontrak a 
-                    inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor
-                    where a.no_bastp = '" . $this->attributes['NO_BASTP'] ."'")->row_array();
-        
-        $this->attributes['NILAI_BASTP'] = $row['TOTAL'];
-        $this->attributes['MATA_UANG_BASTP'] = $row['MATA_UANG'];
-        
+//        $row = $this->db->query("select mata_uang, persentasi, nilai_kontrak, (persentasi / 100) * nilai_kontrak as total
+//                    from ep_ktr_jangka_kontrak a 
+//                    inner join ep_ktr_kontrak b on a.kode_kontrak = b.kode_kontrak and a.kode_kantor = b.kode_kantor
+//                    where a.no_bastp = '" . $this->attributes['NO_BASTP'] ."'")->row_array();
+//        
+//        $this->attributes['NILAI_BASTP'] = $row['TOTAL'];
+//        $this->attributes['MATA_UANG_BASTP'] = $row['MATA_UANG'];
     }
-    
+
     function _before_insert() {
         parent::_before_insert();
-        
+
         $row = $this->db->query("select count(*) as CNT from ep_ktr_invoice_item where no_bastp = '" . $this->attributes['NO_BASTP'] . "'")->row_array();
-        
-        if($row['CNT'] > 0){
+
+        if ($row['CNT'] > 0) {
             show_error("NOMOR BASTP Sudah ada di database");
         }
     }

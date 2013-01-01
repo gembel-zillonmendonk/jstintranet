@@ -18,6 +18,8 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
         <div class="accordion">
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_perusahaan') ?>">NAMA PERUSAHAAN</h3>
             <div></div>
+            <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_login') ?>">INFORMASI LOGIN</h3>
+            <div></div>
             <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_alamat') ?>">KONTAK PERUSAHAAN</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_kontak_person') ?>">KONTAK PERSON</h3>
@@ -124,6 +126,7 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
         </div>
     </div>
 </div>
+
 <script>
     // Tabs
     

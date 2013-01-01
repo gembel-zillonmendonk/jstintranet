@@ -8,21 +8,31 @@ class ep_ktr_po_perkembangan extends MY_Model {
 //        'KODE_PO',
         'KODE_KONTRAK',
         'KODE_KANTOR',
-        'TGL_PERKEMBANGAN',
-        'TGL_BUAT',
-        'PEMBUAT',
+//        'TGL_PERKEMBANGAN',
+//        'TGL_BUAT',
+//        'PEMBUAT',
         'NAMA_PEMBUAT',
 //        'STATUS',
         'PERSENTASI_PERKEMBANGAN',
 //        'POSISI_PERSETUJUAN',
         'KETERANGAN',
         'DETAIL_KONTRAK',
+        
+        'CATATAN_PO'=>array('type'=>'label'),
+        'TGL_MULAI'=>array('type'=>'label'),
+        'TGL_AKHIR'=>array('type'=>'label'),
     );
     public $dir = 'po';
 
     function __construct() {
         parent::__construct();
         $this->init();
+        
+        $sql = "select * from ep_ktr_po where kode_po = '".$_REQUEST['KODE_PO']."'";
+        $row = $this->db->query($sql)->row_array();
+        $this->attributes['CATATAN_PO'] = $row['CATATAN_PO'];
+        $this->attributes['TGL_MULAI'] = $row['TGL_MULAI'];
+        $this->attributes['TGL_AKHIR'] = $row['TGL_AKHIR'];
         
         $wkf = new Workflow();
         $kode_wkf = 6; //contract flow

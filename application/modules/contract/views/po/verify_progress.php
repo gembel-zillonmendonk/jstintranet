@@ -16,7 +16,7 @@ if (count($_REQUEST) > 0) {
     <?php if (!isset($_REQUEST['KODE_PERKEMBANGAN']) || $_REQUEST['KODE_PERKEMBANGAN'] == 0): ?>
         <h3 href="<?php echo site_url('/contract/po/view_grid/po.ep_ktr_po_item' . $params) ?>">ITEM</h3>
     <?php else: ?>
-        <h3 href="<?php echo site_url('/contract/po/grid_form/po.ep_ktr_po_item_perkembangan' . $params) ?>">ITEM</h3>
+        <h3 href="<?php echo site_url('/contract/po/grid/po.ep_ktr_po_item_perkembangan' . $params) ?>">ITEM</h3>
     <?php endif; ?>
 
     <div></div>
@@ -74,6 +74,7 @@ if (count($_REQUEST) > 0) {
                             var kode_po = $("input[name='EP_KTR_PO_PERKEMBANGAN[KODE_PO]']", data).val();
                             var kode_kontrak = $("input[name='EP_KTR_PO_PERKEMBANGAN[KODE_KONTRAK]']", data).val();
                             var kode_kantor = $("input[name='EP_KTR_PO_PERKEMBANGAN[KODE_KANTOR]']", data).val();
+                            var persentasi_perkembangan = $("input[name='EP_KTR_PO_PERKEMBANGAN[PERSENTASI_PERKEMBANGAN]']", data).val();
                             
                             $("#id_form_ep_ktr_po_perkembangan").replaceWith(data);
                             f = data;
@@ -90,6 +91,7 @@ if (count($_REQUEST) > 0) {
                             //window.location = '<?php echo site_url('/wkf/start?kode_wkf=64&referer_url=/contract/po/list_todo&') ?>' + params;
                             
                             var newURL = updateURLParameter(window.location.href, 'KODE_PERKEMBANGAN', kode_perkembangan);
+                            newURL = updateURLParameter(window.location.href, 'PERSENTASI_PERKEMBANGAN', persentasi_perkembangan);
                             window.location = newURL;
                         },
                         error: function(){

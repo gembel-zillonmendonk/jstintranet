@@ -5,7 +5,8 @@ class list_performance_barang_detail extends MY_Model
     public $table = 'EP_VENDOR';
     public $dir = 'vendor';
     public $sql_select = "( 
-                select x.*, ROW_NUMBER() OVER(PARTITION BY kode_vendor, kode_kel_jasa_barang1 ORDER BY kode_param1, nilai ASC) rn 
+        select * from (
+                select x.*, ROW_NUMBER() OVER(PARTITION BY kode_vendor, kode_param1, kode_kel_jasa_barang1 ORDER BY kode_param1, nilai ASC) rn 
                 from (
                     select A.*
                         , FN_VENDOR_PERF_FLAG(A.KODE_VENDOR, A.KODE_KEL_JASA_BARANG1, A.KODE_PARAM1, A.KODE_TENDER) as FLAG
@@ -20,6 +21,8 @@ class list_performance_barang_detail extends MY_Model
                         ) b on a.kode_kel_jasa_barang = b.kode_sub_barang_jasa1
                     ) A
                 ) x
+        ) y
+        where rn = 1
     )";
     public $columns_conf = array(
         'KODE_VENDOR',

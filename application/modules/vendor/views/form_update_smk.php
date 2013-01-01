@@ -9,16 +9,10 @@ if (count($_REQUEST) > 0) {
         $params = '?' . $params;
 }
 ?>
-
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/view_form/contract.ep_ktr_kontrak_view' . $params) ?>">HEADER</h3>
-    <div></div>
-    <h3 href="<?php echo site_url('/contract/view_form/contract.ep_ktr_kontrak_jaminan' . $params) ?>">JAMINAN PELAKSANAAN</h3>
-    <div></div>
-    <h3 href="<?php echo site_url('/contract/form/contract.ep_ktr_kontrak_termination' . $params) ?>">KEPUTUSAN</h3>
+    <h3 href="<?php echo site_url('/vendor/form/form_update_smk' . $params) ?>">EXTEND VENDOR</h3>
     <div></div>
 </div>
-
 <script>
     $(".accordion").each(function(){
         //alert("test");
@@ -34,7 +28,7 @@ if (count($_REQUEST) > 0) {
             }
         });
     });
-    
+
     $(".accordion")
     .addClass("ui-accordion ui-widget ui-helper-reset")
     //.css("width", "auto")
@@ -46,19 +40,38 @@ if (count($_REQUEST) > 0) {
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
     //.css("width", "auto");
+        
     
-    
-    $(document).ready(function(){
-        $('#selesai').live('click', function(){
-            var f = $("#id_form_ep_ktr_kontrak_view");
-            var params = "kode_kontrak="+$("#id_form_ep_ktr_kontrak_view_kode_kontrak", f).val()
-                +"&kode_kantor="+$("#id_form_ep_ktr_kontrak_view_kode_kantor", f).val()
-                +"&kode_tender="+$("#id_form_ep_ktr_kontrak_view_kode_tender", f).val()
-                +"&kode_vendor="+$("#id_form_ep_ktr_kontrak_view_kode_vendor", f).val();
+    $(document).ajaxComplete(function() {
+        var f = $("form");
+        var el = $("#btnSimpan");
+        if(el.length > 0) {
+            $(el).off('click');
             
-            if(params.length > 0)
-                window.location = '<?php echo site_url('/wkf/start?kode_wkf=6&referer_url=/contract/todo&') ?>' + params;
-        });
+            var validator = $(f).validate({
+                meta: "validate",
+                submitHandler: function(form) {
+                    jQuery(form).ajaxSubmit();
+                }
+            });
+        
+            // attach event to button
+            $(el).click(function() {
+                if(validator.form()) {
+                    jQuery(f).ajaxSubmit({
+                        success: function(data){
+                            
+                            var $referer_url = '<?php echo (isset($_REQUEST['referer_url']) ? $_REQUEST['referer_url'] : $_SERVER['HTTP_REFERER']) ?>';
+                            
+                            window.location = $site_url + $referer_url;   
+                        },
+                        error: function(){
+                            alert('Data gagal disimpan')
+                        }
+                    });
+                }
+            });
+        }
     });
     
 </script>

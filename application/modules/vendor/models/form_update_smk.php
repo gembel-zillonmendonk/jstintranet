@@ -17,14 +17,14 @@ class form_update_smk extends MY_Model {
     //public $table = "EP_NOMORURUT";
     
     public $elements_conf = array(
-        'KODE_VENDOR',
+        'KODE_VENDOR'=>array('type'=>'hidden'),
         'NAMA_VENDOR',
         'ALAMAT',
-        'KODE_WILAYAH',
-        'WILAYAH',
-        'STATUS_AKTIF',
+        'KODE_WILAYAH'=>array('type'=>'hidden'),
+        'WILAYAH'=>array('type'=>'label'),
+        'STATUS_AKTIF'=>array('type'=>'hidden'),
         'NO_SMK',
-        'TGL_SMK',
+        'TGL_SMK'=>array('type'=>'hidden'),
         'BERLAKU_SMK',
     );
     
@@ -40,6 +40,7 @@ class form_update_smk extends MY_Model {
         select KODE_VENDOR, KODE_VENDOR as \"xxx\", NAMA_VENDOR, KODE_LOGIN, NAMA_STATUS_REG, '' as \"ACT\"
         from EP_VENDOR a
         left join EP_VENDOR_STATUS_REGISTRASI b on a.KODE_STATUS_REG = b.KODE_STATUS_REG 
+        inner join ep_vendor_wilayah c on a.kode_vendor = c.kode_vendor
         )";
     
     /*
@@ -54,6 +55,15 @@ class form_update_smk extends MY_Model {
         parent::__construct();
         $this->init();
         
+        // set default value
+        if(isset($_REQUEST['KODE_VENDOR'])){
+            $sql = "select nama_vendor, alamat from ep_vendor where kode_vendor = '".($_REQUEST['KODE_VENDOR'])."'";
+            $row = $this->db->query($sql)->row_array();
+            
+            $this->attributes['NAMA_VENDOR'] = $row['NAMA_VENDOR'];
+            $this->attributes['ALAMAT'] = $row['ALAMAT'];            
+        }
+        
         $this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
 		for(var i=0;i < ids.length;i++){
                     var cl = ids[i];
@@ -62,7 +72,14 @@ class form_update_smk extends MY_Model {
                     jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{ACT:be});
 		}';
         
+    }
+    
+    public function _before_save() {
+        parent::_before_save();
         
+//        $this->attributes['STATUS_AKTIF'] = '1';
+        $this->attributes['TGL_SMK'] = date("Y-m-d");
+        $this->attributes['STATUS_AKTIF'] = 1;
     }
 
 }

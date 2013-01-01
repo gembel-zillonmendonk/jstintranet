@@ -25,7 +25,7 @@ foreach ($form->model->primary_keys as $v) {
                 echo form_hidden($v['name'], $v['value']);
                 continue;
             endif;
-            
+
             if (isset($read_only) && $read_only == true):
                 $v['readonly'] = 'readonly';
             endif;
@@ -67,13 +67,18 @@ foreach ($form->model->primary_keys as $v) {
                             echo form_input($v);
                             break;
                         case 'file':
+                            $this->load->helper('html');
                             echo form_upload($v);
+                            if (strlen($v['value']) > 0) {
+                                echo "<br/>";
+                                echo anchor($v['value'], "DOWNLOAD FILE");
+                            }
                             break;
                         case 'label':
                             echo form_label($v['value'], $v['id'], array("class" => "checkbox inline"));
                             break;
                         case 'anchor_popup':
-                            echo anchor_popup($v['url'], $v['value'], array_merge( $v, array("class" => "checkbox inline")));
+                            echo anchor_popup($v['url'], $v['value'], array_merge($v, array("class" => "checkbox inline")));
                             break;
                         default:
                             echo form_input($v);
