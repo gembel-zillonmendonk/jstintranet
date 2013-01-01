@@ -1,0 +1,347 @@
+
+Connected to: Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+Export done in WE8MSWIN1252 character set and AL16UTF16 NCHAR character set
+
+About to export specified users ...
+. exporting pre-schema procedural objects and actions
+. exporting foreign function library names for user EP 
+. exporting PUBLIC type synonyms
+. exporting private type synonyms
+. exporting object type definitions for user EP 
+About to export EP's objects ...
+. exporting database links
+. exporting sequence numbers
+. exporting cluster definitions
+. about to export EP's tables via Conventional Path ...
+. . exporting table                 BG_MS_ANGGARAN
+.....
+                                                         5053 rows exported
+. . exporting table                   EP_ALURKERJA
+                                                            5 rows exported
+. . exporting table         EP_ALURKERJA_AKTIFITAS
+                                                          101 rows exported
+. . exporting table         EP_ALURKERJA_ANTARMUKA
+                                                           68 rows exported
+. . exporting table          EP_ALURKERJA_TRANSISI
+                                                          161 rows exported
+. . exporting table EP_ALURKERJA_TRANSISI_EKSEKUSI
+                                                            1 rows exported
+. . exporting table  EP_ALURKERJA_TRANSISI_EKSEPSI
+                                                            1 rows exported
+. . exporting table               EP_KOM_AKTIFITAS
+                                                            1 rows exported
+. . exporting table            EP_KOM_HARGA_BARANG
+                                                           12 rows exported
+. . exporting table              EP_KOM_HARGA_JASA
+                                                           26 rows exported
+. . exporting table                    EP_KOM_JASA
+                                                           32 rows exported
+. . exporting table           EP_KOM_KELOMPOK_JASA
+                                                           57 rows exported
+. . exporting table                EP_KOM_KOMENTAR
+                                                           30 rows exported
+. . exporting table                  EP_KOM_RESPON
+                                                            2 rows exported
+. . exporting table            EP_KOM_SUMBER_HARGA
+                                                            2 rows exported
+. . exporting table                 EP_KTR_INVOICE
+                                                            8 rows exported
+. . exporting table             EP_KTR_INVOICE_DOK
+                                                            4 rows exported
+. . exporting table            EP_KTR_INVOICE_ITEM
+                                                            6 rows exported
+. . exporting table        EP_KTR_INVOICE_KOMENTAR
+                                                            0 rows exported
+. . exporting table         EP_KTR_JANGKA_KOMENTAR
+                                                            0 rows exported
+. . exporting table          EP_KTR_JANGKA_KONTRAK
+                                                           22 rows exported
+. . exporting table     EP_KTR_JANGKA_PERKEMBANGAN
+                                                           20 rows exported
+. . exporting table                 EP_KTR_KONTRAK
+                                                           23 rows exported
+. . exporting table             EP_KTR_KONTRAK_DOK
+                                                            3 rows exported
+. . exporting table            EP_KTR_KONTRAK_ITEM
+                                                           74 rows exported
+. . exporting table     EP_KTR_KONTRAK_JAMINAN_PEL
+                                                            0 rows exported
+. . exporting table        EP_KTR_KONTRAK_KOMENTAR
+                                                            0 rows exported
+. . exporting table     EP_KTR_KONTRAK_PEMERIKSAAN
+                                                            0 rows exported
+. . exporting table       EP_KTR_KONTRAK_PENUTUPAN
+                                                            0 rows exported
+. . exporting table               EP_KTR_PERUBAHAN
+                                                            1 rows exported
+. . exporting table          EP_KTR_PERUBAHAN_ITEM
+                                                            1 rows exported
+. . exporting table   EP_KTR_PERUBAHAN_JAMINAN_PEL
+                                                            0 rows exported
+. . exporting table        EP_KTR_PERUBAHAN_JANGKA
+                                                            2 rows exported
+. . exporting table      EP_KTR_PERUBAHAN_KOMENTAR
+                                                            0 rows exported
+. . exporting table        EP_KTR_PERUBAHAN_TERMIN
+                                                            0 rows exported
+. . exporting table                      EP_KTR_PO
+                                                           16 rows exported
+. . exporting table                 EP_KTR_PO_ITEM
+                                                           27 rows exported
+. . exporting table    EP_KTR_PO_ITEM_PERKEMBANGAN
+                                                           16 rows exported
+. . exporting table             EP_KTR_PO_KOMENTAR
+                                                            0 rows exported
+. . exporting table         EP_KTR_PO_PERKEMBANGAN
+                                                            9 rows exported
+. . exporting table         EP_KTR_TERMIN_KOMENTAR
+                                                            0 rows exported
+. . exporting table          EP_KTR_TERMIN_KONTRAK
+                                                            0 rows exported
+. . exporting table     EP_KTR_TERMIN_PERKEMBANGAN
+                                                            0 rows exported
+. . exporting table          EP_MS_ANGGOTA_PANITIA
+                                                            7 rows exported
+. . exporting table         EP_MS_KELOMPOK_PANITIA
+                                                           13 rows exported
+. . exporting table           EP_MS_MATA_UANG_KURS
+                                                            1 rows exported
+. . exporting table                     EP_MS_MENU
+                                                          101 rows exported
+. . exporting table             EP_MS_MENU_JABATAN
+                                                          124 rows exported
+. . exporting table                   EP_NOMORURUT
+                                                           33 rows exported
+. . exporting table                 EP_PGD_DOKUMEN
+                                                            4 rows exported
+. . exporting table        EP_PGD_DOKUMEN_KATEGORI
+                                                            7 rows exported
+. . exporting table          EP_PGD_EVALUASI_MODEL
+                                                            1 rows exported
+. . exporting table   EP_PGD_EVALUASI_MODEL_DETAIL
+                                                            3 rows exported
+. . exporting table           EP_PGD_EVALUASI_TIPE
+                                                            3 rows exported
+. . exporting table     EP_PGD_HIST_ITEM_PENAWARAN
+                                                            0 rows exported
+. . exporting table          EP_PGD_HIST_PENAWARAN
+                                                            0 rows exported
+. . exporting table          EP_PGD_ITEM_PENAWARAN
+                                                           51 rows exported
+. . exporting table             EP_PGD_ITEM_TENDER
+                                                           51 rows exported
+. . exporting table         EP_PGD_KOMENTAR_TENDER
+                                                           20 rows exported
+. . exporting table                  EP_PGD_METODE
+                                                            3 rows exported
+. . exporting table           EP_PGD_METODE_SAMPUL
+                                                            6 rows exported
+. . exporting table               EP_PGD_PENAWARAN
+                                                           58 rows exported
+. . exporting table        EP_PGD_PENAWARAN_TEKNIS
+                                                            6 rows exported
+. . exporting table             EP_PGD_PERENCANAAN
+                                                           21 rows exported
+. . exporting table    EP_PGD_PERENCANAAN_ANGGARAN
+                                                            7 rows exported
+. . exporting table        EP_PGD_PERSIAPAN_TENDER
+                                                            1 rows exported
+. . exporting table            EP_PGD_PESAN_TENDER
+                                                            0 rows exported
+. . exporting table                  EP_PGD_SAMPUL
+                                                            3 rows exported
+. . exporting table                  EP_PGD_TENDER
+                                                           58 rows exported
+. . exporting table         EP_PGD_TENDER_EVALUASI
+                                                            2 rows exported
+. . exporting table      EP_PGD_TENDER_KLASIFIKASI
+                                                            1 rows exported
+. . exporting table           EP_PGD_TENDER_VENDOR
+                                                           60 rows exported
+. . exporting table    EP_PGD_TENDER_VENDOR_STATUS
+                                                           60 rows exported
+. . exporting table                      EP_VENDOR
+                                                           43 rows exported
+. . exporting table                 EP_VENDOR_AGEN
+                                                           14 rows exported
+. . exporting table                 EP_VENDOR_AKTA
+                                                            6 rows exported
+. . exporting table               EP_VENDOR_ALAMAT
+                                                           12 rows exported
+. . exporting table                 EP_VENDOR_BANK
+                                                            5 rows exported
+. . exporting table               EP_VENDOR_BARANG
+                                                            9 rows exported
+. . exporting table            EP_VENDOR_DELISTING
+                                                            0 rows exported
+. . exporting table        EP_VENDOR_DEWAN_DIREKSI
+                                                           13 rows exported
+. . exporting table              EP_VENDOR_DOKUMEN
+                                                           54 rows exported
+. . exporting table    EP_VENDOR_DOKUMEN_PENDUKUNG
+                                                            5 rows exported
+. . exporting table          EP_VENDOR_DOKUMEN_REF
+                                                           18 rows exported
+. . exporting table              EP_VENDOR_HALAMAN
+                                                            0 rows exported
+. . exporting table                 EP_VENDOR_HIST
+                                                            3 rows exported
+. . exporting table            EP_VENDOR_HIST_AGEN
+                                                            3 rows exported
+. . exporting table            EP_VENDOR_HIST_AKTA
+                                                            3 rows exported
+. . exporting table          EP_VENDOR_HIST_ALAMAT
+                                                            3 rows exported
+. . exporting table            EP_VENDOR_HIST_BANK
+                                                            3 rows exported
+. . exporting table          EP_VENDOR_HIST_BARANG
+                                                            3 rows exported
+. . exporting table   EP_VENDOR_HIST_DEWAN_DIREKSI
+                                                            5 rows exported
+. . exporting table            EP_VENDOR_HIST_IJIN
+                                                            4 rows exported
+. . exporting table  EP_VENDOR_HIST_INFORMASI_LAIN
+                                                            5 rows exported
+. . exporting table            EP_VENDOR_HIST_JASA
+                                                            3 rows exported
+. . exporting table         EP_VENDOR_HIST_KINERJA
+                                                            0 rows exported
+. . exporting table    EP_VENDOR_HIST_LAP_KEUANGAN
+                                                            3 rows exported
+. . exporting table      EP_VENDOR_HIST_PENGALAMAN
+                                                            3 rows exported
+. . exporting table       EP_VENDOR_HIST_PERALATAN
+                                                            3 rows exported
+. . exporting table      EP_VENDOR_HIST_SERTIFIKAT
+                                                            3 rows exported
+. . exporting table    EP_VENDOR_HIST_TENAGA_KERJA
+                                                            3 rows exported
+. . exporting table            EP_VENDOR_HIST_TIPE
+                                                            0 rows exported
+. . exporting table         EP_VENDOR_HIST_WILAYAH
+                                                            3 rows exported
+. . exporting table                 EP_VENDOR_IJIN
+                                                            6 rows exported
+. . exporting table       EP_VENDOR_INFORMASI_LAIN
+                                                           19 rows exported
+. . exporting table                 EP_VENDOR_JASA
+                                                            6 rows exported
+. . exporting table               EP_VENDOR_KANTOR
+                                                            0 rows exported
+. . exporting table              EP_VENDOR_KINERJA
+                                                          237 rows exported
+. . exporting table             EP_VENDOR_KOMENTAR
+                                                            0 rows exported
+. . exporting table      EP_VENDOR_KOMENTAR_DETAIL
+                                                            0 rows exported
+. . exporting table         EP_VENDOR_LAP_KEUANGAN
+                                                            5 rows exported
+. . exporting table        EP_VENDOR_NEGOISASI_HIS
+                                                            0 rows exported
+. . exporting table        EP_VENDOR_NEGOSIASI_HIS
+                                                            0 rows exported
+. . exporting table           EP_VENDOR_PENGALAMAN
+                                                            6 rows exported
+. . exporting table            EP_VENDOR_PERALATAN
+                                                            6 rows exported
+. . exporting table          EP_VENDOR_PERF_MASTER
+                                                           29 rows exported
+. . exporting table       EP_VENDOR_PERF_PERMULAAN
+                                                           74 rows exported
+. . exporting table            EP_VENDOR_ROUTE_DEF
+                                                            0 rows exported
+. . exporting table              EP_VENDOR_ROUTING
+                                                            0 rows exported
+. . exporting table           EP_VENDOR_SERTIFIKAT
+                                                            6 rows exported
+. . exporting table              EP_VENDOR_SESSION
+                                                            0 rows exported
+. . exporting table    EP_VENDOR_STATUS_REGISTRASI
+                                                            8 rows exported
+. . exporting table                 EP_VENDOR_TEMP
+                                                            2 rows exported
+. . exporting table            EP_VENDOR_TEMP_AGEN
+                                                            3 rows exported
+. . exporting table            EP_VENDOR_TEMP_AKTA
+                                                            2 rows exported
+. . exporting table          EP_VENDOR_TEMP_ALAMAT
+                                                            3 rows exported
+. . exporting table            EP_VENDOR_TEMP_BANK
+                                                            2 rows exported
+. . exporting table          EP_VENDOR_TEMP_BARANG
+                                                            4 rows exported
+. . exporting table   EP_VENDOR_TEMP_DEWAN_DIREKSI
+                                                            4 rows exported
+. . exporting table            EP_VENDOR_TEMP_IJIN
+                                                            2 rows exported
+. . exporting table  EP_VENDOR_TEMP_INFORMASI_LAIN
+                                                            4 rows exported
+. . exporting table            EP_VENDOR_TEMP_JASA
+                                                            2 rows exported
+. . exporting table         EP_VENDOR_TEMP_KINERJA
+                                                            0 rows exported
+. . exporting table    EP_VENDOR_TEMP_LAP_KEUANGAN
+                                                            2 rows exported
+. . exporting table      EP_VENDOR_TEMP_PENGALAMAN
+                                                            2 rows exported
+. . exporting table       EP_VENDOR_TEMP_PERALATAN
+                                                            2 rows exported
+. . exporting table      EP_VENDOR_TEMP_SERTIFIKAT
+                                                            2 rows exported
+. . exporting table    EP_VENDOR_TEMP_TENAGA_KERJA
+                                                            2 rows exported
+. . exporting table            EP_VENDOR_TEMP_TIPE
+                                                            2 rows exported
+. . exporting table         EP_VENDOR_TEMP_WILAYAH
+                                                            2 rows exported
+. . exporting table         EP_VENDOR_TENAGA_KERJA
+                                                            8 rows exported
+. . exporting table                 EP_VENDOR_TIPE
+                                                            6 rows exported
+. . exporting table              EP_VENDOR_WILAYAH
+                                                            5 rows exported
+. . exporting table                         EP_WKF
+                                                           14 rows exported
+. . exporting table               EP_WKF_AKTIFITAS
+                                                           77 rows exported
+. . exporting table         EP_WKF_AKTIFITAS_CONST
+                                                           55 rows exported
+. . exporting table                  EP_WKF_PROSES
+                                                           59 rows exported
+. . exporting table              EP_WKF_PROSES_HIS
+                                                          336 rows exported
+. . exporting table             EP_WKF_PROSES_VARS
+                                                          192 rows exported
+. . exporting table                EP_WKF_TRANSISI
+                                                          104 rows exported
+. . exporting table          EP_WKF_TRANSISI_CONST
+                                                           75 rows exported
+. . exporting table                   GL_MATA_UANG
+                                                            5 rows exported
+. . exporting table                      MS_BARANG
+                                                          131 rows exported
+. . exporting table                     MS_JABATAN
+                                                           77 rows exported
+. . exporting table                      MS_KANTOR
+                                                            1 rows exported
+. . exporting table             MS_KELOMPOK_BARANG
+                                                           10 rows exported
+. . exporting table          MS_SUBKELOMPOK_BARANG
+                                                           92 rows exported
+. exporting synonyms
+. exporting views
+. exporting stored procedures
+. exporting operators
+. exporting referential integrity constraints
+. exporting triggers
+. exporting indextypes
+. exporting bitmap, functional and extensible indexes
+. exporting posttables actions
+. exporting materialized views
+. exporting snapshot logs
+. exporting job queues
+. exporting refresh groups and children
+. exporting dimensions
+. exporting post-schema procedural objects and actions
+. exporting statistics
+Export terminated successfully without warnings.
