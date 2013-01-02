@@ -19,8 +19,8 @@ class Ep_pgd_pesan_tender extends MY_Model {
                                    'KODE_KANTOR',
 				   'KODE_AKTIFITAS',
 			           'KODE_VENDOR',
-				   'TANGGAL',
-                                    'PESAN');
+				   'TGL_PESAN',
+                                   'PESAN');
 			 
     public $columns_conf = array(
                                 'KODE_PESAN_TENDER' =>array('hidden'=>true, 'width'=>0),
@@ -28,24 +28,23 @@ class Ep_pgd_pesan_tender extends MY_Model {
                                 'KODE_KANTOR' =>array('hidden'=>true, 'width'=>10),
                                 'KODE_VENDOR' =>array('hidden'=>true, 'width'=>10),
                                 'NAMA_AKTIFITAS'  =>array('hidden'=>false, 'width'=>20),
-                                'TANGGAL'  =>array('hidden'=>false, 'width'=>10),
+                                'TGL_PESAN'  =>array('hidden'=>false, 'width'=>10),
                                 'DARI'  =>array('hidden'=>false, 'width'=>10),
                                 'UNTUK'  =>array('hidden'=>false, 'width'=>10),
                                 'PESAN'  =>array('hidden'=>false, 'width'=>50) 
                                 );
     
     
-    public $sql_select = "(SELECT  P.KODE_PESAN_TENDER  ,
-                                   P.KODE_TENDER ,
-                                   P.KODE_KANTOR ,
-                                   P.KODE_VENDOR ,
-				   A.NAMA_AKTIFITAS ,
-				   P.TANGGAL,
-                                   '' AS \"DARI\",
-                                   '' AS \"UNTUK\",
-                                   P.PESAN 
-                            FROM EP_PGD_PESAN_TENDER P
-                            LEFT JOIN EP_ALURKERJA_AKTIFITAS A ON P.KODE_AKTIFITAS = A.KODE_AKTIFITAS
+    public $sql_select = "(SELECT  KODE_PESAN_TENDER  ,
+                                   KODE_TENDER ,
+                                   KODE_KANTOR ,
+                                   KODE_VENDOR ,
+				   NAMA_AKTIFITAS ,
+				   TGL_PESAN,
+                                   DARI,
+                                   UNTUK,
+                                   PESAN 
+                            FROM VW_PESAN_NEGOSIASI
                             WHERE 1 = 1
 		 ";
 	
@@ -61,11 +60,11 @@ class Ep_pgd_pesan_tender extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND P.KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
-                $this->sql_select  = $this->sql_select . " AND P.KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
+                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
-            $this->sql_select  = $this->sql_select . " )";  
+            $this->sql_select  = $this->sql_select . " ORDER BY TGL_PESAN DESC )";  
         
     }
 	

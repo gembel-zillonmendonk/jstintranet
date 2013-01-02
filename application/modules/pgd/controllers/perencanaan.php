@@ -185,7 +185,14 @@ class Perencanaan extends MY_Controller {
            $data["rs_transisi"] = $this->alur->getTransisi(40002);
  
             
-          $this->layout->view("perencanaan_anggaran_editor", $data);
+           
+          if ($this->session->userdata("nama_jabatan") == "KAUR PERENCANAAN") { 
+                $this->layout->view("perencanaan_anggaran_editor", $data);
+          } else {
+                 $data["pesan_error"] = "Persetujuan Anggaran Harus Oleh: KAUR PERENCANAAN";
+                 $this->layout->view("tampilkan_error", $data);
+          }
+          
 	
           
           

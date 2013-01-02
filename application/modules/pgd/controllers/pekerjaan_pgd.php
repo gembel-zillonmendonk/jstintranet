@@ -35,7 +35,7 @@ class Pekerjaan_pgd extends MY_Controller {
                         $sql .= " AND KODE_VENDOR =  " .$this->input->post("KODE_VENDOR"). "";
                         $sql .= " AND KETERANGAN =  '" .  str_replace("_"," ", substr($k,11)). "'";
                            
-                        echo $sql;
+                     //   echo $sql;
                         
                         $this->db->simple_query($sql);
                           
@@ -43,8 +43,8 @@ class Pekerjaan_pgd extends MY_Controller {
                 
             }
             
-            
-              print_r($_POST); 
+            echo "1";
+            //  print_r($_POST); 
             
             
         }
@@ -194,8 +194,8 @@ class Pekerjaan_pgd extends MY_Controller {
         function do_upload()
 	{
 		$config['upload_path'] = './uploaded_test/';
-		 $config['allowed_types'] = 'gif|jpg|png';
-		 $config['max_size']	= '100';
+		$config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx';
+		$config['max_size']	= '1000';
 		$config['max_width']  = '1024';
 		$config['max_height']  = '768';
 
@@ -205,7 +205,7 @@ class Pekerjaan_pgd extends MY_Controller {
 		{
 			$error = array('error' => $this->upload->display_errors());
 
-			// echo $error; 
+			//echo $error; 
                         return ''; 
 		}
 		else
@@ -227,6 +227,8 @@ class Pekerjaan_pgd extends MY_Controller {
              print_r($_POST);
             
             $str_file =  $this->do_upload();
+            
+            echo $str_file;
             
             if (strlen( $str_file)) {
                 
@@ -378,9 +380,56 @@ class Pekerjaan_pgd extends MY_Controller {
             $result = $this->opsi->getMetodeSampul($metode_tender);
               
         }
-       
+     
+        function fn_batalkan_pengadaan() {
+            print_r($_POST);
+            
+            // Komentar 
+            
+            $sql = "UPDATE EP_PGD_KOMENTAR_TENDER ";
+            $sql .= " SET KODE_AKTIFITAS = 1902 ";
+            $sql .= " , KODE_TRANSISI = 436 ";
+            $sql .= " , NAMA_TRANSISI = 'BATALKAN PENGADAAN' ";
+            $sql .= " , TGL_BERAKHIR =  TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
+            $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
+            $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
+            $sql .= " AND TGL_BERAKHIR IS NULL ";
+            
+            $this->db->simple_query($sql);
+            
+            
+            
+            $sql = "UPDATE EP_PGD_TENDER ";
+            $sql .= " SET STATUS = 1902 ";
+            $sql .= " , TGL_SELESAI =  TO_DATE('" . date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
+            $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
+            $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
+             
+            $this->db->simple_query($sql);
+            
+            
+            $sql = "UPDATE EP_PGD_TENDER_VENDOR_STATUS ";
+            $sql .= " SET STATUS = 26 ";
+            $sql .= " WHERE KODE_TENDER = '" . $this->input->post("KODE_TENDER") . "'";
+            $sql .= " AND KODE_KANTOR = '" . $this->input->post("KODE_KANTOR") . "'";
+             
+            $this->db->simple_query($sql);
+          
+                    if ($this->db->simple_query($sql)) {
+                        echo "1";
+
+                    } else{
+                         echo "0";
+
+                    }   
+            
+            
+        }
+        
+        
+        
         function update_Pembuatan_jadwal() {
-             print_r($_POST);
+   //          print_r($_POST);
               
             if (strlen($this->input->post("TGL_PEMBUKAAN_REG"))) {
                 $sql  = " SELECT KODE_TENDER FROM EP_PGD_PERSIAPAN_TENDER ";
@@ -399,7 +448,7 @@ class Pekerjaan_pgd extends MY_Controller {
                     $sql .= " WHERE KODE_TENDER = '" .$this->input->post("KODE_TENDER") . "' ";
                     $sql .= " AND KODE_KANTOR =  '" .$this->input->post("KODE_KANTOR") . "'  ";
 
-echo $sql;
+// echo $sql;
                     
                     if ($this->db->simple_query($sql)) {
                         echo "1";

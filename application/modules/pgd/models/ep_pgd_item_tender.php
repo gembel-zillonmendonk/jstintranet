@@ -28,12 +28,14 @@ class Ep_pgd_item_tender extends MY_Model {
                                                                  'KODE_SUB_BARANG_JASA'  =>array('hidden'=>false, 'width'=>10),				 
                                                                  'KODE_BARANG_JASA'  =>array('hidden'=>false, 'width'=>10),
 								 'KETERANGAN'  =>array('hidden'=>false, 'width'=>40),
-								 'JUMLAH'  =>array('hidden'=>false, 'width'=>10),
-        							 'UNIT'  =>array('hidden'=>false, 'width'=>10),
+								 'JUMLAH'  =>array('hidden'=>false, 'width'=>10, 'align'=>'center'),
+        							 'UNIT'  =>array('hidden'=>false, 'width'=>10, 'align'=>'center'),
         
-								 'HARGA'  =>array('hidden'=>false, 'width'=>10),
-								 'SUBTOTAL'   =>array('hidden'=>false, 'width'=>10)
-	 ,   'EDIT'  =>array('hidden'=>false, 'width'=>10) );							 
+								 'HARGA'  =>array('hidden'=>false, 'width'=>10, 'align'=>'right'),
+								 'SUBTOTAL'   =>array('hidden'=>false, 'width'=>10, 'align'=>'right')
+	 ,   'EDIT'  =>array('hidden'=>false, 'width'=>5, 'align'=>'center') 
+         ,   'HAPUS'  =>array('hidden'=>false, 'width'=>5, 'align'=>'center') 
+        );							 
  
 	
     function setParam() {
@@ -58,8 +60,9 @@ class Ep_pgd_item_tender extends MY_Model {
         
     }
 	
-    public $sql_select = "( SELECT T.KODE_BARANG_JASA , J.KODE_SUB_BARANG_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,    T.JUMLAH, T.UNIT, T.HARGA,  T.JUMLAH *  T.HARGA AS SUBTOTAL
+    public $sql_select = "( SELECT T.KODE_TENDER, T.KODE_KANTOR ,T.KODE_BARANG_JASA , J.KODE_SUB_BARANG_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,    T.JUMLAH, T.UNIT, T.HARGA,  T.JUMLAH *  T.HARGA AS SUBTOTAL
                 ,  '' as \"EDIT\"
+                ,  '' as \"HAPUS\" 
 		FROM EP_PGD_ITEM_TENDER T
 		LEFT JOIN  VW_BARANG_JASA J ON T.KODE_BARANG_JASA = J.KODE_BARANG_JASA  AND T.KODE_SUB_BARANG_JASA = J.KODE_SUB_BARANG_JASA
                 WHERE 1 = 1
@@ -76,6 +79,9 @@ class Ep_pgd_item_tender extends MY_Model {
                     
                     be = "<button onclick=\"fnEditBarangJasa(\'"+cl+"\');\"  >EDIT</button>"; 
                     jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{EDIT:be});
+                    bx = "<button onclick=\"fnDeleteBarangJasa(\'"+cl+"\');\"  >HAPUS</button>"; 
+                    jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{HAPUS:bx});
+                        
 		}';
 
             

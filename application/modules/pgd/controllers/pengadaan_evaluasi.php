@@ -217,8 +217,13 @@ class Pengadaan_evaluasi extends MY_Controller {
                 $sql .= " AND  COALESCE(BERAT, 0) != 0 ";
                 $sql .= " GROUP BY KETERANGAN, BERAT ";
                 
+               // echo $sql;
+                
                 $query = $this->db->query($sql);
                 $data["rsitemteknis"] = $query->result();
+                
+               // print_r($data["rsitemteknis"]);
+                
                 
                 $sql = "SELECT T.KODE_VENDOR,  V.NAMA_VENDOR, T.NILAI_TEKNIS , T.KETERANGAN_TEKNIS ";
                 $sql .= " FROM EP_PGD_TENDER_EVALUASI T ";
@@ -232,6 +237,7 @@ class Pengadaan_evaluasi extends MY_Controller {
                 $query = $this->db->query($sql);
                 $data["rsvendor"] = $query->result();
                 
+                // print_r($data["rsvendor"]);
                 
                 $sql = "SELECT T.KODE_VENDOR, T.KETERANGAN, T.KETERANGAN_VENDOR, V.NAMA_VENDOR , T.NILAI ";
                 $sql .= " FROM EP_PGD_PENAWARAN_TEKNIS T ";
@@ -241,11 +247,12 @@ class Pengadaan_evaluasi extends MY_Controller {
                 $sql .= " GROUP BY T.KODE_VENDOR, T.KETERANGAN, T.KETERANGAN_VENDOR, V.NAMA_VENDOR , T.NILAI "; 
                 $sql .= " ORDER BY T.KETERANGAN, T.KODE_VENDOR ";
                 
-                
+                // echo $sql;
                 
                 $query = $this->db->query($sql);
                 $data["rsvendorteknis"] = $query->result();
                 
+                // print_r($data["rsvendorteknis"]);
                 
 		$this->load->view("pengadaan_evaluasi_teknis", $data);
 	}

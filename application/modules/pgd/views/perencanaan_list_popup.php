@@ -1,5 +1,5 @@
   <div class="accordion">
- <h3 id="h3_perencanaan_popup" href="<?php echo base_url(); ?>index.php/pgd/gridpopup_perencanaan/ep_pgd_perencanaan">RENCANA PENGADAAN</h3>
+ <h3 id="h3_perencanaan_popup" href="<?php echo base_url(); ?>index.php/pgd/gridpopup_perencanaan/ep_pgd_perencanaan_get">RENCANA PENGADAAN</h3>
             <div>
 			<p>
 			<div id="mysearch"></div>
@@ -49,7 +49,7 @@
 		var myfilter = { groupOp: "AND", rules: []};
 		myfilter.rules.push({field:"JUDUL_PEKERJAAN",op:"cn",data:srcval});
 		
-		var grid = $("#grid_ep_pgd_perencanaan");
+		var grid = $("#grid_ep_pgd_perencanaan_get");
 			
 		
 		alert(grid);

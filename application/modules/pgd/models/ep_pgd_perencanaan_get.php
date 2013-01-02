@@ -10,7 +10,7 @@
  *
  * @author  
  */
-class Ep_pgd_perencanaan extends MY_Model {
+class Ep_pgd_perencanaan_get extends MY_Model {
 
     
   
@@ -52,10 +52,11 @@ class Ep_pgd_perencanaan extends MY_Model {
           WHEN P.STATUS_AKTIFITAS = 40002 THEN 'TELAH DISETUJUI' 
           ELSE 'BELUM DISETUJUI'
           END AS STATUS  
-		FROM EP_PGD_PERENCANAAN P
-		LEFT JOIN MS_KANTOR K ON P.KODE_KANTOR = K.KODE_KANTOR
-                LEFT JOIN EP_ALURKERJA_AKTIFITAS A ON P.STATUS_AKTIFITAS = A.KODE_AKTIFITAS
-		)";
+            FROM EP_PGD_PERENCANAAN P
+            LEFT JOIN MS_KANTOR K ON P.KODE_KANTOR = K.KODE_KANTOR
+            LEFT JOIN EP_ALURKERJA_AKTIFITAS A ON P.STATUS_AKTIFITAS = A.KODE_AKTIFITAS
+            WHERE P.STATUS_AKTIFITAS = 40002
+	  )";
     
     protected function _before_insert()
     {

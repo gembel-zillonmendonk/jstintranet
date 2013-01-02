@@ -47,65 +47,7 @@
     .next()
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
- 
-$("#btnSrcBarang").click(function() {
-	
-
-	
-		//alert($("#kolom").val());
-		
-		
-		
-		srcval = $("#kolom_barang").val();
-		var myfilter = { groupOp: "AND", rules: []};
-		
-		var myfield = $("#myfield_barang").val();
-		
-		myfilter.rules.push({field: myfield ,op:"cn",data:srcval});
-		
-		var grid = $("#grid_ep_kom_komentar_harga_barang");
-			
-	 
-		grid[0].p.search = myfilter.rules.length>0;
-		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
-		grid.trigger("reloadGrid",[{page:1}]);
-	 
-		
-		 
-		 
-		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
-		
-	});
-	
-
-$("#btnSrcJasa").click(function() {
-	
-
-	
-		//alert($("#kolom").val());
-		
-		
-		
-		srcval = $("#kolom_jasa").val();
-		var myfilter = { groupOp: "AND", rules: []};
-		
-		var myfield = $("#myfield_jasa").val();
-		
-		myfilter.rules.push({field: myfield ,op:"cn",data:srcval});
-		
-		var grid = $("#grid_ep_kom_komentar_jasa");
-			
-	 
-		grid[0].p.search = myfilter.rules.length>0;
-		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
-		grid.trigger("reloadGrid",[{page:1}]);
-	 
-		
-		 
-		 
-		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
-		
-	});	
+  
 	
 $("#btnSrc").click(function() {
 	
@@ -122,7 +64,7 @@ $("#btnSrc").click(function() {
 		
 		myfilter.rules.push({field: myfield ,op:"cn",data:srcval});
 		
-		var grid = $("#grid_ep_kom_komentar_harga_jasa");
+		var grid = $("#grid_ep_pgd_pekerjaan");
 			
 	 
 		grid[0].p.search = myfilter.rules.length>0;
@@ -224,7 +166,7 @@ $("#btnSrc").click(function() {
                         str += v + "=" + selected[v] + "&";
                         count++; 
                     }); 
-		}			
+                  }			
 		 
 		   window.location = "<?php echo base_url() . "index.php/pgd/pekerjaan_pgd/editor"; ?>?" + str;
 	 }

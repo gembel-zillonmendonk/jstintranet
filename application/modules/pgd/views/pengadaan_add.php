@@ -32,7 +32,22 @@
             <?php echo form_label("DISKRIPSI PEKERJAAN *") ?>
 	    <input type="text" style="width: 50%" class="{validate:{required:true}}"  id="LINGKUP_PEKERJAAN" name="LINGKUP_PEKERJAAN" value="" /> 
 	</p>
-    
+       
+        <p>	
+            <?php echo form_label("LOKASI PENGIRIMAN") ?>
+            <select name="KODE_KANTOR_KIRIM" class="{validate:{required:true}}"  >
+                <?php
+                echo "<option value='' >-- Pilih Kantor --</option>";
+                 
+                foreach($rs_kantor as $row) {
+                    echo "<option value='" .$row->KODE_KANTOR. "' >".$row->NAMA_KANTOR."</option>";
+                   
+                }
+                ?>
+                
+            </select> 
+        </p>
+        
         <p>	
             <?php echo form_label("JENIS KONTRAK *") ?>
             <select name="TIPE_KONTRAK" class="{validate:{required:true}}" >
@@ -62,9 +77,11 @@
                 
                 <div id="list_perencanaan_anggaran" ></div>      
           </div>
+<!--
 <h3 href="">LAMPIRAN DOKUMEN</h3>
             <div>
           </div>
+-->
 <h3 href="">ITEM</h3>
             <div>
        <fieldset class="ui-widget-content">
@@ -86,7 +103,7 @@
 	    <input type="text"   class="{validate:{required:true}}"   id="JUMLAH" name="JUMLAH" value="" />
 	</p>   
         <p>	
-            <?php echo form_label("Unit") ?>
+            <?php echo form_label("Satuan") ?>
 	    <input type="text"     id="UNIT" name="UNIT" value="" />
 	</p>
         <p>	
@@ -167,6 +184,7 @@
             }
         });
         
+        
      
      $("#btnSubmit").click(function(){ 
         $.ajax({
@@ -185,7 +203,7 @@
                                     //  $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
-                                    
+                                    window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd";
                    
                                 },
                                 error: function(){
@@ -218,7 +236,7 @@
         });
         
         $("#btnAddBarangJasa").click(function() {
-            // alert(kode_tender);
+              alert(kode_tender);
             if (kode_tender == 0) {
                 //alert("Header Tender Belum Tersimpan");
                             fnHeaderSubmit();
@@ -232,7 +250,7 @@
                 return;
                 
             } else  {
-            
+             alert(kode_tender);
            //  $("#KODE_TENDER").val(kode_tender);
             // alert($("#KODE_TENDER").val());
             
@@ -241,7 +259,7 @@
                                 //clearForm: false,
                                 success: function(msg){
                                       //alert(msg);
-                                      $("#trace").html(msg);
+                                   / //  $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
                                     
@@ -363,8 +381,8 @@
          $("#frmPermintaan").ajaxSubmit({
             //clearForm: false,
             success: function(msg){
-                   alert("KODE_TENDER:" + msg);
-                $("#trace").html(msg);
+                //   alert("KODE_TENDER:" + msg);
+               //  $("#trace").html(msg);
                  SetKodeTender(msg);  
                   
                    //  alert($("#KODE_TENDER").val());
@@ -374,7 +392,7 @@
                                 //clearForm: false,
                                 success: function(msg){
                                       //alert(msg);
-                                      $("#trace").html(msg);
+                  //                    $("#trace").html(msg);
                                   //  alert(msg);
                                     //reload grid
                                     
@@ -407,7 +425,7 @@
  
  function fnShowItemTender(strurl) {
      var uri = strurl + "&r=" + Math.random();
-                     alert(uri);
+                    // alert(uri);
                      
                     if(uri != '' && uri != '#'){
                         var ctn = $("#list_itemtender") ;
@@ -474,5 +492,49 @@
      
  }
  
+ function fnEditBarangJasa(){
+      
+        var selected = $('#grid_ep_pgd_item_tender').jqGrid('getGridParam', 'selrow');
+        if (selected) {
+           selected = jQuery('#grid_ep_pgd_item_tender').jqGrid('getRowData',selected);
+           $('#KODE_BARANG_JASA').val(selected["KODE_BARANG_JASA"]);
+           $('#KODE_SUB_BARANG_JASA').val(selected["KODE_SUB_BARANG_JASA"]);
+           $('#KETERANGAN').val(selected["KETERANGAN"]);
+           $('#JUMLAH').val(selected["JUMLAH"]);
+           $('#UNIT').val(selected["UNIT"]);
+           $('#HARGA').val(selected["HARGA"]);
+        }
+         
+ }
+ 
+ 
+ function fnDeleteBarangJasa(str) {
+         
+         
+        if (confirm("Yakin Akan Menghapus Item")) { 
+            $('#grid_ep_pgd_item_tender').jqGrid('setSelection',str); 
+            var selected = $('#grid_ep_pgd_item_tender').jqGrid('getGridParam', 'selrow');
+
+               selected = jQuery('#grid_ep_pgd_item_tender').jqGrid('getRowData',selected);
+
+              $.ajax({
+                    url: "delete_item_tender/"   ,
+                    type: "POST",
+                    data: "KODE_TENDER=" + selected["KODE_TENDER"] + "&KODE_KANTOR="+selected["KODE_KANTOR"]+"&KODE_BARANG_JASA="+selected["KODE_BARANG_JASA"]+"&KODE_SUB_BARANG_JASA=" + selected["KODE_SUB_BARANG_JASA"] ,
+                    dataType: "html",
+                    success: function(msg) {
+                          var grid = $("#grid_ep_pgd_item_tender");
+                          grid.trigger("reloadGrid",[{page:1}]);
+                    }
+                });
+        }    
+        
+         
+        
+        
+            
+        
+     
+ }
  
 </script>   	 			

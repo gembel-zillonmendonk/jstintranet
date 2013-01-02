@@ -11,12 +11,26 @@ class Pengadaan_monitor extends MY_Controller {
 		$this->layout->view("pengadaan_monitor_list");
 	}
         
+        function view(){
+            
+            
+            $data["kode_tender"] = $this->input->get("KODE_TENDER");
+            $data["kode_kantor"] = $this->input->get("KODE_KANTOR");
+            
+           $this->load->view("pengadaan_monitor", $data);
+           
+        }
+        
+        
         function header() {
             
-                $sql = "SELECT JUDUL_PEKERJAAN, LINGKUP_PEKERJAAN, TIPE_KONTRAK  ";
-                $sql .= " FROM EP_PGD_TENDER ";
-                $sql .= " WHERE KODE_TENDER = '" .$this->input->get("KODE_TENDER"). "' ";
-                $sql .= " AND KODE_KANTOR = '" .$this->input->get("KODE_KANTOR"). "' ";
+                $sql = "SELECT T.JUDUL_PEKERJAAN, T.LINGKUP_PEKERJAAN, T.TIPE_KONTRAK, K.NAMA_KANTOR, T.NAMA_PEMOHON, K1.NAMA_KANTOR AS NAMA_KANTOR_KIRIM  ";
+                $sql .= " FROM EP_PGD_TENDER T ";
+                $sql .= " LEFT JOIN MS_KANTOR K ON T.KODE_KANTOR = K.KODE_KANTOR ";
+                 $sql .= " LEFT JOIN MS_KANTOR K1 ON T.KODE_KANTOR_KIRIM = K1.KODE_KANTOR ";
+                
+                $sql .= " WHERE T.KODE_TENDER = '" .$this->input->get("KODE_TENDER"). "' ";
+                $sql .= " AND T.KODE_KANTOR = '" .$this->input->get("KODE_KANTOR"). "' ";
                 
                 $query = $this->db->query($sql);
                 $result = $query->result();
@@ -29,11 +43,12 @@ class Pengadaan_monitor extends MY_Controller {
                     $data["judul_pekerjaan"] = $result[0]->JUDUL_PEKERJAAN; 
                     $data["lingkup_pekerjaan"] = $result[0]->LINGKUP_PEKERJAAN; 
                     $data["tipe_kontrak"] = $result[0]->TIPE_KONTRAK; 
+                    $data["nama_kantor"] = $result[0]->NAMA_KANTOR;
+                    $data["nama_pemohon"] = $result[0]->NAMA_PEMOHON;
+                    $data["nama_kantor_kirim"] = $result[0]->NAMA_KANTOR_KIRIM;
                     
-                }
-                
-                
-                
+                    
+                } 
 		$this->load->view("pengadaan_monitor_header", $data);            
         }
         

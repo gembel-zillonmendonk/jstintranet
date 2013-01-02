@@ -10,7 +10,7 @@
  *
  * @author  
  */
-class Ep_pgd_tender_evaluasi extends MY_Model {
+class Ep_pgd_tender_evaluasi_view extends MY_Model {
 
     public $table = "VW_PGD_TENDER_EVALUASI";
  	
@@ -28,9 +28,7 @@ class Ep_pgd_tender_evaluasi extends MY_Model {
                                  ,'NILAI_HARGA' =>array('hidden'=>false, 'width'=>10, 'align'=>'right')
                                  ,'NILAI_BOBOT' =>array('hidden'=>false, 'width'=>10,'align'=>'right')
                                  ,'NILAI_TOTAL' =>array('hidden'=>false, 'width'=>10,'align'=>'right')
-                                 ,'PERINGKAT' =>array('hidden'=>false, 'width'=>10,'align'=>'center')
-                                 ,   'BTN_NILAI_TEKNIS'  =>array('hidden'=>false, 'width'=>10)  
-                                 ,   'BTN_NILAI_HARGA'  =>array('hidden'=>false, 'width'=>10)   
+                                 ,'PERINGKAT' =>array('hidden'=>false, 'width'=>10,'align'=>'center') 
                      		 					 );
 	
 	
@@ -50,7 +48,7 @@ class Ep_pgd_tender_evaluasi extends MY_Model {
                                                          ROWNUM AS PERINGKAT
                                                           ,  '' as \"BTN_NILAI_TEKNIS\"
                                                            ,  '' as \"BTN_NILAI_HARGA\"
-			 			  FROM 	  VW_PGD_TENDER_EVAL_PERINGKAT
+			 			  FROM 	 VW_PGD_TENDER_EVAL_PERINGKAT
                                                   WHERE 1 = 1
 						 
 						";
@@ -71,7 +69,7 @@ class Ep_pgd_tender_evaluasi extends MY_Model {
                 $this->sql_select  = $this->sql_select . " AND KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
-            $this->sql_select  = $this->sql_select . " ORDER BY NILAI_TOTAL DESC )";  
+            $this->sql_select  = $this->sql_select . "  ORDER BY NILAI_TOTAL DESC )";  
             
           //  echo $this->sql_select; 
         

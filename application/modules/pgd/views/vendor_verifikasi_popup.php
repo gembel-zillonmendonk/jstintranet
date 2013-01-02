@@ -42,8 +42,7 @@
           <?php
           $i = 1;
           foreach ($rs_teknisadm as $row) { 
-          ?>
-          for
+          ?> 
           <tr>
               <td class="ui-state-default jqgrid-rownum" >&nbsp;<?php echo $i; ?></td>
               <td class="ui-state-default jqgrid-rownum" >&nbsp;<?php echo $row->KETERANGAN; ?></td>

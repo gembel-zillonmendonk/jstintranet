@@ -16,7 +16,7 @@ class Hirarki_posisi extends  CI_Model {
 	$sql = "SELECT OTO.KODE_OTORISASI , OTO.KODE_JABATAN , J.NAMA_JABATAN,  OTO.KODE_OTORISASI_INDUK 
 	FROM EP_MS_OTORISASI OTO
 	LEFT JOIN MS_JABATAN J ON J.KODE_JABATAN = OTO.KODE_JABATAN 
-	START WITH OTO.KODE_OTORISASI = 1000000 
+	START WITH OTO.KODE_JABATAN = 3
 	CONNECT BY PRIOR OTO.KODE_OTORISASI = OTO.KODE_OTORISASI_INDUK ";
 
 	/*
@@ -72,6 +72,8 @@ class Hirarki_posisi extends  CI_Model {
 			
 				$txtspan = strlen($link) == 0 ?  $txt : ""  ;
 				 
+                                $txtspan = str_replace("&", " DAN ", $txtspan);
+                                
 				$xml_span = $xml->createElement( "span" , $txtspan);				
 				if ($detail == "D") {
 					$xml_span->setAttribute("class", "file" );

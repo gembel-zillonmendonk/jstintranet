@@ -41,11 +41,12 @@ class Ep_pgd_tender_vendor_klas extends MY_Model {
      
             
                 
-            $this->sql_select  = $this->sql_select . "  WHERE   K.KODE_KLAS_VENDOR IS NOT NULL )";  
+            $this->sql_select  = $this->sql_select . "  WHERE   K.KODE_KLAS_VENDOR IS NOT NULL  AND V.STATUS = 9 )";  
     }
 	
     public $sql_select = "(SELECT   V.KODE_VENDOR, V.NAMA_VENDOR
-                            FROM  EP_VENDOR V  ";
+                            FROM  EP_VENDOR V  
+                             ";
     
                           
 	

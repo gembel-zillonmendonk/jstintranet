@@ -16,7 +16,17 @@ class App extends MX_Controller {
 	
 	
 	function index() {
-		 $this->load->view("login");
+            $sql = "SELECT KODE_JABATAN, NAMA_JABATAN ";
+            $sql .= " FROM MS_JABATAN ";
+            $sql .= " ORDER BY NAMA_JABATAN ";
+            
+            
+            $query = $this->db->query($sql);
+            $data["rsjabatan"] = $query->result();
+            
+            
+            
+		 $this->load->view("login", $data);
 	} 
 	
 	function login() {

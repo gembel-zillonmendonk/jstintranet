@@ -28,11 +28,11 @@ class Ep_pgd_item_tender_view extends MY_Model {
                                                                  'KODE_SUB_BARANG_JASA'  =>array('hidden'=>false, 'width'=>10),				 
                                                                  'KODE_BARANG_JASA'  =>array('hidden'=>false, 'width'=>10),
 								 'KETERANGAN'  =>array('hidden'=>false, 'width'=>40),
-								 'JUMLAH'  =>array('hidden'=>false, 'width'=>10),
-        							 'UNIT'  =>array('hidden'=>false, 'width'=>10),
+								 'JUMLAH'  =>array('hidden'=>false, 'width'=>10,'align'=>'center'),
+        							 'UNIT'  =>array('hidden'=>false, 'width'=>10,'align'=>'center'),
         
-								 'HARGA'  =>array('hidden'=>false, 'width'=>10),
-								 'SUBTOTAL'   =>array('hidden'=>false, 'width'=>10)
+								 'HARGA'  =>array('hidden'=>false, 'width'=>10,'align'=>'right'),
+								 'SUBTOTAL'   =>array('hidden'=>false, 'width'=>10,'align'=>'right')
 	  );							 
  
 	
@@ -56,7 +56,7 @@ class Ep_pgd_item_tender_view extends MY_Model {
         
     }
 	
-    public $sql_select = "(SELECT T.KODE_BARANG_JASA , J.KODE_SUB_BARANG_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,    T.JUMLAH, T.UNIT, T.HARGA,  T.JUMLAH *  T.HARGA AS SUBTOTAL
+    public $sql_select = "(SELECT T.KODE_BARANG_JASA , J.KODE_SUB_BARANG_JASA AS KODE_SUB_BARANG_JASA, T.KETERANGAN,    T.JUMLAH, T.UNIT, TO_CHAR(T.HARGA ,'999G999G999G999') AS HARGA, TO_CHAR( T.JUMLAH *  T.HARGA ,'999G999G999G999') AS SUBTOTAL
                
 		FROM EP_PGD_ITEM_TENDER T
 		LEFT JOIN  VW_BARANG_JASA J ON T.KODE_BARANG_JASA = J.KODE_BARANG_JASA  AND T.KODE_SUB_BARANG_JASA = J.KODE_SUB_BARANG_JASA

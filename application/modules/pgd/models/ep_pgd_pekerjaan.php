@@ -33,6 +33,18 @@ class Ep_pgd_pekerjaan extends MY_Model {
                 '1' => 'YA'
         )) );
 		
+    
+    function setParam() {
+          
+        if ($this->session->userdata("kode_jabatan")) {
+            $this->sql_select = $this->sql_select . " AND P.KODE_JABATAN =  " . $this->session->userdata("kode_jabatan") . " ";
+        }
+             
+          $this->sql_select  = $this->sql_select . ")";  
+          
+         // echo $this->sql_select;
+        
+    }
 		
     public $columns_conf = array('KODE_KOMENTAR' =>array('hidden'=>true, 'width'=>0) 
                         ,'KODE_TENDER' =>array('hidden'=>false, 'width'=>10)  
@@ -58,10 +70,12 @@ class Ep_pgd_pekerjaan extends MY_Model {
 		LEFT JOIN MS_KANTOR K ON P.KODE_KANTOR = K.KODE_KANTOR
 		LEFT JOIN EP_PGD_TENDER T ON P.KODE_TENDER = T.KODE_TENDER AND P.KODE_KANTOR = T.KODE_KANTOR 
                 WHERE KODE_ALURKERJA = 5 AND TGL_BERAKHIR IS NULL  
-                )";
+                
+                 ";
      
     function __construct() {
         parent::__construct();
+        $this->setParam();
         $this->init();
 		$this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
 		for(var i=0;i < ids.length;i++){

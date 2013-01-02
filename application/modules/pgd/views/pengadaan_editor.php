@@ -14,7 +14,7 @@ if (in_array("MonitorTender", $arr_antarmuka)) {
  <h3 id="MonitorTender" href="<?php echo base_url(); ?>index.php/pgd/pengadaan_monitor/header?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">HEADER</h3>
     <div>
         
-          <div id="list" ></div>o
+          <div id="list" ></div> 
     </div>
  </div>
 <?php
@@ -42,8 +42,28 @@ if (in_array("MonitorTenderDetail", $arr_antarmuka)) {
  <h3 id="MonitorTenderDetail" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_item_tender_view?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">ITEM </h3>
     <div>
           <div id="list" ></div>
+          <div id="item_total" ref="<?php echo base_url(); ?>index.php/pgd/item_total/total?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>"  >
+          </div>
     </div>
  </div>
+ 
+ <script>
+ $(document).ready(function(){
+     
+     $('#item_total').each(function(){
+        
+                    var uri = $(this).attr('ref');
+				//	alert(uri);
+                            $(this).load(uri);
+                    }
+                 );
+     
+ });
+ 
+ 
+ </script> 
+ 
+ 
 <?php
 }
 ?> 
@@ -75,7 +95,7 @@ if (in_array("InputTenderDetail", $arr_antarmuka)) {
 	    <input type="number"   class="{validate:{required:true}}"   id="JUMLAH" name="JUMLAH" value="" />
 	</p>   
         <p>	
-            <?php echo form_label("Unit") ?>
+            <?php echo form_label("Satuan") ?>
 	    <input type="text"     id="UNIT" name="UNIT" value="" />
 	</p>
         <p>	
@@ -95,6 +115,7 @@ if (in_array("InputTenderDetail", $arr_antarmuka)) {
            </fieldset>     
        
         <div id="list" ></div>
+        <div id="item_total" ref="<?php echo base_url(); ?>index.php/pgd/item_total/total?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>"  >
     </div>
  </div>     
  <script>
@@ -117,7 +138,7 @@ if (in_array("InputTenderDetail", $arr_antarmuka)) {
                     $("#frmBarangJasa").ajaxSubmit({
                                 //clearForm: false,
                                 success: function(msg){
-                                       alert(msg);
+                                       //alert(msg);
       //                                $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
@@ -126,6 +147,9 @@ if (in_array("InputTenderDetail", $arr_antarmuka)) {
 			
                         		grid.trigger("reloadGrid",[{page:1}]);
                                      
+                                      var uri = $('#item_total').attr('ref');
+				//	alert(uri);
+                                        $("#item_total").load(uri);
 
                                 },
                                 error: function(){
@@ -507,6 +531,10 @@ if (in_array("InputMetodePengadaan", $arr_antarmuka)) {
  function fnSetEvaluasi(kode_evaluasi, nama) {
     $("#KODE_EVALUASI").val(kode_evaluasi);
     $("#KETERANGAN_EVALUASI").val(nama);
+    
+     var grid = $("#ep_pgd_evaluasi_view");
+     grid.trigger("reloadGrid",[{page:1}]);
+                                       
     
  
  }
@@ -929,8 +957,8 @@ function fnVerifikasiVendor(str) {
                                         data: str,
                                         dataType: "html",
                                         success: function(msg) {
-                                                alert(msg);
-                                            
+                                                 alert(msg);
+                                             jQuery('#modal_form_verifikasi').dialog("close");
                                         
                                     }
 
@@ -953,16 +981,15 @@ function fnVerifikasiVendor(str) {
 }
 ?>
 
-
- <?php
-if (in_array("InputEvaluasiVendor", $arr_antarmuka)) {
+<?php
+if (in_array("MonitorEvaluasiVendor", $arr_antarmuka)) {
 ?>
 <div id="modal_form_komentar_harga" ></div>
 <div id="modal_form_komentar_teknis" ></div> 
 <div id="modal_form_evaluasi_teknis" ></div>  
  <div id="modal_form_evaluasi_harga" ></div>
  <div class="accordion">
- <h3 id="InputEvaluasiTender" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_evaluasi?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >EVALUASI</h3>
+ <h3 id="InputEvaluasiTender" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_evaluasi_view?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >EVALUASI</h3>
     <div>
         
         
@@ -1166,6 +1193,220 @@ function fnNilaiHarga(str) {
 ?>
 
 
+
+ <?php
+if (in_array("InputEvaluasiVendor", $arr_antarmuka)) {
+?>
+<div id="modal_form_komentar_harga" ></div>
+<div id="modal_form_komentar_teknis" ></div> 
+<div id="modal_form_evaluasi_teknis" ></div>  
+ <div id="modal_form_evaluasi_harga" ></div>
+ <div class="accordion">
+ <h3 id="InputEvaluasiTender" href="<?php echo base_url(); ?>index.php/pgd/gridrf/ep_pgd_tender_evaluasi?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>" >EVALUASI</h3>
+    <div>
+        
+        
+       <div id="list" ></div>
+    </div>
+ </div>  
+<script>
+
+
+  function fnHitungNilaiHarga(){
+      
+                alert("Hitung Nilai");
+                 $("#frm_EvaluasiHarga").ajaxSubmit({
+                                             success: function(msg){
+                                                 
+                                          //   $("#trace").html(msg);
+                                             alert(msg);
+  jQuery('#modal_form_evaluasi_harga').load($site_url + '/pgd/Pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' );
+ // alert(msg);
+                                                 //reload grid
+                                                 //   window.location.reload();
+                                                  
+                     
+                                             },
+                                             error: function(){
+                                                 alert('Data gagal disimpan')
+                                             }
+                    });
+            
+            
+        } 
+        
+   
+function fnKomentarHarga(kode_vendor,nama_vendor){
+             
+      jQuery('#modal_form_komentar_harga')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/komentar_harga/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                       
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                $('#KOMENTAR_EVALUASI_HARGA').val(tinyMCE.get('commentar_harga').getContent());
+                               
+                                $("#frmKomentarTeknis").ajaxSubmit({
+                                      //clearForm: false,
+                                      success: function(msg){
+                                            alert(msg);
+                                           $("#trace").html(msg);
+                                         // alert(msg);
+                                          //reload grid
+                                        jQuery('#modal_form_evaluasi_harga').load($site_url + '/pgd/Pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' )
+                                          },
+                                      error: function(){
+                                          alert('Data gagal disimpan')
+                                      }
+                                  });
+
+                               
+                               
+                               
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_komentar_harga').dialog("open");
+    
+}   
+
+
+function fnKomentarTeknis(kode_vendor,nama_vendor){
+             
+      jQuery('#modal_form_komentar_teknis')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                        
+                       
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                               
+                                $("#frmKomentarTeknis").ajaxSubmit({
+                                      //clearForm: false,
+                                      success: function(msg){
+                                        //    alert(msg);
+                                         //  $("#trace").html(msg);
+                                         // alert(msg);
+                                          //reload grid
+                                        jQuery('#modal_form_evaluasi_teknis').load($site_url + '/pgd/Pengadaan_evaluasi/teknis?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' )
+                                          },
+                                      error: function(){
+                                          alert('Data gagal disimpan')
+                                      }
+                                  });
+
+                               
+                               
+                               
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_komentar_teknis').dialog("open");
+    
+}   
+
+
+function fnNilaiHarga(str) {
+   //   alert("Edit Nilai Harga : " + str);
+      
+             
+      jQuery('#modal_form_evaluasi_harga')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                        
+                                      
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_evaluasi_harga').dialog("open");
+            
+      
+  }  
+  
+  function fnNilaiTeknis(str) {
+      alert("Edit Nilai Teknis : " + str);
+      
+      jQuery('#modal_form_evaluasi_teknis')
+                     .load($site_url + '/pgd/Pengadaan_evaluasi/teknis?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' )
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                         height:500,
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "SIMPAN": function() { 
+                                 //  alert("xxx"); 
+                                   validator_EvaluasiTeknis = $("#frm_EvaluasiTeknis").validate({
+                                        meta: "validate",
+                                        submitHandler: function(form) {
+                                            jQuery(form).ajaxSubmit();
+                                        }
+                                    });
+                                    
+                                       
+                                      $("#frm_EvaluasiTeknis").ajaxSubmit({
+                                             success: function(msg){
+                                                 
+                                             $("#trace").html(msg);
+                                             alert(msg);
+                                                 
+                                                  
+  jQuery('#modal_form_evaluasi_teknis').load($site_url + '/pgd/Pengadaan_evaluasi/teknis?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' );
+ // alert(msg);
+                                                 //reload grid
+                                                 //   window.location.reload();
+                                                  
+                     
+                                             },
+                                             error: function(){
+                                                 alert('Data gagal disimpan')
+                                             }
+                                          
+                                      });
+                                    
+                            }, 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_evaluasi_teknis').dialog("open");
+      
+  }  
+  
+</script>
+
+
+  <?php
+}
+?>
+
+
 <?php
 if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
 ?>
@@ -1179,8 +1420,32 @@ if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
 }
 ?> 
 
-  
-  
+<?php
+if (in_array("InputTenderPemenang", $arr_antarmuka)) {
+?>
+<div class="accordion">
+ <h3 id="InputTenderPemenang"  href="<?php echo base_url(); ?>index.php/pgd/pilih_pemenang/add?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">PILIH PEMENANG</h3>
+    <div>
+          <div id="list" ></div>
+    </div>
+ </div>  
+<?php
+}
+?>  
+
+    
+    <?php
+if (in_array("InputTenderNegosiasi", $arr_antarmuka)) {
+?>
+<div class="accordion">
+ <h3 id="InputTenderNegosiasi" href="<?php echo base_url(); ?>index.php/pgd/negosiasi/add?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>">PESAN NEGOSIASI</h3>
+    <div>
+          <div id="list" ></div>
+    </div>
+ </div>  
+<?php
+}
+?>  
  
 <?php
  if (in_array("MonitorTenderNegosiasi", $arr_antarmuka)) {
@@ -1192,7 +1457,7 @@ if (in_array("MonitorMetodeJadwal", $arr_antarmuka)) {
     </div>
  </div>
 <?php
-}
+  }
 ?>  
 
    
@@ -1289,7 +1554,7 @@ if (1) {
            
         
         frmlength = $(".clsinput").length;
-        //alert(frmlength);
+        alert(frmlength);
         if (frmlength == 0) {
             
                    $.ajax({
@@ -1303,12 +1568,11 @@ if (1) {
                           $("#frmKomentar").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
-                                        //    alert(msg);
-                                        //   $("#trace").html(msg);
+                                          //     alert(msg);
+                                          //    $("#trace").html(msg);
                                          // alert(msg);
                                           //reload grid
-
-
+                                          window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd"; ;   
                                       },
                                       error: function(){
                                           alert('Data gagal disimpan')
@@ -1343,9 +1607,9 @@ if (1) {
                                     $("#frmKomentar").ajaxSubmit({
                                                 //clearForm: false,
                                                 success: function(msg){
-                                                      alert('Komentar:' + msg);
-                                                     $("#trace").html(msg);
-                                                    
+                                             //         alert('Komentar:' + msg);
+                                             //         $("#trace").html(msg);
+                                                     window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd";
                                                 },
                                                 error: function(){
                                                     alert('Data Komentar gagal disimpan')

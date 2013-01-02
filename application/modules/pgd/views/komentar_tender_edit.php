@@ -31,7 +31,7 @@
 <br/> 
 <button type="button" id="btnSubmit"   >Submit</button>
 <button type="button" id="btnCancel"    >Cancel</button> 
-<div id="trace" ><div>
+<div id="trace" ></div>
   </div>
   <script>
      tinyMCE.init({
@@ -72,7 +72,7 @@
         
         
         $("#btnSubmit").click(function(){ 
-            alert("btnSubmit");
+            //alert("btnSubmit");
              $('#komentar').val(tinyMCE.get('commentar').getContent());
             fnSubmitKomentar();
             return;

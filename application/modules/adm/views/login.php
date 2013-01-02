@@ -10,7 +10,7 @@
 </head>
 <body onload="document.getElementById('txtUserName').focus();" leftmargin="0" topmargin="0"
     marginwidth="0" marginheight="0">
-    <form id="form1" runat="server" action="<?php echo base_url()  . "index.php/adm/app/login"; ?>" method="get" >
+    <form id="form1" runat="server" action="<?php echo base_url()  . "index.php/adm/app/login"; ?>" method="post" >
          <table class="table_main_container" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td class="table_band">
@@ -75,6 +75,23 @@
                                                         &nbsp;</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="txt_label">
+                                                        Jabatan</td>
+                                                    <td>
+                                                        <select id="kode_jabatan" name="kode_jabatan" >
+                                                            <?php 
+                                                            foreach($rsjabatan as $row) {
+                                                            ?>
+                                                                <option value="<?php echo $row->KODE_JABATAN; ?>" ><?php echo $row->NAMA_JABATAN; ?></option> 
+                                                            
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                            
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
                                                     <td colspan="2" align="center">
                                                         <input type="submit" name="Submit" value="Login" style="width: 60px" id="btnLogin"
                                                             class="frm_butt" runat="server"></td>
@@ -129,8 +146,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="table_footer">
-                    © 2009 Copyright <b>PT. ADW</b> - All Right Reserved</td>
+                <td class="table_footer" >&copy; 2012 Copyright <b>PT. ADW</b> - All Right Reserved</td>
             </tr>
             <tr>
                 <td class="table_end">

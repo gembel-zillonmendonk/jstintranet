@@ -20,13 +20,14 @@ class Ep_pgd_tender_vendor_view extends MY_Model {
                             );
 			 
     public $columns_conf = array( 
-                            'NAMA_VENDOR' =>array('hidden'=>false, 'width'=>100)    
+                            'NAMA_VENDOR' =>array('hidden'=>false, 'width'=>50)    
+                            , 'STATUS' =>array('hidden'=>false, 'width'=>50)    
+        
                             );
 
 	
-    public $sql_select = "(SELECT T.KODE_TENDER , T.KODE_KANTOR, T.KODE_VENDOR, V.NAMA_VENDOR
-                           FROM EP_PGD_TENDER_VENDOR T  
-                           LEFT JOIN EP_VENDOR V ON T.KODE_VENDOR = V.KODE_VENDOR
+    public $sql_select = "(SELECT KODE_TENDER ,  KODE_KANTOR,   KODE_VENDOR,  NAMA_VENDOR, STATUS
+                           FROM VW_PGD_TENDER_VENDOR_STATUS 
                             ";
     function setParam() {
                          if ($this->input->get("KODE_TENDER")){
@@ -40,8 +41,8 @@ class Ep_pgd_tender_vendor_view extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             } 
             
-                 $this->sql_select  = $this->sql_select . " WHERE  T.KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
-                $this->sql_select  = $this->sql_select . " AND T.KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'   "; 
+                 $this->sql_select  = $this->sql_select . " WHERE   KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
+                $this->sql_select  = $this->sql_select . " AND  KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'   "; 
      
             
                 

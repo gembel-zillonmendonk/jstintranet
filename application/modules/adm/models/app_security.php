@@ -10,8 +10,11 @@ class App_security extends CI_Model {
 
 	function login() {
 		
-		$kode_user = 'USER01';
-		$kode_jabatan = 	81;
+            
+                // print_r($_POST);
+		 
+                $kode_user = 'USER01';
+		$kode_jabatan = $this->input->post("kode_jabatan");
 		$kode_kantor = 	'44A';
 		
 		 

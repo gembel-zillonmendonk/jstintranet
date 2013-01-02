@@ -35,8 +35,8 @@ class Ep_pgd_perencanaan_anggaran extends MY_Model {
                              'KODE_MA' =>array('hidden'=>true, 'width'=>0)     ,
                              'AKUN' =>array('hidden'=>false, 'width'=>10),
                              'NAMA_AKUN' =>array('hidden'=>false, 'width'=>70),
-                             'PAGU_ANGGARAN' =>array('hidden'=>false, 'width'=>10),
-                             'SISA_ANGGARAN' =>array('hidden'=>false, 'width'=>10)
+                             'PAGU_ANGGARAN' =>array('hidden'=>false, 'width'=>10, 'align'=>'right'),
+                             'SISA_ANGGARAN' =>array('hidden'=>false, 'width'=>10, 'align'=>'right')
                                 );
 	
 	
@@ -49,8 +49,8 @@ class Ep_pgd_perencanaan_anggaran extends MY_Model {
                              P.KODE_MA       ,
                              P.AKUN, 
                              P.NAMA_AKUN ,
-                             P.PAGU_ANGGARAN ,
-                             P.SISA_ANGGARAN 
+                             TO_CHAR(P.PAGU_ANGGARAN,'999G999G999G999') AS PAGU_ANGGARAN,
+                             TO_CHAR(P.SISA_ANGGARAN,'999G999G999G999') AS SISA_ANGGARAN 
                 FROM EP_PGD_PERENCANAAN_ANGGARAN P
 		WHERE 1 = 1 
 		 ";

@@ -199,7 +199,7 @@
                                          //  $("#trace").html(msg);
                                          // alert(msg);
                                           //reload grid
-                                            window.location = "<?php echo base_url() ."index.php/perencanaan/rekap_perencanaan"; ?>";    
+                                            window.location = "<?php echo base_url() ."index.php/pgd/perencanaan/rekap_perencanaan"; ?>";    
 
                                       },
                                       error: function(){

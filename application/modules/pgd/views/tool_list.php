@@ -84,7 +84,7 @@
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
 	 
-		 alert(grid);
+		 // alert(grid);
 		 
 		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
 		
@@ -112,7 +112,8 @@
          
  
 function fnTenderMonitor(str) {
-    
+   
+
        
         $('#grid_ep_pgd_tender_monitor').jqGrid('setSelection',str); 
      	var selected = $('#grid_ep_pgd_tender_monitor').jqGrid('getGridParam', 'selrow');
@@ -123,24 +124,10 @@ function fnTenderMonitor(str) {
     kode_tender = selected["KODE_TENDER"] ;
     kode_kantor = selected["KODE_KANTOR"] ;
     
- 
+   
     
-    jQuery('#modal_form_pengadaan_monitor')
-                    .load($site_url + '/pgd/Pengadaan_monitor/view?KODE_TENDER=' + kode_tender + '&KODE_KANTOR=' + kode_kantor ) 
-                    .dialog({ //dialog form use for popup after click button in pager
-                        autoOpen:false,
-                        width:1000,
-                        height:600,
-                        modal:true,
-                        //position:'top',
-                        buttons: { 
-                          
-                            "BATAL": function() { 
-                                $(this).dialog("close");
-                            } 
-                        }
-                    });
-            jQuery('#modal_form_pengadaan_monitor').dialog("open");
+    window.location = '<?php echo base_url(); ?>index.php/pgd/tools/update_tanggal?KODE_TENDER=' + kode_tender + '&KODE_KANTOR=' + kode_kantor;
+ 
 
 } 
   
