@@ -30,7 +30,7 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 //        'POSISI_PERSETUJUAN',
 //        'JUMLAH_PERUBAHAN',
 //        'TGL_AKHIR_PENAWARAN',
-        'NILAI_JAMINAN',
+        'NILAI_JAMINAN'=>array('pattern'=>'^((\d+)|(\d{1,3})(\,\d{3}|)*)(\.\d{2}|)$'),
         'NILAI_MINIMAL_JAMINAN',
         'BANK_JAMINAN',
         'NO_JAMINAN',
@@ -115,7 +115,21 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
         $this->init();
         
         // set default value
-        if(isset($_REQUEST['KODE_TENDER']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])){
+        if(isset($_REQUEST['KODE_KONTRAK'])){
+            $sql = "SELECT NILAI_KONTRAK * 0.05 as NILAI_KONTRAK
+                        FROM EP_KTR_KONTRAK
+                        WHERE KODE_KONTRAK = '".$_REQUEST['KODE_KONTRAK']."' 
+                            AND KODE_VENDOR = '".$_REQUEST['KODE_VENDOR']."' 
+                            AND KODE_TENDER = '".$_REQUEST['KODE_TENDER']."' 
+                            AND KODE_KANTOR = '".$_REQUEST['KODE_KANTOR']."'";
+            
+            $row = $this->db->query($sql)->row_array();
+            
+//            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
+            $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['NILAI_KONTRAK'] * 1;
+            $this->validation['NILAI_JAMINAN']['min'] = $row['NILAI_KONTRAK'] * 1;
+        }
+        else if(isset($_REQUEST['KODE_TENDER']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])){
             $this->attributes['KODE_TENDER'] = $_REQUEST['KODE_TENDER'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];

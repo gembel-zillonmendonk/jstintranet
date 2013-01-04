@@ -10,6 +10,8 @@ class list_for_blacklist extends MY_Model {
         'NAMA_VENDOR',
         'ALAMAT',
         'STATUS',
+        'NILAI',
+        'FLAG',
         'ACT',
     );
     function __construct() {
@@ -27,6 +29,31 @@ class list_for_blacklist extends MY_Model {
                 $pivot_query
             ) x on x.kode_vendor = a.kode_vendor
             where a.status = 9 and x.kode_vendor is null
+        )";
+        
+        $this->sql_select = "(
+            select y.*, z.nama_vendor, z.status, z.alamat, '' as ACT 
+            from (
+                select x.*, ROW_NUMBER() OVER(PARTITION BY kode_vendor ORDER BY nilai ASC) rn 
+                from (
+                    select a.kode_vendor, a.kode_kel_jasa_barang, b.nama_sub_barang_jasa
+                            , FN_VENDOR_PERF_POINT(A.KODE_VENDOR, A.KODE_KEL_JASA_BARANG, A.KODE_PARAM, A.KODE_TENDER) as NILAI
+                            , FN_VENDOR_PERF_FLAG(A.KODE_VENDOR, A.KODE_KEL_JASA_BARANG, A.KODE_PARAM, A.KODE_TENDER) as FLAG
+
+                    from ep_vendor_kinerja a
+                    inner join (
+                        select kode_vendor, kode_barang as kode_sub_barang_jasa, nama_barang as nama_sub_barang_jasa, terdaftar from ep_vendor_barang
+                        union all
+                        select kode_vendor, kode_jasa, nama_jasa, terdaftar from ep_vendor_jasa
+                    ) b on a.kode_kel_jasa_barang = b.kode_sub_barang_jasa
+                    where b.terdaftar = '1'
+                ) x
+            ) y
+            inner join ep_vendor z on y.kode_vendor = z.kode_vendor
+            left join (
+                $pivot_query
+            ) x on x.kode_vendor = y.kode_vendor
+            where rn = 1 and z.status = 9 and x.kode_vendor is null and flag = 'Black'
         )";
         
         $this->js_grid_completed = '
