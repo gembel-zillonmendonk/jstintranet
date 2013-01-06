@@ -38,6 +38,13 @@ class po extends MY_Controller
             $this->layout->view('po/detail');
     }
     
+    public function detail_progress(){        
+        if($this->_is_ajax_request())
+            $this->load->view('po/detail_progress');
+        else
+            $this->layout->view('po/detail_progress');
+    }
+    
     public function detail_bastp(){        
         if($this->_is_ajax_request())
             $this->load->view('po/detail_bastp');
@@ -51,6 +58,10 @@ class po extends MY_Controller
     
     public function monitoring(){
         $this->layout->view('po/monitoring');
+    }
+    
+    public function monitoring_progress(){
+        $this->layout->view('po/monitoring_progress');
     }
 }
 ?>

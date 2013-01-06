@@ -66,6 +66,11 @@ foreach ($form->model->primary_keys as $v) {
                             $v['class'] = 'datepicker ' . $v['class'];
                             echo form_input($v);
                             break;
+                        case 'datetime':
+                            $v['type'] = 'text';
+                            $v['class'] = 'datetimepicker ' . $v['class'];
+                            echo form_input($v);
+                            break;
                         case 'file':
                             $this->load->helper('html');
                             echo form_upload($v);

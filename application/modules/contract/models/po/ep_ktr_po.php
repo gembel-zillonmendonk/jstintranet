@@ -13,7 +13,7 @@ class ep_ktr_po extends MY_Model {
         'KODE_VENDOR' => array('type' => 'hidden'),
         'NAMA_VENDOR',
 //        'MATA_UANG',
-        'TGL_MULAI',
+        'TGL_MULAI' => array('type' => 'datetime'),
         'TGL_AKHIR',
 //        'TGL_BUAT',
         'CATATAN_PO',
@@ -80,7 +80,7 @@ class ep_ktr_po extends MY_Model {
                 $this->attributes['SISA_NILAI_KONTRAK'] = $row['SISA_NILAI_KONTRAK'];
 
                 // popup detail kontrak
-                $this->attributes['DETAIL_KONTRAK'] = $row['KODE_KONTRAK'] . "&nbsp;&nbsp;&nbsp;<button href='" . (site_url('contract/contract/view_popup?KODE_PROSES=' . $row['KODE_PROSES'] . '&KODE_KONTRAK=' . $row['KODE_KONTRAK'] . '&KODE_KANTOR=' . $row['KODE_KANTOR'] . '&KODE_VENDOR=' . $row['KODE_VENDOR'] . '&KODE_TENDER=' . $row['KODE_TENDER'] . '&')) . "' onclick='window.open($(this).attr(\"href\"), \"xx\", \"width=800,height=500\"); return false;'> [lihat detail] </button>";
+                $this->attributes['DETAIL_KONTRAK'] = $row['KODE_KONTRAK'] . "&nbsp;&nbsp;&nbsp;<button href='" . (site_url('contract/contract/view_popup_po?KODE_PROSES=' . $row['KODE_PROSES'] . '&KODE_KONTRAK=' . $row['KODE_KONTRAK'] . '&KODE_KANTOR=' . $row['KODE_KANTOR'] . '&KODE_VENDOR=' . $row['KODE_VENDOR'] . '&KODE_TENDER=' . $row['KODE_TENDER'] . '&')) . "' onclick='window.open($(this).attr(\"href\"), \"xx\", \"width=800,height=500\"); return false;'> [lihat detail] </button>";
 //                $this->elements_conf['LABEL_KODE_KONTRAK'] = array(
 //                    'type'=>'anchor_popup'
 //                    , 'value' => 'xxx'

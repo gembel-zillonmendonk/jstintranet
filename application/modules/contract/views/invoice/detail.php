@@ -12,9 +12,11 @@ if (count($_REQUEST) > 0) {
 
 <div class="accordion">
     <?php if (strlen($params) > 0 && isset($_REQUEST['KODE_INVOICE'])): ?>
-        <h3 href="<?php echo site_url('/contract/invoice/view_form/invoice.ep_ktr_invoice' . $params) ?>">HEADER</h3>
+        <h3 href="<?php echo site_url('/contract/invoice/view_form/invoice.ep_ktr_invoice_view' . $params) ?>">HEADER</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/invoice/view_grid/invoice.ep_ktr_invoice_item' . $params) ?>">ITEM</h3>
+        <h3 href="<?php echo site_url('/contract/invoice/view_grid/invoice.ep_ktr_invoice_item_bastp' . $params) ?>">BASTP/B</h3>
+        <div></div>
+        <h3 href="<?php echo site_url('/contract/invoice/view_grid/invoice.ep_ktr_invoice_dok' . $params) ?>">LAMPIRAN</h3>
         <div></div>
     <?php else: ?>
         <h3 href="<?php echo site_url('/contract/invoice/view_form/invoice.ep_ktr_invoice' . $params) ?>">HEADER</h3>

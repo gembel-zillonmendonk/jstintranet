@@ -7,6 +7,7 @@
         $(function() {
             $( "input:submit, button").button();
             $( ".datepicker" ).datepicker();
+            $( ".datetimepicker" ).datetimepicker();
             //$( ".datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
         
         });

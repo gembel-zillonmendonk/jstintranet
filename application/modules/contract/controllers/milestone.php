@@ -35,6 +35,11 @@ class milestone extends MY_Controller
             $this->layout->view('milestone/detail');
     }
     
+    public function view_popup() {
+        $this->layout->setLayout('layout_popup');
+        $this->layout->view('milestone/view_popup');
+    }
+    
     public function update_bastp(){
         
         if($this->_is_ajax_request())

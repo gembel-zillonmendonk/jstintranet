@@ -21,6 +21,8 @@
 
         <script type="text/javascript" src="<?php echo base_url('js/jquery.validate.js') ?>"></script>         
         <script type="text/javascript" src="<?php echo base_url('js/jquery.metadata.js') ?>"></script>         
+        
+        <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-timepicker-addon.js') ?>"></script>        
         <script type="text/javascript">
             $.jgrid.no_legacy_api = true;
             $.jgrid.useJSON = true;
@@ -34,6 +36,17 @@
                 defaultDate: $('.datepicker').val()
             });
             
+            $.timepicker.setDefaults({
+                showOn: 'both',
+                buttonImageOnly: true,
+                buttonImage: '<?php echo base_url('images/Calendar_scheduleHS.png') ?>',
+                buttonText: 'Calendar',
+                dateFormat: "yy-mm-dd",
+                readOnly: true,
+                defaultDate: $('.datepicker').val(),
+                showButtonPanel: true,
+                showTimepicker: true
+            });
         </script>
 
         <script type="text/javascript" src="<?php echo base_url('js/hoverIntent.js') ?>"></script> 
@@ -371,5 +384,6 @@
     $(function() {
         $( "input:submit, input:button").button();
         $( ".datepicker" ).datepicker();
+        $( ".datetimepicker" ).datetimepicker();
     });
 </script>
