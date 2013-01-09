@@ -53,7 +53,7 @@ class list_for_blacklist extends MY_Model {
             left join (
                 $pivot_query
             ) x on x.kode_vendor = y.kode_vendor
-            where rn = 1 and z.status = 9 and x.kode_vendor is null and flag = 'Black'
+            where rn = 1 and z.status = 9 and x.kode_vendor is null and flag = 'BLACK'
         )";
         
         $this->js_grid_completed = '

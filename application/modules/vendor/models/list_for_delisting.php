@@ -46,7 +46,7 @@ class list_for_delisting extends MY_Model {
             left join (
                 $pivot_query
             ) x on x.kode_vendor = y.kode_vendor and x.kode_barang_jasa = y.kode_kel_jasa_barang
-            where rn = 1 and z.status = 9 and x.kode_vendor is null and flag = 'Red'
+            where rn = 1 and z.status = 9 and x.kode_vendor is null and flag = 'GREEN'
         )";
         
         $this->js_grid_completed = '

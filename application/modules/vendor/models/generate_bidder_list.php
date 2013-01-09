@@ -5,7 +5,7 @@ class generate_bidder_list extends MY_Model {
     public $table = 'EP_VENDOR';
     public $dir = 'vendor';
     public $sql_select = "( 
-        select a.*, b.KODE_WILAYAH, e.kode_barang, d.nama_subkelompok, e.nama_barang, c.terdaftar, 'M' as TIPE_KOMODITI, 0 as win, 0 as invited, 0 as reg, 0 as quote, '' as ACT 
+        select a.*, b.KODE2_WILAYAH, b.WILAYAH, e.kode_barang, d.nama_subkelompok, e.nama_barang, c.terdaftar, 'M' as TIPE_KOMODITI, 0 as win, 0 as invited, 0 as reg, 0 as quote, '' as ACT 
         from EP_VENDOR a 
         left join EP_VENDOR_WILAYAH b on a.kode_vendor = b.kode_vendor
         left join EP_VENDOR_BARANG c on c.kode_vendor = b.kode_vendor
@@ -16,6 +16,8 @@ class generate_bidder_list extends MY_Model {
         'KODE_VENDOR',
         'NAMA_VENDOR',
         'KODE_BARANG',
+        'KODE2_WILAYAH',
+        'WILAYAH',
         'NAMA_SUBKELOMPOK',
         'NAMA_BARANG',
         'TIPE_KOMODITI',

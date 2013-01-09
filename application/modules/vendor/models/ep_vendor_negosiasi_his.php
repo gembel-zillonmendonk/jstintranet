@@ -71,6 +71,11 @@ class Ep_vendor_negosiasi_his extends MY_Model {
     function _after_insert() {
         parent::_after_insert();
         $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 where kode_nomorurut = 'EP_VENDOR_NEGOSIASI_HIS'");
+        
+        $terdaftar = $this->attributes['STATUS'] == 'LISTED' ? 1 : 0;
+        $this->db->query("update ep_vendor_barang set terdaftar = $terdaftar 
+            where kode_vendor = '".$this->attributes['KODE_VENDOR']."'
+                AND kode_barang = '".$this->attributes['PROD_EXP_ID']."'");
     }
 
 }

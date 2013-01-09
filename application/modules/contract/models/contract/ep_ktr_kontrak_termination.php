@@ -64,7 +64,24 @@ class ep_ktr_kontrak_termination extends MY_Model {
                     $val['NAMA_PARAM'] = $v['NAMA_PARAM'];
                     $val['PILIHAN_PARAM'] = isset($v['PILIHAN_PARAM']) ? $v['PILIHAN_PARAM'] : 0;
 
-                    $this->db->insert("EP_VENDOR_KINERJA", $val);
+                    $cek = $this->db->query("SELECT * 
+                        FROM EP_VENDOR_KINERJA 
+                        WHERE KODE_VENDOR='" . $val['KODE_VENDOR'] . "'
+                        AND TIPE_KOMODITI='" . $val['TIPE_KOMODITI'] . "'
+                        AND KODE_KEL_JASA_BARANG='" . $val['KODE_KEL_JASA_BARANG'] . "'
+                        AND KODE_TENDER='" . $val['KODE_TENDER'] . "'
+                        AND KODE_PARAM='" . $val['KODE_PARAM'] . "'")->result_array();
+
+                    if (!count($cek))
+                        $this->db->insert("EP_VENDOR_KINERJA", $val);
+                    else
+                        $this->db->update("EP_VENDOR_KINERJA", $val, array(
+                            'KODE_VENDOR' => $val['KODE_VENDOR'],
+                            'TIPE_KOMODITI' => $val['TIPE_KOMODITI'],
+                            'KODE_KEL_JASA_BARANG' => $val['KODE_KEL_JASA_BARANG'],
+                            'KODE_TENDER' => $val['KODE_TENDER'],
+                            'KODE_PARAM' => $val['KODE_PARAM'],
+                        ));
                 }
             }
 
@@ -84,7 +101,24 @@ class ep_ktr_kontrak_termination extends MY_Model {
                     $v['KODE_VENDOR'] = $val['KODE_VENDOR'];
                     $v['KODE_TENDER'] = $val['KODE_TENDER'];
 
-                    $this->db->insert("EP_VENDOR_KINERJA", $v);
+                    $cek = $this->db->query("SELECT * 
+                        FROM EP_VENDOR_KINERJA 
+                        WHERE KODE_VENDOR='" . $v['KODE_VENDOR'] . "'
+                        AND TIPE_KOMODITI='" . $v['TIPE_KOMODITI'] . "'
+                        AND KODE_KEL_JASA_BARANG='" . $v['KODE_KEL_JASA_BARANG'] . "'
+                        AND KODE_TENDER='" . $v['KODE_TENDER'] . "'
+                        AND KODE_PARAM='" . $v['KODE_PARAM'] . "'")->result_array();
+
+                    if (!count($cek) > 0)
+                        $this->db->insert("EP_VENDOR_KINERJA", $v);
+                    else
+                        $this->db->update("EP_VENDOR_KINERJA", $v, array(
+                            'KODE_VENDOR' => $v['KODE_VENDOR'],
+                            'TIPE_KOMODITI' => $v['TIPE_KOMODITI'],
+                            'KODE_KEL_JASA_BARANG' => $v['KODE_KEL_JASA_BARANG'],
+                            'KODE_TENDER' => $v['KODE_TENDER'],
+                            'KODE_PARAM' => $v['KODE_PARAM'],
+                        ));
                 }
             }
         }

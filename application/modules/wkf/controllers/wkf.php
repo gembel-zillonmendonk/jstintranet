@@ -160,7 +160,7 @@ class Wkf extends MX_Controller {
                 inner join ep_wkf_aktifitas d on b.kode_aktifitas = d.kode_aktifitas
                 where a.kode_proses = $kode_proses";
         
-        $history = $this->db->query()->result_array();
+        $history = $this->db->query($sql)->result_array();
         
         if ($this->_is_ajax_request())
             $this->load->view('list_history', array(

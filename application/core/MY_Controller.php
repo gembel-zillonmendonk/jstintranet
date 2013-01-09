@@ -31,6 +31,35 @@ class MY_Controller extends MX_Controller {
 //        print_r($model);
     }
 
+    public function download($filename) {
+
+
+        $config = $this->config->item('ftp');
+        if ($config['enable']) {
+            $this->load->library('ftp');
+            $this->ftp->connect($config);
+
+            //Create temp handler: 
+            $tempHandle = fopen('php://temp', 'r+');
+
+            //Get file from FTP: 
+			$size = ftp_size($this->ftp->conn_id, $config['target_dir'] . $filename);
+			
+            if (ftp_fget ($this->ftp->conn_id, $tempHandle, $config['target_dir'] . $filename, FTP_BINARY)) {
+				rewind($tempHandle);
+
+                header("Content-Length: " . $size . "\n\n");
+                header("Content-Disposition: attachment; filename=$filename");
+
+                echo stream_get_contents($tempHandle);
+            } else {
+                return false;
+            }
+
+            $this->ftp->close();
+        }
+    }
+
     public function gridr($model = null) {
         // check and load model
         $model = $this->_load_model($model);
@@ -575,6 +604,27 @@ class MY_Controller extends MX_Controller {
         }
     }
 
+    public function grid_delete($model = null) {
+        // check and load model
+        $model = $this->_load_model($model);
+
+        // edit request 
+        $keys = $model->primary_keys;
+        if (
+                (count($_REQUEST) > 0 && count(array_intersect(array_keys($_REQUEST), $keys)) === count($keys)) // get PKey from $_REQUEST
+                ||
+                (count($model->attributes) > 0 && count(array_intersect(array_keys($model->attributes), $keys)) === count($keys)) // get PKey from model
+        ) { // check wheater primary key was supplied or not
+            $where = array();
+            foreach ($keys as $key)
+                $where[$key] = isset($model->attributes[$key]) ? $model->attributes[$key] : $_REQUEST[$key];
+
+            $query = $this->db->delete($model->table, $where); // get single row
+            // $model->attributes = $query; // set model attributes
+//            $model->attributes = array_merge($model->attributes, $query); // set model attributes
+        }
+    }
+
     public function grid($model = null) {
         // check and load model
         $model = $this->_load_model($model);
@@ -669,10 +719,10 @@ class MY_Controller extends MX_Controller {
     public function cache_grid_form($model = null) {
         // check and load model
         $model = $this->_load_model($model);
-        
+
         if ($this->_is_ajax_request() && isset($_REQUEST[$model->table]) && count($_REQUEST[$model->table]) > 0) {
 //            echo "<pre>";
-            foreach($_REQUEST[$model->table] as $data){
+            foreach ($_REQUEST[$model->table] as $data) {
                 $model->attributes = isset($model->attributes) ? array_merge($model->attributes, $data) : $data;
 //                print_r($model->attributes);
                 $model->save();
@@ -680,21 +730,21 @@ class MY_Controller extends MX_Controller {
 //            die();
             $model->attributes = array();
         }
-        
+
         $model->grid_view = 'crud/cache_grid_form';
         $query = $this->_grid_data($model);
-        
+
         $form = new MY_Form($model);
         $el_fields = $this->load->view('crud/_el_fields', array('form' => $form,), true);
         $el_buttons = $this->load->view('crud/_el_buttons', array('form' => $form,), true);
-        
+
         if ($this->_is_ajax_request()) {
             if (isset($_REQUEST['oper'])) {
                 echo json_encode($query);
                 exit();
             } else {
                 $this->load->view($model->grid_view, array(
-                    'model'=> $model,
+                    'model' => $model,
                     'el_fields' => $el_fields,
                     'form' => $form,
                     'grid' => new MY_Grid($model),
@@ -702,7 +752,7 @@ class MY_Controller extends MX_Controller {
             }
         } else {
             $this->layout->view($model->grid_view, array(
-                'model'=> $model,
+                'model' => $model,
                 'el_fields' => $el_fields,
                 'el_buttons' => $el_buttons,
                 'form' => $form,
