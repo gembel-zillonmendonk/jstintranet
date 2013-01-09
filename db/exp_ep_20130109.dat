@@ -1,0 +1,4 @@
+FILE="D:\www\jstintranet\db\ep_20130109.DMP"
+LOG="D:\www\jstintranet\db\exp_ep_20130109.log"
+OWNER=('EP')
+FEEDBACK=1000
