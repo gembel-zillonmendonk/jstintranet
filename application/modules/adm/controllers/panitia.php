@@ -18,6 +18,32 @@ class Panitia extends MY_Controller {
  
 	}
 	
+        public function delete_kelompok(){
+
+             
+            $sql = "DELETE FROM EP_MS_KELOMPOK_PANITIA ";
+            $sql .= " WHERE KODE_PANITIA=" . $_GET["KODE_PANITIA"] ;
+            $sql .= " AND KODE_KANTOR= '" . $_GET["KODE_KANTOR"]. "' ";
+              
+            $this->db->simple_query($sql);
+             
+            redirect(base_url() . "index.php/adm/panitia");
+            
+        }        
+        
+        public function delete(){
+            // print_r($_GET); 
+            
+            $sql = "DELETE FROM EP_MS_ANGGOTA_PANITIA ";
+            $sql .= " WHERE KODE_PANITIA=" . $_GET["KODE_PANITIA"] ;
+            $sql .= " AND KODE_KANTOR= '" . $_GET["KODE_KANTOR"]. "' ";
+            $sql .= " AND KODE_JABATAN= '" . $_GET["KODE_JABATAN"]. "' ";
+             
+            $this->db->simple_query($sql);
+             
+            redirect(base_url() . "index.php/adm/panitia/edit?KODE_PANITIA=" . $_GET["KODE_PANITIA"] . "&KODE_KANTOR=" . $_GET["KODE_KANTOR"]);
+        }
+        
 	public function add() {
 	
 		if ($this->input->post("nama_panitia")) {
@@ -64,15 +90,35 @@ class Panitia extends MY_Controller {
 		
 		if ($this->input->post("add_type") == "add_anggota") {
 			 
-			$sql = "INSERT INTO EP_MS_ANGGOTA_PANITIA (KODE_PANITIA,  KODE_KANTOR, KODE_JABATAN, TGL_REKAM ) ";
-			 $sql .= " VALUES ( " . $this->input->post("kode_panitia_key") . ",'" .$this->input->post("kode_kantor_key"). "', '" . $this->input->post("kode_jabatan"). "', TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD')) ";
+                    //print_r($_POST);
+                    if ($this->input->post("status_pemimpin")  ) {
+                        $status_pemimpin = "1";
+                        
+                        $sql = "UPDATE EP_MS_ANGGOTA_PANITIA ";
+                        $sql .= " SET STATUS_PEMIMPIN = '0' ";
+                        $sql .= " WHERE KODE_PANITIA=" . $this->input->post("kode_panitia_key") ;
+                        $sql .= " AND KODE_KANTOR= '" . $this->input->post("kode_kantor_key"). "' ";
+
+                        $this->db->simple_query($sql);
+                         
+                        
+                    } else {
+                        $status_pemimpin = "0";
+                        
+                    }
+                    
+                    
+			$sql = "INSERT INTO EP_MS_ANGGOTA_PANITIA (KODE_PANITIA,  KODE_KANTOR, KODE_JABATAN, STATUS_PEMIMPIN,   TGL_REKAM ) ";
+			 $sql .= " VALUES ( " . $this->input->post("kode_panitia_key") . ",'" .$this->input->post("kode_kantor_key"). "', '" . $this->input->post("kode_jabatan"). "',  '" . $status_pemimpin . "',  TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD')) ";
 			 
-			// echo $sql;
+			 
                          
 			 //echo $this->session->userdata("kode_panitia");
 			 
 			 $this->db->simple_query($sql);
 			 //return;
+                         
+                          
 		}
 		
 		if (  $this->input->get("KODE_PANITIA") ) {

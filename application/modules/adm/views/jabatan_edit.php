@@ -97,6 +97,14 @@
             $('input[id*="'+b+'"]').attr("checked",true) ;
             
         }
+        
+        function chk_child(obj){
+            b = obj.attr("id") ;
+             
+            $('input[parent*="'+b+'"]').attr("checked",false) ;
+            
+        }
+        
   
 	$(".chk").click(function() {
  	 idx = $(this).attr("id");
@@ -121,6 +129,7 @@
 		 $('input[parent*="'+idx+'"]').each(function(){
 			 if (!a) {
 				  $(this).attr("checked", false)  ;
+                                  chk_child($('input[id*="'+$(this).attr("id")+'"]'))
 			 }
 		 });
 	 

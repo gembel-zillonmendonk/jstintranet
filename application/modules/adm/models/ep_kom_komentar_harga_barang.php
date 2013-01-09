@@ -23,12 +23,13 @@ class Ep_kom_komentar_harga_barang extends MY_Model {
         ,  'KODE_KANTOR'  =>array('hidden'=>false, 'width'=>10)
         , 'NAMA_SUMBER'   =>array('hidden'=>false, 'width'=>10)
         , 'TGL_SUMBER'  =>array('hidden'=>false, 'width'=>10)
+        , 'NAMA_VENDOR'  =>array('hidden'=>false, 'width'=>10)
         , 'MATA_UANG'  =>array('hidden'=>false, 'width'=>10)
-        , 'HARGA'   =>array('hidden'=>false, 'width'=>10)
+        , 'HARGA'   =>array('hidden'=>false, 'width'=>'10', 'align'=>'right')
         , 'PROSES'   =>array('hidden'=>false, 'width'=>10)
    );
    public  $sql_select=  "(select K.KODE_KOMENTAR,  H.KODE_HARGA_BARANG , H.KODE_BARANG ,  J.NAMA_BARANG ,
-	H.KODE_KANTOR ,  H.KODE_SUMBER , S.NAMA_SUMBER ,  H.TGL_SUMBER ,  H.MATA_UANG ,  H.HARGA ,  H.KODE_VENDOR ,  H.STATUS  , '' as \"PROSES\"
+	H.KODE_KANTOR ,  H.KODE_SUMBER , S.NAMA_SUMBER ,  H.TGL_SUMBER , H.NAMA_VENDOR,  H.MATA_UANG , TO_CHAR(H.HARGA ,'999G999G999G999') AS HARGA ,  H.KODE_VENDOR ,  H.STATUS  , '' as \"PROSES\"
 	from EP_KOM_KOMENTAR K 
 	LEFT JOIN EP_KOM_HARGA_BARANG H ON   H.KODE_HARGA_BARANG =   K.KODE_HARGA
 	LEFT JOIN 	MS_BARANG J ON H.KODE_BARANG = J.KODE_BARANG AND H.KODE_SUB_BARANG = J.KODE_SUB_BARANG

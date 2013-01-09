@@ -20,8 +20,15 @@ class Ep_kom_jasa extends MY_Model {
     public $elements_conf = array('KODE_JASA','KODE_KEL_JASA', 'NAMA_JASA'  );
     public $columns_conf = array('KODE_JASA' =>array('hidden'=>false, 'width'=>10)
                     ,'KODE_KEL_JASA'  =>array('hidden'=>false, 'width'=>10)
-                    , 'NAMA_JASA'  =>array('hidden'=>false, 'width'=>80) );
-    public $sql_select = "(select  KODE_JASA , KODE_KEL_JASA ,  NAMA_JASA    from EP_KOM_JASA)";
+                    , 'NAMA_JASA'  =>array('hidden'=>false, 'width'=>60) 
+                    , 'STATUS'  =>array('hidden'=>false, 'width'=>20,  'align'=>'center') 
+        );
+    public $sql_select = "(select  KODE_JASA , KODE_KEL_JASA ,  NAMA_JASA 
+            ,CASE 
+                WHEN STATUS = '1' THEN 'SUDAH DISETUJUI'
+                ELSE 'BELUM DISETUJUI'
+            END AS STATUS  
+            from EP_KOM_JASA)";
     
     /*
       public $columns = array(

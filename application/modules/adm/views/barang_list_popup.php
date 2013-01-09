@@ -44,7 +44,7 @@
 		var myfilter = { groupOp: "AND", rules: []};
 		myfilter.rules.push({field:"KODE_BARANG",op:"eq",data:srcval});
 		
-		var grid = $("#grid_ep_kom_jasa");
+		var grid = $("#grid_ms_barang");
 			
 		
 		alert(grid);

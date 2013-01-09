@@ -2,7 +2,7 @@
 <?php $this->load->helper('form'); ?>
 <fieldset class="ui-widget-content">
      
-<?php echo form_open(); ?>
+    <form id="frmJasa" method="POST" >
  
 	 <div class="accordion">
             <h3 href="">KELOMPOK JASA</h3>
@@ -57,12 +57,12 @@
 			</div>
 	</div>			
 
-    <p>
-        <input type="button" id="btncancel"  value="Cancel" />
-        <input type="submit" value="Submit" />
-    </p>
+    
 </form>	
-
+<p>
+        <input type="button" id="btncancel"  value="Cancel" />
+        <input type="submit" id="btnsubmit" value="Submit" />
+    </p>
 <div id="modal_form_kelompok_jasa"></div>
 
 </fieldset> 
@@ -75,6 +75,10 @@
   }
   
   $(document).ready(function(){
+       	$("#btnsubmit").click(function() {
+            $("#frmJasa").submit();
+            
+        });
   
 	$("#btnPopup").click(function() {
 		 

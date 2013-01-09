@@ -202,7 +202,7 @@ class vendor extends MY_Controller
     
     public function generate_bidder_list()
     {
-        $rows = $this->db->query("select * from ms_subkelompok_barang")->result_array();
+        $rows = $this->db->query("select * from ms_subkelompok_barang order by nama_subkelompok")->result_array();
         $grup_barang = array();
         foreach ($rows as $v) {
             $grup_barang[$v['KODE_BARANG']] = $v['NAMA_SUBKELOMPOK'];

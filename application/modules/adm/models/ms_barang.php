@@ -18,8 +18,11 @@ class Ms_barang extends MY_Model {
     //public $table = "EP_NOMORURUT";
     
     public $elements_conf = array('KODE_BARANG', 'KODE_SUB_BARANG', 'NAMA_BARANG' );
-    public $columns_conf = array('KODE_BARANG' =>array('hidden'=>false, 'width'=>10) , 'KODE_SUB_BARANG' =>array('hidden'=>false, 'width'=>10) , 'NAMA_BARANG' =>array('hidden'=>false, 'width'=>80));
-    public $sql_select = "(select KODE_BARANG ,  KODE_SUB_BARANG ,  NAMA_BARANG  from MS_BARANG)";
+    public $columns_conf = array('KODE_BARANG' =>array('hidden'=>false, 'width'=>10) , 'KODE_SUB_BARANG' =>array('hidden'=>false, 'width'=>10) 
+        , 'NAMA_BARANG' =>array('hidden'=>false, 'width'=>60)  );
+    public $sql_select = "(select KODE_BARANG ,  KODE_SUB_BARANG , NAMA_BARANG 
+
+from MS_BARANG)";
     
     /*
       public $columns = array(

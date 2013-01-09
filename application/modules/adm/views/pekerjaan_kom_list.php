@@ -11,7 +11,7 @@
 				<label>
 					<select id="myfield" >
 						<option value="KODE_JASA" >Kode  Jasa</option>
-						<option value="NAMA_JASA" >Sumber</option>
+						<option value="NAMA_JASA" >Nama Jasa</option>
 						<option value="NAMA_SUMBER" >Sumber</option>
 						<option value="NAMA_VENDOR" >Vendor</option>
 						

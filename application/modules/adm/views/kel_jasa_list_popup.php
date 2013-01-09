@@ -73,51 +73,7 @@
                     }
                 });
             });
-	$("#btnAdd" ).click(function() {
-		window.location = "<?php echo base_url() ."index.php/kel_jasa/add"; ?>";  
-	});
-	
-	$("#btnEdit" ).click(function() {
-	 
-	 var selected = $('#grid_ep_kom_kelompok_jasa').jqGrid('getGridParam', 'selrow');
-		 if (selected) {
-                    selected = jQuery('#grid_ep_kom_kelompok_jasa').jqGrid('getRowData',selected);
-                    var keys = <?php echo json_encode(Array ( 0  => "KODE_KEL_JASA" )); ?>;
-                    var count = 0;
-                
-                    var data = {};
-                    var str ="";
-                    $.each(keys, function(k, v) { 
-                        data = {v:selected[v]};
-                        str += v + "=" + selected[v] + "&";
-                        count++; 
-                    });
-                    window.location = "<?php echo base_url() . "index.php/kel_jasa/edit"; ?>?" + str;
-		}			
-	});
-	
-		
-	$("#btnDelete" ).click(function() {
-	alert("xxAA");
-	 var selected = $('#grid_ep_kom_kelompok_jasa').jqGrid('getGridParam', 'selrow');
-		 if (selected) {
-                    selected = jQuery('#grid_ep_kom_kelompok_jasa').jqGrid('getRowData',selected);
-                    var keys = <?php echo json_encode(Array ( 0  => "KODE_KEL_JASA" )); ?>;
-                    var count = 0;
-                
-                    var data = {};
-                    var str ="";
-                    $.each(keys, function(k, v) { 
-                        data = {v:selected[v]};
-                        str += v + "=" + selected[v] + "&";
-                        count++; 
-                    }); 
-					
-                    window.location = "<?php echo base_url() . "index.php/kel_jasa/delete"; ?>?" + str;
-		}			
-	});
-	 
-	 
+	  
 
 	 });
   

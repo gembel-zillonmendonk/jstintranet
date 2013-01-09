@@ -8,7 +8,26 @@
 				<input type="button" id="btnSrc"  value="Cari" /> 
 			</p>
 			-->
+			 <fieldset class="ui-widget-content">
+        <legend>Pencarian</legend>
+			<form id="frmSearch" method="POST" action="" >
 			
+			<div id="mysearch"></div>
+			 
+                     
+                        <p>
+                                <label>CARI BERDASARKAN</label>
+                            		<select  id="kolom" name="kolom"  > 
+                                            <option value="KODE_BARANG">KODE BARANG</option>
+                                            <option value="NAMA_BARANG">DESKRIPSI</option>
+                                            
+                                         </select>    
+                                <input type="text" id="cari" name="cari"  />
+                                <button type="button" id="btnSrc"  >Cari</button> 
+                        </p>
+			</form>
+         </fieldset>                   
+
 			 
 			<div id="list" ></div>
 			</div>
@@ -32,26 +51,26 @@
 	
 	$("#btnSrc").click(function() {
 	
-
-	
-		//alert($("#kolom").val());
-		
-		
-		
-		srcval = $("#kolom").val();
+                // STATUS = $("#status").val();
+        	srcval = $("#kolom").val();
 		var myfilter = { groupOp: "AND", rules: []};
-		myfilter.rules.push({field:"KODE_KEL_JASA",op:"eq",data:srcval});
-		
-		var grid = $("#grid_ep_kom_kelompok_jasa");
+		var kolom = $("#kolom").val(); 
+                var cari = $("#cari").val();
+                
+                   
+                        
+                            myfilter.rules.push({field: kolom ,op:"cn",data: cari } );
+                         
+                    
+                       
+                  
+		var grid = $("#grid_ms_barang");
 			
 	 
 		grid[0].p.search = myfilter.rules.length>0;
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
-	 
-		 
-		 
-		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
+
 		
 	});
 	

@@ -1,7 +1,7 @@
 <script type="text/javascript" src="<?php echo base_url();  ?>js/tiny_mce/tiny_mce.js"></script> 
 <?php $this->load->helper('form'); ?>
 
- 
+ <div id="modal_form_kelompok_jasa"></div>
 	 <div class="accordion">
             <h3 href="">KELOMPOK JASA</h3>
             <div>
@@ -87,7 +87,7 @@
  
 <div id="trace" ></div>
 
-<div id="modal_form_kelompok_jasa"></div>
+
 
 
  <script>
@@ -99,7 +99,7 @@
 	
    function fnSetValue(str) {
 		$("#kode_kel_jasa").val(str);
-		  
+		 jQuery('#modal_form_kelompok_jasa').dialog("close");  
   }
   
   $(document).ready(function(){
@@ -139,7 +139,7 @@
 				 jQuery("#frmJasa").ajaxSubmit({
                     //clearForm: false,
                     success: function(msg){
-                        alert(msg); 
+                       // alert(msg); 
 						if (msg) {
 								$("#trace").html(msg);
 								$("#kode_jasa_barang").val(msg);
@@ -147,9 +147,10 @@
 								jQuery("#frmKomentar").ajaxSubmit({
                     //clearForm: false,
 								success: function(msgx){
-									alert(msgx);
-									$("#trace").html(msgx);
-									alert('Data berhasil disimpan');
+									 //alert(msgx);
+									 //$("#trace").html(msgx);
+									 alert('Data berhasil disimpan');
+                                                                         window.location = "<?php echo base_url() ?>index.php/adm/jasa";       
                          
 								},
 								error: function(){

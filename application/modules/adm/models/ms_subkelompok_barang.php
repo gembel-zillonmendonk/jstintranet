@@ -18,7 +18,8 @@ class Ms_subkelompok_barang extends MY_Model {
     //public $table = "EP_NOMORURUT";
     
     public $elements_conf = array('KODE_SUBKELOMPOK', 'NAMA_SUBKELOMPOK' );
-    public $columns_conf = array('KODE_SUBKELOMPOK', 'NAMA_SUBKELOMPOK');
+    public $columns_conf = array('KODE_SUBKELOMPOK' =>array('hidden'=>false, 'width'=>10)
+                , 'NAMA_SUBKELOMPOK' =>array('hidden'=>false, 'width'=>90) );
     public $sql_select = "(select KODE_SUBKELOMPOK, NAMA_SUBKELOMPOK from MS_SUBKELOMPOK_BARANG)";
     
     /*

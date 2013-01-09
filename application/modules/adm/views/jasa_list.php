@@ -1,12 +1,42 @@
   <div class="accordion">
  <h3 href="<?php echo base_url()?>index.php/adm/gridr/ep_kom_jasa">JASA</h3>
             <div>
+                                        <fieldset class="ui-widget-content">
+        <legend>Pencarian</legend>
+			<form id="frmSearch" method="POST" action="" >
+			
+			<div id="mysearch"></div>
+			 
+                        <p>	
+				<label>STATUS</label>
+                                        <select id="status">
+                                            <option value="">SEMUA</option>
+                                            <option value="SUDAH DISETUJUI">SUDAH DISETUJUI</option>
+                                            <option value="BELUM DISETUJUI">BELUM DISETUJUI</option>
+                                        </select>
+                              
+		
+			</p>
+                        <p>
+                                <label>CARI BERDASARKAN</label>
+                            		<select  id="kolom" name="kolom"  > 
+                                            <option value="KODE_JASA">KODE JASA</option>
+                                            <option value="NAMA_JASA">DESKRIPSI</option>
+                                            
+                                         </select>    
+                                <input type="text" id="cari" name="cari"  />
+                                <button type="button" id="btnSrc"  >Cari</button> 
+                        </p>
+			</form>
+         </fieldset>                   
+
  
 			<p>
                             <button type="button" id="btnAdd"  >Tambah Jasa</button> 
 				<button type="button" id="btnEdit"  >Edit Jasa   </button> 
+                                <!--
 				<button type="button" id="btnDelete"  >Hapus Jasa   </button>
-			
+                                -->
 			</p>
 			
 			
@@ -32,25 +62,31 @@
     .css('overflow','visible')
 	
 	$("#btnSrc").click(function() {
-	
-/*
-	
-		//alert($("#kolom").val());
-	 
+		 
+                 
+                STATUS = $("#status").val();
+        	srcval = $("#kolom").val();
 		var myfilter = { groupOp: "AND", rules: []};
-		myfilter.rules.push({field:"KODE_KEL_JASA",op:"eq",data:"J01"});
-		
+		var kolom = $("#kolom").val(); 
+                var cari = $("#cari").val();
+                
+                   
+                        if (STATUS != "") {
+                            myfilter = { groupOp: "AND", rules: []};
+                            myfilter.rules.push({field:'STATUS' ,op:"eq",data: STATUS} , {field: kolom ,op:"cn",data: cari } );
+                        } else {
+                            myfilter.rules.push({field: kolom ,op:"cn",data: cari } );
+                        }
+                    
+                       
+                  
 		var grid = $("#grid_ep_kom_jasa");
 			
-		
-		alert(grid);
-		
+	 
 		grid[0].p.search = myfilter.rules.length>0;
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
-		alert(grid);
-*/		 
-		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
+
 		
 	});
 	

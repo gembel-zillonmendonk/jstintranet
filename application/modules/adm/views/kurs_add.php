@@ -3,7 +3,7 @@
 <fieldset class="ui-widget-content">
 <?php      
 $attributes = array( 'id' => 'frmKurs');
-echo form_open(  base_url() ."index.php/adm/kurs", $attributes);  ?>
+echo form_open(  base_url() ."index.php/adm/kurs/add", $attributes);  ?>
  
 	 <div class="accordion">
             <h3 href="">KURS MATA UANG</h3>

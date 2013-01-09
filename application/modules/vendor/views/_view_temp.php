@@ -15,6 +15,8 @@
         <div class="accordion">
             <h3 href="<?php echo site_url('/vendor/view_form/temp.ep_vendor_temp_perusahaan') ?>">NAMA PERUSAHAAN</h3>
             <div></div>
+            <h3 href="<?php echo site_url('/vendor/view_form/temp.ep_vendor_login') ?>">INFORMASI LOGIN</h3>
+            <div></div>
             <h3 href="<?php echo site_url('/vendor/view_grid_form/temp.ep_vendor_temp_alamat') ?>">KONTAK PERUSAHAAN</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/temp.ep_vendor_temp_kontak_person') ?>">KONTAK PERSON</h3>

@@ -9,6 +9,19 @@ class Kurs extends CI_Controller {
  
 	}
 	
+        function delete() {
+            // print_r($_GET);
+            
+            $sql = "DELETE FROM EP_MS_MATA_UANG_KURS ";
+            $sql .= " WHERE MATA_UANG_DARI = '" . $_GET["MATA_UANG_DARI"] . "'";
+            $sql .= " AND MATA_UANG_KE = '" . $_GET["MATA_UANG_KE"] . "'";
+            $sql .= " AND TO_CHAR(TGL_KURS,'YYYY-MM-DD') = SUBSTR('" . $_GET["TGL_KURS"] . "',0,10) ";
+            
+            $this->db->simple_query($sql);
+            redirect(base_url() . "index.php/adm/kurs");
+        }
+        
+        
 	public function add() {
 	 
 		if ($this->input->post("mata_uang_dari") && $this->input->post("mata_uang_ke")) {
@@ -19,7 +32,7 @@ class Kurs extends CI_Controller {
 			
 			$query = $this->db->simple_query($sql);
 			
-			redirect(base_url() . "index.php/kurs");
+			redirect(base_url() . "index.php/adm/kurs");
 		}
 		
 		$sql = "SELECT MATA_UANG FROM GL_MATA_UANG ";

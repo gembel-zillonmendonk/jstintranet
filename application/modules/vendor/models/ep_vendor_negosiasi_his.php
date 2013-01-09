@@ -10,9 +10,9 @@ class Ep_vendor_negosiasi_his extends MY_Model {
     public $table = "EP_VENDOR_NEGOSIASI_HIS";
     public $elements_conf = array(
 //        'KODE_NEGOSIASI',
-        'KODE_VENDOR',
-        'TIPE_KOMODITI',
-        'PROD_EXP_ID',
+        'KODE_VENDOR' => array('type' => 'hidden'),
+        'TIPE_KOMODITI' => array('type' => 'hidden'),
+        'PROD_EXP_ID' => array('type' => 'hidden'),
         'KETERANGAN',
         'STATUS' => array('type' => 'dropdown', 'options' => array('LISTED' => 'LISTED', 'NOT LISTED' => 'NOT LISTED')),
     );
@@ -62,7 +62,7 @@ class Ep_vendor_negosiasi_his extends MY_Model {
         $this->attributes['USERNAME'] = $this->session->userdata('user_id');
 
         // set auto increament
-        if (!isset($this->attributes['KODE_NEGOSIASI'])) {
+        if (!isset($this->attributes['KODE_NEGOSIASI']) || $this->attributes['KODE_NEGOSIASI'] == 0) {
             $row = $this->db->query("select nomorurut + 1 as NEXT_ID from ep_nomorurut where kode_nomorurut = 'EP_VENDOR_NEGOSIASI_HIS'")->row_array();
             $this->attributes['KODE_NEGOSIASI'] = $row['NEXT_ID'];
         }

@@ -35,6 +35,8 @@ class App extends MX_Controller {
 			//echo $this->session->userdata("kode_kantor");
 			 
 			 $this->sec->getMenuAkses($this->session->userdata("kode_jabatan"));
+                         
+                         
 			 echo $this->session->userdata("menu");
 			 echo strlen($this->session->userdata("menu"));
 			 

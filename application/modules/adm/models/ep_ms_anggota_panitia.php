@@ -23,14 +23,21 @@ class Ep_ms_anggota_panitia extends MY_Model
         'STATUS_PEMIMPIN'
     );
     public $columns_conf = array(
-         'KODE_PANITIA',
-		'KODE_KANTOR',
-        'KODE_JABATAN',
-		'NAMA_JABATAN',
-        'STATUS_PEMIMPIN'
+         'KODE_PANITIA'  =>array('hidden'=>true, 'width'=>10, 'align'=>'center') ,
+		'KODE_KANTOR'  =>array('hidden'=>false, 'width'=>10, 'align'=>'center') ,
+        'KODE_JABATAN'  =>array('hidden'=>true, 'width'=>10, 'align'=>'center') , 
+		'NAMA_JABATAN'  =>array('hidden'=>false, 'width'=>60, 'align'=>'left') ,
+        'STATUS_PEMIMPIN'  => array('hidden'=>false, 'width'=>10, 'align'=>'center'),
+        'HAPUS'  => array('hidden'=>false, 'width'=>10, 'align'=>'center')
     );
-    public $sql_select = "(select P.KODE_PANITIA, P.KODE_KANTOR, P.KODE_JABATAN , J.NAMA_JABATAN
-						from EP_MS_ANGGOTA_PANITIA P 
+    
+    public $sql_select = "(select P.KODE_PANITIA, P.KODE_KANTOR, P.KODE_JABATAN , J.NAMA_JABATAN, 
+                                                CASE 
+                                                    WHEN STATUS_PEMIMPIN = '1' THEN 'PIMPINAN'
+                                                    ELSE 'ANGGOTA'
+                                                END AS  STATUS_PEMIMPIN  
+                                                ,  '' as \"HAPUS\" 
+						FROM EP_MS_ANGGOTA_PANITIA P 
 						LEFT JOIN MS_JABATAN J ON P.KODE_JABATAN = J.KODE_JABATAN
 						";
 
@@ -49,7 +56,12 @@ class Ep_ms_anggota_panitia extends MY_Model
 		$this->setParam();
 		$CI = & get_instance();
         $this->attributes['KODE_PANITIA'] = $CI->session->userdata('kode_panitia');
-		
+        $this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
+		for(var i=0;i < ids.length;i++){
+                    var cl = ids[i];
+                     bx = "<button onclick=\"fnDeleteAnggotaPanitia(\'"+cl+"\');\"  >HAPUS</button>"; 
+                    jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{HAPUS:bx});
+                }';		
     }
 	
 }

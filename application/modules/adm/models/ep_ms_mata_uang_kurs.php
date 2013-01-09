@@ -17,8 +17,18 @@ class Ep_ms_mata_uang_kurs extends MY_Model {
     //public $table = "EP_NOMORURUT";
     
     public $elements_conf = array('MATA_UANG_DARI', 'MATA_UANG_KE','NILAI','TGL_KURS');
-    public $columns_conf = array('MATA_UANG_DARI', 'MATA_UANG_KE','NILAI' ,'TGL_KURS');
-    public $sql_select = "(select   MATA_UANG_DARI ,  MATA_UANG_KE ,  NILAI, TGL_KURS  from EP_MS_MATA_UANG_KURS)";
+    public $columns_conf = array('MATA_UANG_DARI' =>  array('hidden'=>false, 'width'=>10, 'align'=>'center')
+        , 'MATA_UANG_KE' =>  array('hidden'=>false, 'width'=>10, 'align'=>'center')
+        ,'NILAI' =>  array('hidden'=>false, 'width'=>10, 'align'=>'center')
+        ,'TGL_KURS' =>  array('hidden'=>false, 'width'=>10, 'align'=>'center')
+         ,'HAPUS'  => array('hidden'=>false, 'width'=>5, 'align'=>'center')
+        );
+    public $sql_select = "(select   MATA_UANG_DARI 
+                        ,  MATA_UANG_KE 
+                        ,  NILAI
+                        , TGL_KURS
+                         ,  '' as \"HAPUS\" 
+                        from EP_MS_MATA_UANG_KURS)";
     
     /*
       public $columns = array(
@@ -31,6 +41,12 @@ class Ep_ms_mata_uang_kurs extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
+             $this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
+		for(var i=0;i < ids.length;i++){
+                    var cl = ids[i];
+                     bx = "<button onclick=\"fnDeleteKurs(\'"+cl+"\');\"  >HAPUS</button>"; 
+                    jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{HAPUS:bx});
+                }';
     }
 
 }

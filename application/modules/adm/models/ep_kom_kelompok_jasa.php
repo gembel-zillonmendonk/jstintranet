@@ -17,9 +17,10 @@ class Ep_kom_kelompok_jasa extends MY_Model {
     public $table = "EP_KOM_KELOMPOK_JASA";
     //public $table = "EP_NOMORURUT";
     
-    public $elements_conf = array('KODE_KEL_JASA', 'NAMA_KEL_JASA' ,    'TGL_REKAM'  );
-    public $columns_conf = array('KODE_KEL_JASA', 'NAMA_KEL_JASA', 'TGL_REKAM');
-    public $sql_select = "(select KODE_KEL_JASA ,  NAMA_KEL_JASA  , TGL_REKAM  from EP_KOM_KELOMPOK_JASA)";
+    public $elements_conf = array('KODE_KEL_JASA', 'NAMA_KEL_JASA'    );
+    public $columns_conf = array('KODE_KEL_JASA' =>array('hidden'=>false, 'width'=>20) 
+        , 'NAMA_KEL_JASA' =>array('hidden'=>false, 'width'=>80)   );
+    public $sql_select = "(select KODE_KEL_JASA ,  NAMA_KEL_JASA    from EP_KOM_KELOMPOK_JASA)";
     
     /*
       public $columns = array(

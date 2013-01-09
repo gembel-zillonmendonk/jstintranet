@@ -92,7 +92,7 @@
 				  $.ajax({
 					url: strurl, 
 					success:function(msg) {
-						alert(msg);
+						// alert(msg);
 						window.location.reload();
 					}
 				 });
@@ -102,8 +102,8 @@
 		
 		
 		 $("#btnAdd").click(function(){
-			str= $("#selected_id").val();
-			
+			str = $("#selected_id").val();
+			alert(str);
 			if(str == 0) return;
 			if (!(str)) return;
 			 

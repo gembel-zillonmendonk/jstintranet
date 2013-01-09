@@ -1,6 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url();  ?>js/tiny_mce/tiny_mce.js"></script> 
 <div class="accordion">
- <h3 href="<?php echo base_url()?>index.php/adm/form/ep_kom_komentar_harga_barang">DAFTAR HARGA JASA YANG PERLU PERSETUJUAN</h3>
+ <h3 href="<?php echo base_url()?>index.php/adm/harga_jasa/view?KODE_KOMENTAR=<?php echo $kode_komentar; ?>">DAFTAR HARGA JASA YANG PERLU PERSETUJUAN</h3>
             <div>
 			 
 			
@@ -73,13 +73,11 @@
                          jQuery("#frmKomentar").ajaxSubmit({
                             //clearForm: false,
                             success: function(msg){
-
-                                                 alert(msg);
-
-                                                $("#trace").html(msg) ;	
-
-
-                                //reload grid
+                                      // alert(msg);
+                                      // $("#trace").html(msg) ;	
+                                         window.location = "<?php echo base_url() ?>index.php/adm/pekerjaan_kom";
+                                                    
+                                    //reload grid
 
                             },
                             error: function(){

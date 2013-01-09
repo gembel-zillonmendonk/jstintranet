@@ -34,7 +34,7 @@ class Hirarki_jabatan extends MY_Controller {
 			$sql .= " WHERE KODE_OTORISASI = " . $str ; 
 			$this->db->simple_query($sql);
 		}
-		echo $sql;
+		// echo $sql;
 		return;	
 	}
 	
@@ -46,15 +46,18 @@ class Hirarki_jabatan extends MY_Controller {
 			$sql .= " , '" . $this->input->post("mata_uang") ."', ". str_replace(",","",$this->input->post("nilai_maks_otorisasi")) ." ) ";
 		
 			$this->db->simple_query($sql);
-			echo $sql;
+			//echo $sql;
 			return;
 		}
 
-		$sql = "SELECT J.KODE_JABATAN, NAMA_JABATAN FROM MS_JABATAN J ";		
-		$sql .= " WHERE J.KODE_JABATAN = '" . $str . "' ";
+		$sql = "SELECT J.KODE_JABATAN, J.NAMA_JABATAN FROM EP_MS_OTORISASI O ";
+                $sql .= " LEFT JOIN MS_JABATAN J ON O.KODE_JABATAN = J.KODE_JABATAN";		
+		$sql .= " WHERE O.KODE_OTORISASI =  " . $str . "  ";
 		$query = $this->db->query($sql);
 		$result = $query->result(); 
 		
+                
+                // echo $sql;
 		$data["kode_otorisasi"] =  "";
 		$data["kode_jabatan"] = "";
 		$data["nilai_maks_otorisasi"] = "0";
@@ -63,6 +66,7 @@ class Hirarki_jabatan extends MY_Controller {
 			
 		if (count($result)) {
 			$data["nama_jabatan_induk"]= $result[0]->NAMA_JABATAN;
+                        
 			  
 		}
 		

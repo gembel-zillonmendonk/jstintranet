@@ -21,14 +21,14 @@ if (count($_REQUEST) > 0) {
                     <div class="control-group">
                         <?php echo form_label("TIPE KOMODITI *" , "TIPE_KOMODITI", array("class" => "control-label")) ?> 
                         <div class="controls">
-                            <?php echo form_dropdown("TIPE_KOMODITI", array(''=>'','M'=>'Material', 'S'=>'Service'), "", 'class="{validate:{required:true,maxlength:22}}"'); ?>
+                            <?php echo form_dropdown("TIPE_KOMODITI", array(''=>'','M'=>'Material', 'S'=>'Service'), (isset($_REQUEST['TIPE_KOMODITI']) ? $_REQUEST['TIPE_KOMODITI'] : ""), 'class="{validate:{required:true,maxlength:22}}"'); ?>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <?php echo form_label("GRUP BARANG *" , "KODE_BARANG", array("class" => "control-label")) ?> 
                         <div class="controls">
-                            <?php echo form_dropdown("KODE_BARANG", $grup_barang, "", 'class="{validate:{required:true,maxlength:22}}"'); ?>
+                            <?php echo form_dropdown("KODE_BARANG", $grup_barang, (isset($_REQUEST['KODE_BARANG']) ? $_REQUEST['KODE_BARANG'] : ""), 'class="{validate:{required:true,maxlength:22}}"'); ?>
                         </div>
                     </div>
                 </div>
@@ -37,14 +37,14 @@ if (count($_REQUEST) > 0) {
                     <div class="control-group">
                         <?php echo form_label("WILAYAH *" , "WILAYAH", array("class" => "control-label")) ?> 
                         <div class="controls">
-                            <?php echo form_dropdown("KODE_WILAYAH", array(''=>'','1'=>'KANTOR PUSAT', '2'=>'CABANG'), "", 'class="{validate:{required:true,maxlength:22}}"'); ?>
+                            <?php echo form_dropdown("KODE_WILAYAH", array(''=>'','1'=>'KANTOR PUSAT', '2'=>'CABANG'), (isset($_REQUEST['KODE_WILAYAH']) ? $_REQUEST['KODE_WILAYAH'] : ""), 'class="{validate:{required:true,maxlength:22}}"'); ?>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <?php echo form_label("KLASIFIKASI VENDOR *" , "GOLONGAN_KEUANGAN", array("class" => "control-label")) ?> 
                         <div class="controls">
-                            <?php echo form_dropdown("GOLONGAN_KEUANGAN", array(''=>'','B'=>'Besar', 'M'=>'Menengah', 'K' => 'Kecil'), "", 'class="{validate:{required:true,maxlength:22}}"'); ?>
+                            <?php echo form_dropdown("GOLONGAN_KEUANGAN", array(''=>'','B'=>'Besar', 'M'=>'Menengah', 'K' => 'Kecil'), (isset($_REQUEST['GOLONGAN_KEUANGAN']) ? $_REQUEST['GOLONGAN_KEUANGAN'] : ""), 'class="{validate:{required:true,maxlength:22}}"'); ?>
                         </div>
                     </div>
                 </div>

@@ -26,9 +26,9 @@ class Ep_pgd_dokumen extends MY_Model {
                                 'KODE_TENDER' =>array('hidden'=>true, 'width'=>10) ,
                                 'KODE_KANTOR' =>array('hidden'=>true, 'width'=>10),  
                                 'KATEGORI'  =>array('hidden'=>false, 'width'=>20),
-                                'KETERANGAN'  =>array('hidden'=>false, 'width'=>60),
-                                'NAMA_FILE'  =>array('hidden'=>false, 'width'=>20, 'formatter'=>'showlink', 'formatoptions'=>array('link'=>'test.php'))
-         
+                                'KETERANGAN'  =>array('hidden'=>false, 'width'=>50),
+                                'NAMA_FILE'  =>array('hidden'=>false, 'width'=>20 )
+                                 
                                 );
     
     
@@ -37,7 +37,8 @@ class Ep_pgd_dokumen extends MY_Model {
                                    KODE_KANTOR ,
                                    KATEGORI ,
 				   KETERANGAN ,
-				   NAMA_FILE
+				   '<a href=\"' || NAMA_FILE || '\" >' || NAMA_FILE || '</a>' AS NAMA_FILE 
+                                  
                             FROM EP_PGD_DOKUMEN       
                             WHERE 1 = 1
 		 ";
@@ -67,7 +68,17 @@ class Ep_pgd_dokumen extends MY_Model {
         parent::__construct();
         $this->init();	 
         $this->setParam();
-        
+
+             
+        $this->js_grid_completed = 'var ids = jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'getDataIDs\');
+		for(var i=0;i < ids.length;i++){
+                    var cl = ids[i];
+                    
+                    be = "<button onclick=\"fnDownloadDokumen(\'"+cl+"\');\"  >DOWNLOAD</button>"; 
+                    jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{DOWNLOAD:be});
+                         
+		}';
+
 
             
     }

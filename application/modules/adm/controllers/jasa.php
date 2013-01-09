@@ -13,22 +13,31 @@ class Jasa extends MY_Controller {
 			$this->layout->view('jasa_list' );
 	}	
 	
+        function right($string,$chars) 
+        { 
+            $vright = substr($string, strlen($string)-$chars,$chars); 
+            return $vright; 
+
+        } 
+        
 	function add() {
 	//	print_r($_POST);
 		if ($this->input->post("nama_jasa")) {
 		
 			 $urut = $this->urut->get("ALL","JASA");
 			 
-			 
-			 $sql = "INSERT INTO EP_KOM_JASA (KODE_JASA, KODE_KEL_JASA, NAMA_JASA , TGL_REKAM ) ";
-			 $sql .= " VALUES ('".$urut."','" . $this->input->post("kode_kel_jasa"). "','" . $this->input->post("nama_jasa"). "',  TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD')) ";
+			 $nomorjasa = $this->input->post("kode_kel_jasa") . $this->right("0000000" . $urut, 7); 
+			 $sql = "INSERT INTO EP_KOM_JASA (KODE_JASA, KODE_KEL_JASA, NAMA_JASA ";
+                         $sql .= " , TGL_REKAM, PETUGAS_REKAM ) ";
+                         $sql .= " VALUES ('".$nomorjasa."','" . $this->input->post("kode_kel_jasa"). "','" . $this->input->post("nama_jasa"). "'";
+                         $sql .= " ,  TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD'), '" . $this->session->userdata("kode_user") . "') ";
 			 
 		 //	  echo $sql;
 			 
 			 if ($this->db->simple_query($sql)) {
 				
 				$this->urut->set_plus( "ALL","JASA") ;
-				echo  $urut;
+				echo  $nomorjasa;
 			 
 			 }
 			 return;
@@ -45,12 +54,15 @@ class Jasa extends MY_Controller {
 	function edit() {
 	
 			if ($this->input->post("kode_kel_jasa")) {
-					$sql = "UPDATE EP_KOM_KELOMPOK_JASA ";
-					$sql .= " SET NAMA_KEL_JASA = '" . $this->input->post("nama_kel_jasa") . "' ";
+					$sql = "UPDATE EP_KOM_JASA ";
+					$sql .= " SET NAMA_JASA = '" . $this->input->post("nama_jasa") . "' ";
 					$sql .= " WHERE KODE_KEL_JASA = '" . $this->input->post("kode_kel_jasa") . "' " ;  
+                                        $sql .= " AND KODE_JASA = '" . $this->input->post("kode_jasa") . "' " ;  
 		
 					$this->db->simple_query($sql);
-					redirect(base_url() . "index.php/adm/jasa");
+                                        
+                                         
+                                          redirect(base_url() . "index.php/adm/jasa");
 			}
 
 			$sql = "SELECT KODE_JASA, KODE_KEL_JASA, NAMA_JASA FROM EP_KOM_JASA ";

@@ -8,6 +8,7 @@ class Komentar_kom extends MY_Controller {
 		 
 		$this->load->model('Nomorurut','urut');
                 $this->load->model('alurkerja','alur');
+                $this->alur->setDebug(0);
 	}
 
 	function add(){
@@ -16,7 +17,7 @@ class Komentar_kom extends MY_Controller {
                  
                 
                  $this->alur->mulai($this->input->post("kode_alurkerja"));
-                 $this->alur->setDebug(0);
+                 
                  $this->alur->setKodeKomentar(0);
                  if ($this->input->post("kode_transisi")==1) {
                     $arr = array();

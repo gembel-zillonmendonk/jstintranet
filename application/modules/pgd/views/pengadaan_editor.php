@@ -193,7 +193,7 @@ if (in_array("InputTenderDetail", $arr_antarmuka)) {
    
  function fnEditBarangJasa(str){    
      
-        alert(str);
+      //  alert(str);
         $('#grid_ep_pgd_item_tender').jqGrid('setSelection',str); 
      	var selected = $('#grid_ep_pgd_item_tender').jqGrid('getGridParam', 'selrow');
 				 selected = jQuery('#grid_ep_pgd_item_tender').jqGrid('getRowData',selected);
@@ -555,6 +555,24 @@ if (in_array("MonitorTenderDocument", $arr_antarmuka)) {
           <div id="list" ></div>
     </div>
  </div>
+  <script>
+  function fnDownloadDokumen(str) {
+      
+     alert("Download");
+     $('#grid_ep_pgd_dokumen').jqGrid('setSelection',str); 
+     var selected = $('#grid_ep_pgd_dokumen').jqGrid('getGridParam', 'selrow');
+     selected = jQuery('#grid_ep_pgd_dokumen').jqGrid('getRowData',selected);
+			 
+				 
+                                  
+      
+      window.location = "<?php echo base_url() ?>index.php/pgd/dokumen/get?KODE_DOKUMEN=" + selected["KODE_DOKUMEN"] ; 
+      
+  }
+  
+  </script> 
+  
+  
 <?php
 }
 ?> 

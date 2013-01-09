@@ -17,10 +17,21 @@ class Ep_kom_harga_jasa extends MY_Model {
     public $table = "EP_KOM_HARGA_JASA";
     //public $table = "EP_NOMORURUT";
     
-    public $elements_conf = array('KODE_HARGA_JASA','KODE_JASA',   'KODE_KANTOR', 'KODE_SUMBER' , 'TGL_SUMBER', 'MATA_UANG', 'HARGA', 'KODE_VENDOR' );
-    public $columns_conf = array('KODE_HARGA_JASA','KODE_JASA', 'NAMA_JASA' ,  'KODE_KANTOR', 'NAMA_SUMBER' , 'TGL_SUMBER', 'MATA_UANG', 'HARGA', 'STATUS');
-    public $sql_select = "(select   H.KODE_HARGA_JASA , H.KODE_JASA ,  J.NAMA_JASA ,
-	H.KODE_KANTOR ,  H.KODE_SUMBER , S.NAMA_SUMBER ,  H.TGL_SUMBER ,  H.MATA_UANG ,  H.HARGA ,  H.KODE_VENDOR ,  H.STATUS  
+    public $elements_conf = array('KODE_HARGA_JASA'
+        
+        ,'KODE_JASA',   'KODE_KANTOR', 'KODE_SUMBER' , 'TGL_SUMBER', 'MATA_UANG', 'HARGA', 'KODE_VENDOR' );
+    public $columns_conf = array('KODE_HARGA_JASA'  => array('hidden'=>true, 'width'=>10) ,'KODE_JASA', 'NAMA_JASA' 
+        ,  'KODE_KANTOR' => array('hidden'=>true, 'width'=>10) 
+        
+        , 'NAMA_SUMBER' , 'TGL_SUMBER', 'NAMA_VENDOR', 'MATA_UANG', 'HARGA', 'STATUS');
+    public $sql_select = "(select   H.KODE_HARGA_JASA , H.KODE_JASA , J.KODE_KEL_JASA,  J.NAMA_JASA ,
+	H.KODE_KANTOR 
+        
+            ,  H.KODE_SUMBER , S.NAMA_SUMBER ,  H.TGL_SUMBER ,  H.MATA_UANG ,  H.HARGA ,  H.KODE_VENDOR , H.NAMA_VENDOR,   
+            CASE 
+                WHEN H.STATUS = '1' THEN 'SUDAH DISETUJUI'
+                ELSE 'BELUM DISETUJUI'
+            END AS STATUS     
 	from EP_KOM_HARGA_JASA H
 	LEFT JOIN 	EP_KOM_JASA J ON H.KODE_JASA = J.KODE_JASA
 	LEFT JOIN 	EP_KOM_SUMBER_HARGA S ON H.KODE_SUMBER = S.KODE_SUMBER

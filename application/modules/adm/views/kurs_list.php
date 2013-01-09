@@ -112,4 +112,23 @@
 
 	 });
   
+  function fnDeleteKurs(str){
+  
+  
+    $('#grid_ep_ms_mata_uang_kurs').jqGrid('setSelection',str); 
+    var selected = $('#grid_ep_ms_mata_uang_kurs').jqGrid('getGridParam', 'selrow');
+    selected = jQuery('#grid_ep_ms_mata_uang_kurs').jqGrid('getRowData',selected );
+    
+    var MATA_UANG_DARI = selected["MATA_UANG_DARI"];
+    var MATA_UANG_KE = selected["MATA_UANG_KE"];
+    var TGL_KURS = selected["TGL_KURS"];
+    
+    
+    if (confirm("Akan Menghapus Kurs")) { 
+         window.location = "<?php echo base_url(); ?>index.php/adm/kurs/delete?MATA_UANG_DARI=" +  MATA_UANG_DARI + "&MATA_UANG_KE=" +  MATA_UANG_KE + "&TGL_KURS=" +  TGL_KURS;
+    }
+    
+  }
+  
+  
 </script>   			

@@ -13,6 +13,8 @@ $form_id = 'modal_form_' . $grid->id;
 
         jQuery('#<?php echo $grid->id ?>').jqGrid({
             "shrinkToFit": false,
+			"forceFit": true,
+            "autoWidth": true,
         
 			"onSelectRow": function(ids) { 
 				var selected = $('#grid_ep_kom_kelompok_jasa').jqGrid('getGridParam', 'selrow');
@@ -292,7 +294,7 @@ $form_id = 'modal_form_' . $grid->id;
         });
         */
 		
-        $('#<?php echo $grid->id ?>').jqGrid("setGridWidth", $('#gbox_<?php echo $grid->id ?>').parent().width() , false);
+        $('#<?php echo $grid->id ?>').jqGrid("setGridWidth", $('#gbox_<?php echo $grid->id ?>').parent().width() , true);
         
         $('#<?php echo $grid->id ?>').jqGrid('setGridParam',{
             

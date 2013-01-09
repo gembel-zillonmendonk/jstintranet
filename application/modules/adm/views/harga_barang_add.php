@@ -192,6 +192,19 @@
   $(document).ready(function(){
 	//$("#mysearch").jqGrid('filterGrid','#grid_ep_kom_kelompok_jasa');
 	
+        $("#harga, #biaya_kargo, #biaya_penanganan, #biaya_asuransi, #bea_pajak, #diskon").change(function(){
+            
+            tot = Number(0);
+            tot += Number($("#harga").val());
+            tot += Number($("#biaya_kargo").val());
+            tot += Number($("#biaya_penanganan").val());
+            tot += Number($("#biaya_asuransi").val());
+            tot += Number($("#bea_pajak").val());
+            tot =  tot - Number($("#diskon").val());
+            
+            $("#total_biaya").val(tot);
+        });
+        
 	
 	$("#btnPopup").click(function() {
 		 
@@ -246,9 +259,9 @@
 								jQuery("#frmKomentar").ajaxSubmit({
                     //clearForm: false,
 								success: function(msgx){
-									alert(msgx);
-									alert('Data berhasil disimpan');
-                         
+									// alert(msgx);
+									// alert('Data berhasil disimpan');
+                                                                        window.location = "<?php echo base_url() ?>index.php/adm/harga_barang";           
 								},
 								error: function(){
 									alert('Data Komentar gagal disimpan')
@@ -342,7 +355,7 @@
 		$("#kode_sub_barang").val(strSubId);
 		$("#nama_barang").val(strName);
 		
-		 
+		  jQuery('#modal_form_barang').dialog("close");
   }
   
   

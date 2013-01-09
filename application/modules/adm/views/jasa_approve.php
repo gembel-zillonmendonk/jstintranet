@@ -158,11 +158,11 @@
                     //clearForm: false,
                     success: function(msg){
                          
-							alert(msg);
+							//alert(msg);
 						
-					$("#trace").html(msg) ;	
+					// $("#trace").html(msg) ;	
 						
-						
+					 window.location = "<?php echo base_url() . "index.php/adm/pekerjaan_kom"; ?>?";	
                         //reload grid
                         
                     },

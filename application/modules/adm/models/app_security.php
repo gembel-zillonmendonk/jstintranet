@@ -37,6 +37,8 @@ class App_security extends CI_Model {
 		$query = $this->db->query($sql);
 		$result = $query->result(); 
 		
+                print_r($result);
+                
 		if(count($result)) {  
 			$this->session->set_userdata("kode_jabatan", $kode_jabatan );
 			$this->session->set_userdata("nama_jabatan", $result[0]->NAMA_JABATAN);
@@ -61,13 +63,20 @@ class App_security extends CI_Model {
 		$sql .= " ORDER BY [P!1!L1] , [P!2!L2]  ";
 		
 		$sql = "SELECT M.KODE_MENU, M.NAMA_MENU , M.KODE_MENU_INDUK, M.CONTROLLER
-			FROM   EP_MS_MENU M
-			START WITH  M.KODE_MENU = 0 
+			FROM   EP_MS_MENU M";
+                
+              if ($this->session->userdata("kode_jabatan")) {
+                    $sql .= " LEFT JOIN (SELECT KODE_MENU FROM  EP_MS_MENU_JABATAN ";
+                    $sql .= " WHERE  KODE_JABATAN = " . $this->session->userdata("kode_jabatan") . ") ";
+                    $sql .= " MJ ON M.KODE_MENU = MJ.KODE_MENU ";
+                    
+                    $sql .= " WHERE MJ.KODE_MENU IS NOT NULL ";
+                 }
+                 
+		$sql .= " START WITH  M.KODE_MENU = 0 
 			CONNECT BY PRIOR M.KODE_MENU = M.KODE_MENU_INDUK 
 			ORDER BY M.KODE_MENU ";
-		
-		// echo $sql;
-		
+		 
 		$query = $this->db->query($sql);
 		$result = $query->result(); 
 		

@@ -48,6 +48,11 @@
 		</select>
 		
 	   </p> 
+           <p>
+               <?php echo form_label("Tanggal") ?>
+               <input type="text" style="" name="TGL_SUMBER"  value="<?php echo date("Y-m-d"); ?>" id="TGL_SUMBER" style="" class="datepicker  {validate:{required:true,date:true}}"  />  
+           </p>
+           
 		<p> 
 	   <?php echo form_label("Sumber") ?>
 	   <select name="kode_sumber" >
@@ -83,8 +88,8 @@
         </p>		
 	   <p> 
                 <label     >Vendor</label>                 
-                  <?php 
-				echo form_input("nama_vendor") ?>
+                   
+		  <input type="text" style="width: 50%" name="nama_vendor"  id="nama_vendor"   maxlength="22" style=""    />                
   
         </p>		
 	   <p> 
@@ -94,7 +99,7 @@
 					 'id' => 'catatan',
 					 'name' => 'catatan',
 					  'style' => 'width: 50%',
-					 'class' => " {validate:{maxlength:4000}}"
+					 'class' => " {validate:{maxlength:4000}}" 
 					 );		
 
 		echo form_input($catatan) ?>
@@ -209,11 +214,11 @@
 								jQuery("#frmKomentar").ajaxSubmit({
                     //clearForm: false,
 								success: function(msgx){
-									alert(msgx);
-									 $("#trace").html(msgx);
+									  // alert(msgx);
+									  // $("#trace").html(msgx);
 								
-                                                                        alert('Data berhasil disimpan');
-                         
+                                                                        //alert('Data berhasil disimpan');
+                                                                       window.location = "<?php echo base_url() ?>index.php/adm/harga_jasa";       
 								},
 								error: function(){
 									alert('Data Komentar gagal disimpan')
@@ -304,7 +309,10 @@
    function fnSetValue(strId, strName) {
 		$("#kode_jasa").val(strId);
 		$("#nama_jasa").val(strName);
+                 
+                // grid_ep_kom_jasa
 		
+                jQuery('#modal_form_jasax').dialog("close");
 		 
   }
   

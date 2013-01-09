@@ -2,13 +2,12 @@
 <?php $this->load->helper('form'); ?>
 <fieldset class="ui-widget-content">
      
-<?php 
-$attributes = array( 'id' => 'frmanggota');
-echo form_open("", $attributes);; ?>
  
+   
 	 <div class="accordion">
             <h3 href="">PANITIA</h3>
             <div>
+                 <form>
 			<p>	
 	 <?php echo form_label("Nama  Panitia") ?>
 	 <?php 
@@ -34,7 +33,8 @@ echo form_open("", $attributes);; ?>
 			}
 			?>			
 		</select>	
-	</p>		
+	</p>	
+        </form> 
 	</div>
 	</div>			
 	
@@ -43,7 +43,10 @@ echo form_open("", $attributes);; ?>
             <h3 href="<?php echo base_url()?>index.php/adm/gridr/ep_ms_anggota_panitia?search=true&searchField=KODE_PANITIA&searchString=1&searchOper=bw" >DETAIL ANGGOTA PANITIA</h3>
             <div>
 			<p>	
-		 
+		<?php
+                $attributes = array( 'id' => 'frmanggota');
+                echo form_open("", $attributes);; ?>
+  
 		<?php echo form_label("Jabatan") ?> 
 		<select name="kode_jabatan" >
 			<?php foreach($kode_jabatan as $row ) {
@@ -55,7 +58,8 @@ echo form_open("", $attributes);; ?>
 		</select>	
 		<br/> 
 		<?php echo form_label("Status Pemimpin") ?> 
-		<?php echo form_checkbox("status_pemimpin"); ?>	 
+		<input type="checkbox" name="status_pemimpin" value="1"  ></input>	 
+                
 		<p>
 				<button type="button" id="btnAddAnggota"  >Tambah Anggota</button> 
 				<input type="hidden" id="add_type" name="add_type"  value="" /> 
@@ -63,6 +67,8 @@ echo form_open("", $attributes);; ?>
 				<input type="hidden" id="kode_panitia" name="kode_panitia_key"  value="<?php echo $kode_panitia; ?>" /> 
 				 
 			</p>
+                </form>	        
+                        
 	 	<div id="list" ></div>
 	  </p>
 			</div>
@@ -71,10 +77,10 @@ echo form_open("", $attributes);; ?>
 	</div>			
  
     <p>
-        <input type="button" id="btncancel"  value="Cancel" />
-        <input type="submit" value="Submit" />
+        <button type="button" id="btncancel"  >Kembali</button>
+  
     </p>
-</form>	
+
 </fieldset> 
  <script>
   
@@ -115,6 +121,24 @@ echo form_open("", $attributes);; ?>
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
   });
+  
+  function fnDeleteAnggotaPanitia(str) {
+      
+    $('#grid_ep_ms_anggota_panitia').jqGrid('setSelection',str); 
+    var selected = $('#grid_ep_ms_anggota_panitia').jqGrid('getGridParam', 'selrow');
+    selected = jQuery('#grid_ep_ms_anggota_panitia').jqGrid('getRowData',selected );
+    
+    var KODE_PANITIA = selected["KODE_PANITIA"];
+    var KODE_KANTOR = selected["KODE_KANTOR"];
+    var KODE_JABATAN = selected["KODE_JABATAN"];
+    
+    
+    if (confirm("Akan Menghapus Anggota")) { 
+         window.location = "<?php echo base_url(); ?>index.php/adm/panitia/delete?KODE_PANITIA=" +  KODE_PANITIA + "&KODE_KANTOR=" +  KODE_KANTOR + "&KODE_JABATAN=" +  KODE_JABATAN;
+    }
+    
+  }
+  
   
 </script>        
  

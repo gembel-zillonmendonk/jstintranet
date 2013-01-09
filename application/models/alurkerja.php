@@ -8,7 +8,7 @@
 /**
  * Description of alurkerja
  *
- * @author Untung Cahyono
+ * @author 
  */
 class alurkerja extends CI_Model  {
     
@@ -105,7 +105,7 @@ class alurkerja extends CI_Model  {
     }
     
     function getTransisi ($kode_aktifitas_dari) {
-        $sql = "SELECT T.KODE_TRANSISI, T.KODE_AKTIFITAS_DARI, T.KODE_AKTIFITAS_KE, T.NAMA_TRANSISI ";
+        $sql = "SELECT T.KODE_TRANSISI, T.KODE_AKTIFITAS_DARI, T.KODE_AKTIFITAS_KE,   T.KODE_TRANSISI  || ' -> ' ||  CONCAT(T.NAMA_TRANSISI,  CONCAT(' -> ' , T.KODE_AKTIFITAS_KE ) )    AS NAMA_TRANSISI  ";
         $sql .= " FROM EP_ALURKERJA_TRANSISI T  ";
         $sql .= " LEFT JOIN EP_ALURKERJA_AKTIFITAS A ON T.KODE_AKTIFITAS_DARI = A.KODE_AKTIFITAS   ";
         $sql .= " WHERE T.KODE_AKTIFITAS_DARI = " . $kode_aktifitas_dari; 
@@ -164,13 +164,15 @@ class alurkerja extends CI_Model  {
 
                     $this->proses["TGL_BERAKHIR"] = date("Y-m-d H:i:s");    
                    if (count($result)) {
-                       if($result[0]->TIPE == 'AKHIR') {
-                        $this->tipe =   'AWAL_DAN_AKHIR'; 
-                        $this->proses["TIPE"] = $this->tipe ;
-                        $this->proses["NAMA_AKTIFITAS"] = $result[0]->NAMA_AKTIFITAS;
-                       
-                        $this->proses["TGL_BERAKHIR"] = date("Y-m-d H:i:s");
-                       } 
+                       if($this->proses["KODE_AKTIFITAS"] != 40002 ) {
+                        if($result[0]->TIPE == 'AKHIR') {
+                         $this->tipe =   'AWAL_DAN_AKHIR'; 
+                         $this->proses["TIPE"] = $this->tipe ;
+                         $this->proses["NAMA_AKTIFITAS"] = $result[0]->NAMA_AKTIFITAS;
+
+                         $this->proses["TGL_BERAKHIR"] = date("Y-m-d H:i:s");
+                        } 
+                       }
                    }
                      
                     
@@ -199,9 +201,11 @@ class alurkerja extends CI_Model  {
             $this->getKodeAktifitasEksepsi( $kode_transisi) ;
              
             $this->getKodeJabatan($this->proses["KODE_AKTIFITAS"]);
+            $this->eksekusi($kode_transisi);
         }
         
-       if  ($this->proses["KODE_ALURKERJA"] == 5) {
+       if  ($this->proses["KODE_ALURKERJA"] == 5 || $this->proses["KODE_ALURKERJA"] == 4 ) {
+           
             $this->execQueryTender(); 
        } else {
            
@@ -217,15 +221,18 @@ class alurkerja extends CI_Model  {
               $sql = "SELECT  QUERY_EKSEPSI, KODE_AKTIFITAS_KE ";
               $sql .= " FROM EP_ALURKERJA_TRANSISI_EKSEPSI WHERE KODE_TRANSISI = " . $kode_transisi;
 
+              echo $sql;
+              
               $query = $this->db->query($sql);
               $result = $query->result(); 
+              print_r($result);
               foreach($result as $row) {
                   $strqry = $row->QUERY_EKSEPSI;
                   
                   $strqry = str_replace('@KODE_TENDER', $this->proses["KODE_TENDER"], $strqry );
                   $strqry = str_replace('@KODE_KANTOR' , $this->proses["KODE_KANTOR"], $strqry );
                   
-                 // echo $strqry;
+                   
                   
                   
                       $query = $this->db->query($strqry);
@@ -252,8 +259,112 @@ class alurkerja extends CI_Model  {
         
     }
     
+    function eksekusi($kode_transisi) {
+            $sql = "SELECT QUERY_EKSEKUSI FROM EP_ALURKERJA_TRANSISI_EKSEKUSI  ";
+            $sql .= " WHERE KODE_TRANSISI = " . $kode_transisi;
+            $sql .= " ORDER BY KODE_EKSEKUSI ASC ";
+            
+            $query = $this->db->query($sql);
+              $result = $query->result(); 
+              //print_r($result);
+              foreach($result as $row) {
+                  $strqry = $row->QUERY_EKSEKUSI;
+                 
+                  switch($this->kode_alurkerja) {
+                   case 1:
+                       $strqry = str_replace('@KODE_JASA' , $this->proses["KODE_JASA_BARANG"], $strqry );
+                       break;
+                   case 2:
+                   case 3:
+                       $strqry = str_replace('@KODE_HARGA' , $this->proses["KODE_HARGA"], $strqry );
+                       break;
+                   case 5:
+                        $strqry = str_replace('@KODE_TENDER', $this->proses["KODE_TENDER"], $strqry );
+                        $strqry = str_replace('@KODE_KANTOR' , $this->proses["KODE_KANTOR"], $strqry );
+                      break;
+                  }
+                   
+                   
+                   echo $strqry; 
+                  
+                  $this->db->simple_query($strqry);
+                 
+              }
+
+    }
+    
     
     function getKodeJabatan($kode_aktifitas) {
+        $this->proses["JABATAN_TERAKHIR"] = $this->session->userdata("kode_jabatan");
+        
+      //   echo 'this->session->userdata("kode_jabatan")' . $this->session->userdata("kode_jabatan");
+        
+        if  ($this->proses["KODE_ALURKERJA"] == 5 || $this->proses["KODE_ALURKERJA"] == 4 ) {
+         
+            
+            
+            $sql = "SELECT KODE_JABATAN AS JABATAN_TERAKHIR FROM EP_PGD_KOMENTAR_TENDER  ";
+            $sql .= " WHERE KODE_KOMENTAR = " . $this->proses["KODE_KOMENTAR_PREV"];
+
+            $query = $this->db->query($sql);
+            $result = $query->result(); 
+
+            if (count($result)) {
+                 if    (strlen($result[0]->JABATAN_TERAKHIR) > 0) {
+                 $this->proses["JABATAN_TERAKHIR"] =    $result[0]->JABATAN_TERAKHIR;
+                 }
+            }
+          
+        }
+        
+        
+        $sql = "SELECT JABATAN_QUERY FROM EP_ALURKERJA_JABATAN ";
+        $sql .= " WHERE KODE_AKTIFITAS = " . $kode_aktifitas;
+        
+        $query = $this->db->query($sql);
+        $result = $query->result(); 
+        
+        if (count($result)) {
+            $strqry = $result[0]->JABATAN_QUERY;
+            
+            if ($this->kode_alurkerja == 5) {
+             $strqry = str_replace('@KODE_TENDER', $this->proses["KODE_TENDER"], $strqry );
+             $strqry = str_replace('@KODE_KANTOR' , $this->proses["KODE_KANTOR"], $strqry );
+            }
+             
+             $strqry = str_replace('@JABATAN_TERAKHIR' , $this->proses["JABATAN_TERAKHIR"], $strqry );
+        
+             $query = $this->db->query($strqry);
+             $result = $query->result(); 
+        
+             if (count($result)) {
+                 $this->proses["KODE_JABATAN"] = $result[0]->KODE_JABATAN_BERIKUT;
+                 $this->proses["NAMA_JABATAN"] = $result[0]->NAMA_JABATAN_BERIKUT;
+            
+            }
+            
+        } else { 
+        
+        $this->proses["KODE_JABATAN"] = $this->proses["JABATAN_TERAKHIR"];
+        $sql = "SELECT  NAMA_JABATAN ";
+        $sql .= " FROM MS_JABATAN WHERE KODE_JABATAN = " . $this->proses["KODE_JABATAN"];
+        
+        $query = $this->db->query($sql);
+            $result = $query->result(); 
+            if (count($result)) {
+             $this->proses["NAMA_JABATAN"] = $result[0]->NAMA_JABATAN ;
+            }
+        
+        
+        
+        
+        
+        }
+        
+        
+        
+        
+        /*
         $sql = "SELECT  KODE_PERAN ";
         $sql .= " FROM EP_ALURKERJA_AKTIFITAS WHERE KODE_AKTIFITAS = " . $kode_aktifitas;
         
@@ -269,16 +380,11 @@ class alurkerja extends CI_Model  {
             $query = $this->db->query($sql);
             $result = $query->result(); 
             if (count($result)) {
-                
-                
-            $this->proses["NAMA_JABATAN"] = $result[0]->NAMA_JABATAN ;
+             $this->proses["NAMA_JABATAN"] = $result[0]->NAMA_JABATAN ;
             }
-            
-            
-            
-            
+             
         }
-        
+        */
     }
     
     function getQueryTender() {
@@ -523,9 +629,16 @@ class alurkerja extends CI_Model  {
                     $sql .= "UPDATE EP_PGD_KOMENTAR_TENDER  ";
                     $sql .= " SET  TGL_BERAKHIR = ";
                     $sql .= "  TO_DATE('" . $this->proses["TGL_BERAKHIR"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= " ,KODE_TRANSISI =  " . $this->proses["KODE_TRANSISI"] . "";
+                    $sql .= ", KOMENTAR = '" . $this->proses["KOMENTAR"] . "'  ";
+                    $sql .= " ,NAMA_TRANSISI = '" . $this->proses["NAMA_TRANSISI"] . "'";
                     $sql .= " WHERE KODE_KOMENTAR =  " . $this->proses["KODE_KOMENTAR_PREV"] . " ";
                     
+                     
                     $this->arr_sql[0] = $sql;
+                    
+                    
+                    
                     
                     $sql  = " INSERT INTO EP_PGD_KOMENTAR_TENDER  (";
                     $sql  .= "KODE_KOMENTAR   ";
@@ -533,9 +646,9 @@ class alurkerja extends CI_Model  {
                     $sql  .= ",KODE_KANTOR  "; 
                     $sql  .= ",KODE_JABATAN ";
                     $sql  .= ",NAMA_JABATAN	 "; 
+                    $sql  .= ",NAMA	 ";
                     $sql  .= ",KODE_AKTIFITAS  ";
                     $sql  .= ",NAMA_AKTIFITAS	 "; 
-                    $sql  .= ",KOMENTAR	 ";
                     $sql  .= ",ATTACHMENT  ";
                     $sql  .= ",TGL_MULAI	 ";
                     $sql  .= ",TGL_REKAM ";
@@ -546,9 +659,9 @@ class alurkerja extends CI_Model  {
                     $sql .= ", '" . $this->proses["KODE_KANTOR"] . "'  ";
                     $sql .= ", '" . $this->proses["KODE_JABATAN"] . "'  ";
                     $sql .= ", '" . $this->proses["NAMA_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["PETUGAS_REKAM"] . "' ";
                     $sql .= ", '" . $this->proses["KODE_AKTIFITAS"] . "'  ";
                     $sql .= ", '" . $this->proses["NAMA_AKTIFITAS"] . "'  "; 
-                    $sql .= ", '" . $this->proses["KOMENTAR"] . "'  ";
                     $sql .= ", '" . $this->proses["ATTACHMENT"] . "'  ";
                     $sql .= ", TO_DATE('" . $this->proses["TGL_MULAI"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
                     $sql .= ", TO_DATE('" . $this->proses["TGL_REKAM"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
@@ -567,18 +680,8 @@ class alurkerja extends CI_Model  {
     function getQuery() {
         $sql = "";
          
-             
-                if ($this->proses["TIPE"] == 'AKHIR') {
-               
-                         
-                    $sql .= "UPDATE EP_KOM_KOMENTAR  ";
-                    $sql .= " SET  TGL_BERAKHIR = ";
-                    $sql .= "  TO_DATE('" . $this->proses["TGL_BERAKHIR"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
-                    $sql .= " WHERE KODE_KOMENTAR =  " . $this->proses["KODE_KOMENTAR_PREV"] . "";
-                    
-                     $this->arr_sql[0] = $sql;
-                   
-               
+        
+          if ($this->proses["TIPE"] == 'AWAL_DAN_AKHIR') {
                     
                     $sql  = " INSERT INTO EP_KOM_KOMENTAR  (KODE_KOMENTAR   ";
                     $sql .= ", KODE_JASA_BARANG  ";
@@ -599,7 +702,119 @@ class alurkerja extends CI_Model  {
                     $sql .= ", TGL_UBAH ";
                     $sql .= ", PETUGAS_UBAH  ";
                     
-                    if  ($this->kode_alurkerja == 2) {
+                    if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3 ) {
+                        $sql .= ", KODE_HARGA "; 
+                    }
+                    
+                    $sql .= ", KODE_ALURKERJA ) ";
+                    $sql .= " VALUES (". $this->proses["KODE_KOMENTAR"] ."";
+                    $sql .= ", '" . $this->proses["KODE_JASA_BARANG"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_SUB_BARANG"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_KANTOR"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_AKTIFITAS_DARI"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_AKTIFITAS_DARI"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_TRANSISI"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_TRANSISI"] . "'  ";
+                    $sql .= ", '" . $this->proses["KOMENTAR"] . "'  ";
+                    $sql .= ", '" . $this->proses["ATTACHMENT"] . "'  ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_MULAI"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_BERAKHIR"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_REKAM"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", '" . $this->proses["PETUGAS_REKAM"] . "' ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_UBAH"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", '" . $this->proses["PETUGAS_UBAH"] . "' ";
+                    
+                    if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
+                        $sql .= ", ".$this->proses["KODE_HARGA"]."";
+                    }
+                    
+                    $sql .= ", ".$this->proses["KODE_ALURKERJA"]."   )  ";
+                     $this->arr_sql[0] = $sql;
+              
+                     $sql  = "INSERT INTO EP_KOM_KOMENTAR  (KODE_KOMENTAR   ";
+                    $sql .= ", KODE_JASA_BARANG  ";
+                    $sql .= ", KODE_SUB_BARANG ";
+                    $sql .= ", KODE_KANTOR ";
+                    $sql .= ", KODE_JABATAN  ";
+                    $sql .= ", JABATAN  ";
+                    $sql .= ", KODE_AKTIFITAS ";
+                    $sql .= ", AKTIFITAS ";
+                    $sql .= ", KODE_RESPON ";
+                    $sql .= ", RESPON ";
+                    $sql .= ", KOMENTAR ";
+                    $sql .= ", ATTACHMENT ";
+                    $sql .= ", TGL_MULAI ";           
+                    $sql .= ", TGL_REKAM ";
+                    $sql .= ", PETUGAS_REKAM  ";
+                    
+                    
+                      if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
+                        $sql .= ", KODE_HARGA "; 
+                    }
+                    
+                    
+                    $sql .= ", KODE_ALURKERJA ) ";
+                    $sql .= " VALUES (". ($this->proses["KODE_KOMENTAR"] + 1 )."";
+                    $sql .= ", '" . $this->proses["KODE_JASA_BARANG"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_SUB_BARANG"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_KANTOR"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_AKTIFITAS"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_AKTIFITAS"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_TRANSISI"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_TRANSISI"] . "'  ";
+                    $sql .= ", '" . $this->proses["KOMENTAR"] . "'  ";
+                    $sql .= ", '" . $this->proses["ATTACHMENT"] . "'  ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_MULAI"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_REKAM"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", '" . $this->proses["PETUGAS_REKAM"] . "' ";
+                      if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
+                        $sql .= ", ".$this->proses["KODE_HARGA"]."";
+                    }
+                    
+                    $sql .= ", ".$this->proses["KODE_ALURKERJA"]."   )  ";
+                     
+                    $this->arr_sql[1] = $sql;
+              
+          }
+             
+                if ($this->proses["TIPE"] == 'AKHIR') {
+               
+                         
+                    $sql .= "UPDATE EP_KOM_KOMENTAR  ";
+                    $sql .= " SET  TGL_BERAKHIR = ";
+                    $sql .= "  TO_DATE('" . $this->proses["TGL_BERAKHIR"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                     $sql .= ",KOMENTAR =  '" . $this->proses["KOMENTAR"] . "'  ";
+                    $sql .= " WHERE KODE_KOMENTAR =  " . $this->proses["KODE_KOMENTAR_PREV"] . "";
+                    
+                     $this->arr_sql[0] = "";
+                  $this->arr_sql[1] = $sql;
+                   
+                
+                /*    
+                    $sql  = " INSERT INTO EP_KOM_KOMENTAR  (KODE_KOMENTAR   ";
+                    $sql .= ", KODE_JASA_BARANG  ";
+                    $sql .= ", KODE_SUB_BARANG ";
+                    $sql .= ", KODE_KANTOR ";
+                    $sql .= ", KODE_JABATAN  ";
+                    $sql .= ", JABATAN  ";
+                    $sql .= ", KODE_AKTIFITAS ";
+                    $sql .= ", AKTIFITAS ";
+                    $sql .= ", KODE_RESPON ";
+                    $sql .= ", RESPON ";
+                    $sql .= ", KOMENTAR ";
+                    $sql .= ", ATTACHMENT ";
+                    $sql .= ", TGL_MULAI ";    
+                    $sql .= ", TGL_BERAKHIR ";  
+                    $sql .= ", TGL_REKAM ";
+                    $sql .= ", PETUGAS_REKAM  ";
+                    $sql .= ", TGL_UBAH ";
+                    $sql .= ", PETUGAS_UBAH  ";
+                    
+                    if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
                         $sql .= ", KODE_HARGA "; 
                     }
                     
@@ -623,12 +838,58 @@ class alurkerja extends CI_Model  {
                     $sql .= ", TO_DATE('" . $this->proses["TGL_UBAH"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
                     $sql .= ", '" . $this->proses["PETUGAS_UBAH"] . "' ";
                     
-                    if  ($this->kode_alurkerja == 2) {
+                    if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
                         $sql .= ", ".$this->proses["KODE_HARGA"]."";
                     }
                     
                     $sql .= ", ".$this->proses["KODE_ALURKERJA"]."   )  ";
-                     $this->arr_sql[1] = $sql;
+                    $this->arr_sql[0] = $sql;
+                    
+                    $sql  = "INSERT INTO EP_KOM_KOMENTAR  (KODE_KOMENTAR   ";
+                    $sql .= ", KODE_JASA_BARANG  ";
+                    $sql .= ", KODE_SUB_BARANG ";
+                    $sql .= ", KODE_KANTOR ";
+                    $sql .= ", KODE_JABATAN  ";
+                    $sql .= ", JABATAN  ";
+                    $sql .= ", KODE_AKTIFITAS ";
+                    $sql .= ", AKTIFITAS ";
+                    $sql .= ", KODE_RESPON ";
+                    $sql .= ", RESPON ";
+                    $sql .= ", KOMENTAR ";
+                    $sql .= ", ATTACHMENT ";
+                    $sql .= ", TGL_MULAI ";           
+                    $sql .= ", TGL_REKAM ";
+                    $sql .= ", PETUGAS_REKAM  ";
+                    
+                    
+                      if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
+                        $sql .= ", KODE_HARGA "; 
+                    }
+                    
+                    
+                    $sql .= ", KODE_ALURKERJA ) ";
+                    $sql .= " VALUES (". $this->proses["KODE_KOMENTAR"]."";
+                    $sql .= ", '" . $this->proses["KODE_JASA_BARANG"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_SUB_BARANG"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_KANTOR"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_JABATAN"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_AKTIFITAS"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_AKTIFITAS"] . "'  ";
+                    $sql .= ", '" . $this->proses["KODE_TRANSISI"] . "'  ";
+                    $sql .= ", '" . $this->proses["NAMA_TRANSISI"] . "'  ";
+                    $sql .= ", '" . $this->proses["KOMENTAR"] . "'  ";
+                    $sql .= ", '" . $this->proses["ATTACHMENT"] . "'  ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_MULAI"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", TO_DATE('" . $this->proses["TGL_REKAM"] . "','YYYY-MM-DD HH24:MI:SS' )   ";
+                    $sql .= ", '" . $this->proses["PETUGAS_REKAM"] . "' ";
+                      if  ($this->kode_alurkerja == 2 || $this->kode_alurkerja == 3) {
+                        $sql .= ", ".$this->proses["KODE_HARGA"]."";
+                    }
+                    
+                    $sql .= ", ".$this->proses["KODE_ALURKERJA"]."   )  ";
+                    $this->arr_sql[1] = $sql;
+                    */
                    
                 } 
                 if ($this->proses["TIPE"] == 'AWAL') {
@@ -783,13 +1044,41 @@ class alurkerja extends CI_Model  {
                       
                       echo "SUCCESS";;
                   }
-              }    
+              } 
+              
+               if  ($this->proses["KODE_ALURKERJA"] == 5   ) {
+             $sql = "UPDATE EP_PGD_TENDER ";
+              $sql .= " SET STATUS = " . $this->proses["KODE_AKTIFITAS"];  
+              $sql .= " WHERE KODE_TENDER = '" .$this->proses["KODE_TENDER"]. "'";
+              $sql .= " AND KODE_KANTOR = '" .$this->proses["KODE_KANTOR"]. "'";
+               
+              if ($this->db->simple_query($sql)) {
+                      echo "SUCCESS";
+              }
+       } 
+       
+       
+       if ( $this->proses["KODE_ALURKERJA"] == 4) {
+             $sql = "UPDATE EP_PGD_PERENCANAAN ";
+              $sql .= " SET STATUS_AKTIFITAS = " . $this->proses["KODE_AKTIFITAS"];  
+              $sql .= " WHERE KODE_PERENCANAAN =  " .$this->proses["KODE_TENDER"]. "";
+              $sql .= " AND KODE_KANTOR = '" .$this->proses["KODE_KANTOR"]. "'";
+               
+              if ($this->db->simple_query($sql)) {
+                      echo "SUCCESS";
+              }
+           
+       }
+             
                
          }
         
     }            
     
     function execQuery() {
+        
+        // echo "TIPE:" . $this->proses["TIPE"];
+        
         $this->load->model('Nomorurut','urut');
          
                 $urut = $this->urut->get("ALL","KOMENTARKOM");
@@ -806,16 +1095,23 @@ class alurkerja extends CI_Model  {
                     
                     if (strlen($this->arr_sql[0]) > 10) {
                         $this->db->simple_query($this->arr_sql[0]);
+                         if ($this->proses["TIPE"] == 'AWAL' || $this->proses["TIPE"] == 'AWAL_DAN_AKHIR' ) {
+                             // echo "TAMBAH 1";   
+                             $this->urut->set_plus( "ALL","KOMENTARKOM") ;
+                         }
                     }
-                    if ($this->db->simple_query($this->arr_sql[1]))    {  
+                    
+                    if (strlen($this->arr_sql[1]) > 10) {
+                        if ($this->db->simple_query($this->arr_sql[1]))    {  
 
-                            $this->urut->set_plus( "ALL","KOMENTARKOM") ;
-                     
-                             echo "SUCCESS";
-                     } else {
-                         
-                         echo  $sql;
-                     }
+                                $this->urut->set_plus( "ALL","KOMENTARKOM") ;
+
+                                 echo "SUCCESS";
+                         } else {
+
+                             echo  $sql;
+                         }
+                    }
                    
                 }
           
