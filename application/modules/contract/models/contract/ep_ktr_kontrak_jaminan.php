@@ -30,13 +30,13 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 //        'POSISI_PERSETUJUAN',
 //        'JUMLAH_PERUBAHAN',
 //        'TGL_AKHIR_PENAWARAN',
-        'NILAI_JAMINAN'=>array('pattern'=>'^((\d+)|(\d{1,3})(\,\d{3}|)*)(\.\d{2}|)$'),
+        'NILAI_JAMINAN' => array('pattern' => '^((\d+)|(\d{1,3})(\,\d{3}|)*)(\.\d{2}|)$'),
         'NILAI_MINIMAL_JAMINAN',
         'BANK_JAMINAN',
         'NO_JAMINAN',
         'TGL_MULAI_JAMINAN',
         'TGL_AKHIR_JAMINAN',
-        'LAMPIRAN_JAMINAN'=>array('type'=>'file'),
+        'LAMPIRAN_JAMINAN' => array('type' => 'file'),
 //        'UM_PERSENTASI',
 //        'UM_NILAI',
 //        'JABATAN_PEMBUAT',
@@ -52,13 +52,10 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 //        'PETUGAS_REKAM',
 //        'TGL_UBAH',
 //        'PETUGAS_UBAH',
-        
     );
-    
     public $validation = array(
-        'NILAI_JAMINAN' => array('required'=>'true'),
-        );
-    
+        'NILAI_JAMINAN' => array('required' => 'true'),
+    );
     public $columns_conf = array(
         'KODE_KONTRAK',
         'KODE_KANTOR',
@@ -113,39 +110,40 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
-        
+
         // set default value
-        if(isset($_REQUEST['KODE_KONTRAK'])){
+        if (isset($_REQUEST['KODE_KONTRAK'])) {
             $sql = "SELECT NILAI_KONTRAK * 0.05 as NILAI_KONTRAK
                         FROM EP_KTR_KONTRAK
-                        WHERE KODE_KONTRAK = '".$_REQUEST['KODE_KONTRAK']."' 
-                            AND KODE_VENDOR = '".$_REQUEST['KODE_VENDOR']."' 
-                            AND KODE_TENDER = '".$_REQUEST['KODE_TENDER']."' 
-                            AND KODE_KANTOR = '".$_REQUEST['KODE_KANTOR']."'";
-            
+                        WHERE KODE_KONTRAK = '" . $_REQUEST['KODE_KONTRAK'] . "' 
+                            AND KODE_VENDOR = '" . $_REQUEST['KODE_VENDOR'] . "' 
+                            AND KODE_TENDER = '" . $_REQUEST['KODE_TENDER'] . "' 
+                            AND KODE_KANTOR = '" . $_REQUEST['KODE_KANTOR'] . "'";
+
             $row = $this->db->query($sql)->row_array();
-            
+
+            if (count($row)) {
 //            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
-            $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['NILAI_KONTRAK'] * 1;
-            $this->validation['NILAI_JAMINAN']['min'] = $row['NILAI_KONTRAK'] * 1;
-        }
-        else if(isset($_REQUEST['KODE_TENDER']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])){
+                $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['NILAI_KONTRAK'] * 1;
+                $this->validation['NILAI_JAMINAN']['min'] = $row['NILAI_KONTRAK'] * 1;
+            }
+        } else if (isset($_REQUEST['KODE_TENDER']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])) {
             $this->attributes['KODE_TENDER'] = $_REQUEST['KODE_TENDER'];
             $this->attributes['KODE_KANTOR'] = $_REQUEST['KODE_KANTOR'];
             $this->attributes['KODE_VENDOR'] = $_REQUEST['KODE_VENDOR'];
-            
+
             $sql = "SELECT KODE_VENDOR,
                                 KODE_TENDER,
                                 KODE_KANTOR,
                                 SUM (HARGA * JUMLAH) * 0.05 AS TOTAL_JAMINAN
                         FROM EP_PGD_ITEM_PENAWARAN
-                        WHERE KODE_VENDOR = '".$_REQUEST['KODE_VENDOR']."' 
-                            AND KODE_TENDER = '".$_REQUEST['KODE_TENDER']."' 
-                            AND KODE_KANTOR = '".$_REQUEST['KODE_KANTOR']."' 
+                        WHERE KODE_VENDOR = '" . $_REQUEST['KODE_VENDOR'] . "' 
+                            AND KODE_TENDER = '" . $_REQUEST['KODE_TENDER'] . "' 
+                            AND KODE_KANTOR = '" . $_REQUEST['KODE_KANTOR'] . "' 
                         GROUP BY KODE_VENDOR, KODE_TENDER, KODE_KANTOR";
-            
+
             $row = $this->db->query($sql)->row_array();
-            
+
 //            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
             $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
             $this->validation['NILAI_JAMINAN']['min'] = $row['TOTAL_JAMINAN'] * 1;

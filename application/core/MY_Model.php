@@ -41,14 +41,15 @@ class MY_Model extends CI_Model {
     public $table; // must be initialize by override class
     public $sql_select;
     public $primary_keys = array();
+    public $row_id;
     public $foreign_keys;
     public $show_columns;
     public $attributes = array();
     public $encoding = 'utf-8';
     public $select = "";
     public $datearray = array();
-    protected $dbdateformat = 'Y-m-d';
-    protected $dbtimeformat = 'Y-m-d H:i:s';
+    protected $dbdateformat = 'd-m-Y';
+    protected $dbtimeformat = 'd-m-Y H:i:s';
     protected $userdateformat = 'd/m/Y';
     protected $usertimeformat = 'd/m/Y H:i:s';
     protected $I = '';
@@ -170,8 +171,13 @@ class MY_Model extends CI_Model {
         $this->_before_save();
 
         $where = array();
-        foreach ($this->primary_keys as $key) {
-            $where[$key] = $this->attributes[$key];
+        if(! $this->attributes['ROW_ID']){
+            foreach ($this->primary_keys as $key) {
+                $where[$key] = $this->attributes[$key];
+            }
+        }else{
+            $where['ROWID'] = $this->attributes['ROW_ID'];
+            unset($this->attributes['ROW_ID']);
         }
 
         $this->db->where($where);
@@ -295,8 +301,8 @@ class MY_Model extends CI_Model {
     }
 
     protected function _before_insert() {
-        //$this->db->set("\"TGL_REKAM\"", "TO_DATE('".date("Y-m-d")."','YYYY-MM-DD')", FALSE);
-        $this->attributes['TGL_REKAM'] = date("Y-m-d");
+        //$this->db->set("\"TGL_REKAM\"", "TO_DATE('".date("d-m-Y")."','YYYY-MM-DD')", FALSE);
+        $this->attributes['TGL_REKAM'] = date("d-m-Y");
         $this->attributes['PETUGAS_REKAM'] = $this->session->userdata('user_id');
     }
 
@@ -305,8 +311,8 @@ class MY_Model extends CI_Model {
     }
 
     protected function _before_update() {
-        //$this->db->set("\"TGL_REKAM\"", "TO_DATE('".date("Y-m-d")."','YYYY-MM-DD')", FALSE);
-        $this->attributes['TGL_UBAH'] = date("Y-m-d");
+        //$this->db->set("\"TGL_REKAM\"", "TO_DATE('".date("d-m-Y")."','YYYY-MM-DD')", FALSE);
+        $this->attributes['TGL_UBAH'] = date("d-m-Y");
         $this->attributes['PETUGAS_UBAH'] = $this->session->userdata('user_id');
     }
 

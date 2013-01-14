@@ -113,7 +113,7 @@ $form_id = 'modal_form_' . $grid->id;
                     
                     //console.debug(data);
                     jQuery('#<?php echo $form_id ?> #form')
-                    .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model ?>?' + str)
+                    .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model ?>',str)
                     
                 }
             }
@@ -228,7 +228,7 @@ $form_id = 'modal_form_' . $grid->id;
                         
                                 //console.debug(data);
                                 jQuery('#<?php echo $form_id ?> #form')
-                                .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model ?>?' + str)
+                                .load($site_url + '/<?php echo $grid->module ?>/'+$form+'/<?php echo $grid->model ?>', str)
                         
                             } else {
                                 alert('Harap pilih data yang akan diubah');
