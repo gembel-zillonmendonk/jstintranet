@@ -4,17 +4,18 @@ class todo extends MY_Model
 {
     public $table = 'EP_KTR_KONTRAK';
     public $columns_conf = array(
-        'KODE_KONTRAK',
-        'KODE_TENDER',
-        'KODE_VENDOR',
-        'KODE_KANTOR',
-        'NAMA_VENDOR',
+        'KODE_KONTRAK' => array('hidden' => true),
+        'KODE_TENDER' => array('hidden' => true),
+        'KODE_VENDOR' => array('hidden' => true),
+        'KODE_KANTOR' => array('hidden' => true),
+        'NAMA_VENDOR' => array('hidden' => true),
         'JUDUL_PEKERJAAN',
         'LINGKUP_KERJA',
         'TIPE_KONTRAK',
         'JENIS_KONTRAK',
         'STATUS',
         'NILAI_KONTRAK',
+        'NAMA_PELAKSANA',
         'ACT',
     );
     public $sql_select = "( 
@@ -24,6 +25,7 @@ class todo extends MY_Model
            a.KODE_JAB_PEMOHON,
            a.JUDUL_PEKERJAAN,
            a.LINGKUP_PEKERJAAN,
+           a.NAMA_PELAKSANA,
            a.TIPE_KONTRAK,
            c.KODE_VENDOR,
            c.NAMA_VENDOR,

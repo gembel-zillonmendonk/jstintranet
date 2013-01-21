@@ -59,7 +59,8 @@ $form_id = 'modal_form_' . $grid->id;
             "sortable": true,
             "datatype": "json",
             "colModel": <?php echo json_encode(array_values($grid->columns)) ?>,
-            "toolbar" : [false,"top"],
+//            "toolbar" : [false,"top"],
+            "toolbar": [<?php echo $grid->toolbar ?>,"bottom"],
             "postData": {
                 "oper": "grid"
             },
@@ -84,6 +85,11 @@ $form_id = 'modal_form_' . $grid->id;
                 "subgrid": "subgrid",
                 "totalrows": "totalrows",
                 "autocomplete": "autocmpl"
+            },
+            "gridComplete":function(){
+                
+                <?php echo $grid->js_grid_completed; ?>
+                	
             },
             "loadError": function (xhr, status, err) {
                 try {

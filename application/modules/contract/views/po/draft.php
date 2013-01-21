@@ -34,6 +34,7 @@ if (count($_REQUEST) > 0) {
 <?php endif; ?>
 </div>-->
 <script>
+    
     $(".accordion").each(function(){
         //alert("test");
                 
@@ -48,6 +49,7 @@ if (count($_REQUEST) > 0) {
             }
         });
     });
+    
     
     $(".accordion")
     .addClass("ui-accordion ui-widget ui-helper-reset")
@@ -79,33 +81,39 @@ if (count($_REQUEST) > 0) {
                 if(validator.form()) {
                     jQuery(f).ajaxSubmit({
                         beforeSerialize: function($form, options){
-                            //                            alert('beforeSubmit is: ' + options.beforeSubmit);
-                            //                            alert($form);
+                            //alert('beforeSubmit is: ' + options.beforeSubmit);
+                            //console.log($form.serialize());
+                            //$form = null;
                         },
                         beforeSubmit: function(arr, $form, options) { 
+                            var extraData = [];
                             $grid = $("#grid_ep_ktr_kontrak_item_editor");
-                            
                             if($grid.length > 0) {
                                 var $checked_items = $("input:checkbox[name='selected_items[]']:checked", $grid);
+                            
                                 if(!$checked_items.length) {
                                     alert('Item Harus dipilih');
                                     return false;
                                 }
                             
-                                $("input:checkbox[name='selected_items[]']:checked", $grid).each(function(i){
-                                
+                                $($checked_items).each(function(i){
                                     var $input = $("input[name='selected_qty[]']", $(this).parent().parent()).val();
-                                    if(parseInt($input) <= 0){
+                                    //alert($(this).parent().parent());
+                                    
+                                    if(!$input.length || parseInt($input) <= 0){
                                         alert("Jumlah item harus lebih besar dari nol");
                                         return false;
                                     }
-                                    arr.push({ "name": "selected_items[]", "value": $(this).val() });
-                                    arr.push({ "name": "selected_qty[]", "value": $input });
+                                    extraData.push({ "name": "selected_items[]", "value": $(this).val() });
+                                    extraData.push({ "name": "selected_qty[]", "value": $input });
                                 });
                             }
-                        
-                            //                            var queryString = $.param(arr); 
-                            //                            alert(queryString);
+                            
+                            options["extraData"] = extraData;
+                            
+//                            console.log(JSON.stringify(arr));
+//                            var queryString = $.param(arr); 
+//                            alert(queryString);
                             // return false to cancel submit                  
                             return true;
                         },
@@ -125,7 +133,7 @@ if (count($_REQUEST) > 0) {
                                 +"&KODE_KANTOR="+KODE_KANTOR
                                 +"&KODE_VENDOR="+KODE_VENDOR;
                             
-                            alert(params);
+                            //alert(params);
                             //reload page
                             //window.location = $site_url +"/contract/create_draft?" + params;
                             //window.location = '<?php echo site_url('/wkf/start?kode_wkf=64&referer_url=/contract/todo&') ?>' + params;

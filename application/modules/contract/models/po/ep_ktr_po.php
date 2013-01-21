@@ -13,7 +13,7 @@ class ep_ktr_po extends MY_Model {
         'KODE_VENDOR' => array('type' => 'hidden'),
         'NAMA_VENDOR',
 //        'MATA_UANG',
-        'TGL_MULAI' => array('type' => 'datetime'),
+        'TGL_MULAI' => array('type' => 'date'),
         'TGL_AKHIR',
 //        'TGL_BUAT',
         'CATATAN_PO',
@@ -52,7 +52,7 @@ class ep_ktr_po extends MY_Model {
             $pivot_query = $wkf->get_pivot_query("kode_wkf = $kode_wkf");
 
             // copy default value from ep_ktr_kontrak
-            $sql = "select x.kode_proses, a.nama_vendor, a.nilai_kontrak, a.kode_tender, a.kode_vendor, a.kode_kontrak, a.kode_kantor, b.kode_po, coalesce(b.nilai_wo, 0) as nilai_wo, a.nilai_kontrak - coalesce(b.nilai_wo, 0) as sisa_nilai_kontrak
+            $sql = "select x.kode_proses, a.nama_vendor, a.nilai_kontrak, a.kode_tender, a.kode_vendor, a.kode_kontrak, a.kode_kantor, max(b.kode_po) as kode_po, sum(coalesce(b.nilai_wo, 0)) as nilai_wo, a.nilai_kontrak - sum(coalesce(b.nilai_wo, 0)) as sisa_nilai_kontrak
                     from ep_ktr_kontrak a
                     left join (
                         select x.kode_po, x.kode_kontrak, x.kode_kantor, sum(harga * QTY) as nilai_wo
@@ -68,7 +68,8 @@ class ep_ktr_po extends MY_Model {
                     ) x on x.KODE_KONTRAK = a.KODE_KONTRAK and x.KODE_TENDER = a.KODE_TENDER and x.kode_kantor = a.kode_kantor and x.kode_vendor = a.kode_vendor "
                     . " where a.kode_kontrak = '" . $this->attributes['KODE_KONTRAK'] . "'"
                     . " and a.kode_kantor = '" . $this->attributes['KODE_KANTOR'] . "'"
-                    . " and a.kode_vendor = '" . $this->attributes['KODE_VENDOR'] . "'";
+                    . " and a.kode_vendor = '" . $this->attributes['KODE_VENDOR'] . "'"
+                    . " group by x.kode_proses, a.nama_vendor, a.nilai_kontrak, a.kode_tender, a.kode_vendor, a.kode_kontrak, a.kode_kantor ";
 
             $row = $this->db->query($sql)->row_array();
 
@@ -159,7 +160,7 @@ class ep_ktr_po extends MY_Model {
                 'KODE_KANTOR' => $this->attributes['KODE_KANTOR'],
                 'KODE_KONTRAK' => $this->attributes['KODE_KONTRAK'],
             ));
-
+            
             $sel_items = $_REQUEST['selected_items'];
             $sel_qty = $_REQUEST['selected_qty'];
             foreach ($sel_items as $k => $v) {

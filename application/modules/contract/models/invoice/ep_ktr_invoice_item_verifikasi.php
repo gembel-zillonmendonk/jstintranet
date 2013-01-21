@@ -11,7 +11,7 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
 //        'KODE_VENDOR',
         'NO_BASTP'=>array('type'=>'hidden'),
         'KETERANGAN_BASTP'=>array('type'=>'label'),
-//        'NILAI_BASTP',
+        'NILAI_BASTP' => array('readonly' => true),
 //        'MATA_UANG_BASTP',
         'PENALTI_BASTP',
         'PPH23_BASTP',
@@ -35,11 +35,12 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
         'PPH23_BASTP',
         'PPN_BASTP',
 //        'DP_BASTP',
-//        'SUBTOTAL_BASTP',
+        'SUBTOTAL_BASTP',
 //        'KOMENTAR_BASTP',
     );
     public $dir = 'invoice';
-
+    public $toolbar = true;
+    
     function __construct() {
         parent::__construct();
         $this->init();
@@ -70,6 +71,19 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
 //            
 //            $this->elements_conf['NO_BASTP']['options'] = $options;
         }
+        
+        $this->js_grid_completed = '
+                var total = 0;
+                var ids = jQuery(\'#grid_' . strtolower(get_class($this)) . '\').jqGrid(\'getDataIDs\');
+		for(var i=0;i < ids.length;i++){
+                    var cl = ids[i];
+                    
+                    var data = jQuery(\'#grid_' . strtolower(get_class($this)) . '\').jqGrid(\'getRowData\', cl);
+                    total += Number(data[\'SUBTOTAL_BASTP\']);
+		}
+                
+                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
+        ';
     }
 
     function _before_save() {
@@ -82,6 +96,7 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
 //        
 //        $this->attributes['NILAI_BASTP'] = $row['TOTAL'];
 //        $this->attributes['MATA_UANG_BASTP'] = $row['MATA_UANG'];
+        $this->attributes['SUBTOTAL_BASTP']  = $this->attributes['NILAI_BASTP'] - ($this->attributes['PENALTI_BASTP'] + $this->attributes['PPH23_BASTP'] + $this->attributes['PPN_BASTP']);
     }
 
     function _before_insert() {

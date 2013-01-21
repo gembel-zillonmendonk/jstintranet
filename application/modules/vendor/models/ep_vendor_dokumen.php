@@ -48,6 +48,9 @@ class Ep_vendor_dokumen extends MY_Model {
             
             foreach ($_REQUEST['EP_VENDOR_DOKUMEN'] as $k => $v) {
                 
+                if(! isset($v['STATUS']))
+                    continue;
+                
                 $this->attributes = isset($this->attributes) ? array_merge($this->attributes, $v) : $v;
                 
                 // run before save

@@ -10,9 +10,9 @@ class Ep_vendor_modal extends MY_Model
     public $table = "EP_VENDOR";
     public $elements_conf = array(
         'MATA_UANG_MODAL_DASAR' => array('type' => 'dropdown', 'options' => array('IDR' => 'IDR', 'USD' => 'USD')),
-        'MODAL_DASAR' => array('type' => 'number'),
+        'MODAL_DASAR' => array('type' => 'money'),
         'MATA_UANG_MODAL_SETOR' => array('type' => 'dropdown', 'options' => array('IDR' => 'IDR', 'USD' => 'USD')),
-        'MODAL_SETOR' => array('type' => 'number'),
+        'MODAL_SETOR' => array('type' => 'money'),
     );
     public $validation = array(
         'MATA_UANG_MODAL_DASAR' => array('required' => true),

@@ -12,10 +12,10 @@ class Ep_vendor_laporan_keuangan extends MY_Model
         'TAHUN',
         'TIPE'=>array('type'=>'dropdown', 'options'=>array('AUDIT'=>'AUDIT', 'NON AUDIT'=>'NON AUDIT')),
         'MATA_UANG',
-        'NILAI_ASSET',
-        'HUTANG',
-        'PENDAPATAN',
-        'LABA_BERSIH',
+        'NILAI_ASSET' => array('type' => 'money'),
+        'HUTANG' => array('type' => 'money'),
+        'PENDAPATAN' => array('type' => 'money'),
+        'LABA_BERSIH' => array('type' => 'money'),
         'KELAS',
     );
     public $validation = array(
@@ -32,10 +32,10 @@ class Ep_vendor_laporan_keuangan extends MY_Model
         'MATA_UANG',
         'TAHUN',
         'TIPE',
-        'NILAI_ASSET',
-        'HUTANG',
-        'PENDAPATAN',
-        'LABA_BERSIH',
+        'NILAI_ASSET' => array('formatter' => 'currency'),
+        'HUTANG' => array('formatter' => 'currency'),
+        'PENDAPATAN' => array('formatter' => 'currency'),
+        'LABA_BERSIH' => array('formatter' => 'currency'),
         'KELAS',
     );
     public $sql_select = "(select * from EP_VENDOR_LAP_KEUANGAN)";

@@ -45,6 +45,11 @@ foreach ($form->model->primary_keys as $v) {
                         case 'number':
                             echo form_input($v);
                             break;
+                        case 'money':
+                            $v['type'] = 'text';
+                            $v['class'] = 'money ' . $v['class'];
+                            echo form_input($v);
+                            break;
                         case 'dropdown':
                             $opt = $v;
                             unset($opt['name'], $opt['options'], $opt['value']);

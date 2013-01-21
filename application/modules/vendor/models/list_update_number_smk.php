@@ -16,7 +16,7 @@ class list_update_number_smk extends MY_Model {
         'KODE_WILAYAH',
         'WILAYAH',
         'NO_SMK',
-        'TGL_SMK',
+        'TGL_SMK' => array('formatter' => 'date', 'formatoptions' => array('srcformat'=>'d-m-Y H:i:s', 'newformat'=>'d-m-Y')),
         'BERLAKU_SMK',
         'STATUS_AKTIF',
         'ACT',

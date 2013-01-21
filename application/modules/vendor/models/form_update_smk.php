@@ -78,7 +78,7 @@ class form_update_smk extends MY_Model {
         parent::_before_save();
         
 //        $this->attributes['STATUS_AKTIF'] = '1';
-        $this->attributes['TGL_SMK'] = date("Y-m-d");
+        $this->attributes['TGL_SMK'] = date("d-m-Y");
         $this->attributes['STATUS_AKTIF'] = 1;
     }
 

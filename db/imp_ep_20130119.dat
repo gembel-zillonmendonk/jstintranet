@@ -1,0 +1,6 @@
+FILE="ep_20130119.DMP"
+LOG="D:\www\jstintranet\db\imp_ep_20130119.log"
+FROMUSER=EP
+TOUSER=EP_DEV
+IGNORE=Y
+FEEDBACK=1000

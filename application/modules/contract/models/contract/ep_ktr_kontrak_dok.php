@@ -16,7 +16,7 @@ class ep_ktr_kontrak_dok extends MY_Model {
             )),
         'KETERANGAN',
         'NAMA_FILE'=>array('type'=>'file'),
-        'STATUS',
+//        'STATUS',
         'STATUS_PUBLISH'=>array('type'=>'checkbox', 'options'=>'1'),
     );
     public $columns_conf = array(
@@ -26,7 +26,7 @@ class ep_ktr_kontrak_dok extends MY_Model {
         'KODE_KATEGORI',
         'KETERANGAN',
         'NAMA_FILE',
-        'STATUS',
+//        'STATUS',
         'STATUS_PUBLISH',
     );
     public $dir = 'contract';

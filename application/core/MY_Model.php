@@ -561,9 +561,11 @@ class MY_Form {
                 if ($columns['type'] == 'date') {
                     unset($r[$raw_name]['validate']['maxlength']);
                     unset($el[$raw_name]['maxlength']);
-                    $r[$raw_name]['validate']['date'] = true;
-                }
-
+//                    $r[$raw_name]['validate']['dateID'] = true;
+                    
+                    $el[$raw_name]['value'] = (isset($attributes[$raw_name]) ? substr($attributes[$raw_name], 0, 10) : $columns['default_value']);
+                } 
+                
                 // override configuration defined in $model 
                 if (is_array($v))
                     foreach ($v as $key => $value)
@@ -573,6 +575,19 @@ class MY_Form {
                 $validation = (isset($model->validation[$raw_name]) && is_array($model->validation[$raw_name])) ? $model->validation[$raw_name] : array();
                 foreach ($validation as $key => $value)
                     $r[$raw_name]['validate'][$key] = $value;
+                
+//                if(isset($r[$raw_name]['type']) && $r[$raw_name]['type'] == 'datetime') {
+//                    die($raw_name);
+//                    unset($r[$raw_name]['validate']['maxlength']);
+//                    unset($el[$raw_name]['maxlength']);
+//                    $r[$raw_name]['validate']['datetimeID'] = true;
+//                }
+                
+//                if((isset($r[$raw_name]['type']) && $r[$raw_name]['type'] == 'date')) {
+//                    unset($r[$raw_name]['validate']['maxlength']);
+//                    unset($el[$raw_name]['maxlength']);
+//                    $r[$raw_name]['validate']['datetimeID'] = true;
+//                }
             }
         }
         else {

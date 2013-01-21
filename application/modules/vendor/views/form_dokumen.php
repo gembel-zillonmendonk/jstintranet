@@ -2,7 +2,7 @@
 <?php echo form_open($form->action, $form->form_params); ?>
 <!--<h3 class="ui-widget ui-widget-header ui-corner-all"><span>Form Detail</span></h3>-->
 <legend>Fields with remark (*) is required.</legend>
-<table class="table table-hover">
+<table class="table table-hover" id="table-checklist-doc">
     <thead>
         <tr>
             <th>No.</th>
@@ -14,9 +14,9 @@
     </thead>
     <tbody>
         <?php foreach ($form->model->checklist_doc as $k => $v): ?>
-            <tr>
+            <tr style="display:<?php echo $v['KATEGORI'] == 0 ? "table-row" : "none"; ?>;" class="kategori-<?php echo $v['KATEGORI']; ?>">
                 <td>
-                    <?php echo $v['NO']; ?>
+                    <div class="rownum"><?php echo $v['NO']; ?></div>
                     <input type="hidden" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][KODE_DOKUMEN_REF]" value="<?php echo $v['KODE_DOKUMEN_REF']; ?>" />
                     <input type="hidden" name="EP_VENDOR_DOKUMEN[<?php echo $v['KODE_DOKUMEN_REF']; ?>][TIPE]" value="<?php echo $v['TIPE']; ?>" />
                 </td>
@@ -49,8 +49,32 @@
 <?php if (!isset($read_only) || $read_only != true): ?>
     <button type="button" id="btnSimpan">SIMPAN</button>
     <button type="button" id="btnBatal">BATAL</button>
+    <button type="button" id="btnShowAll">TAMPILKAN SEMUA KATEGORI</button>
     <script>
         $(document).ready(function(){
+            $('.tabs').tabs({
+                select: function( event, ui ) {
+                    $("table#table-checklist-doc tbody tr").hide();
+                    $("table#table-checklist-doc tbody tr.kategori-" + ui.index).show();
+                    console.log($("table#table-checklist-doc tbody tr:visible"));
+                    
+                    $("table#table-checklist-doc tbody tr:visible").each(function(i){
+                        $(".rownum", this).html(i+1);
+                    });
+                },
+                activate : function(evt, ui) {
+                    console.log(ui);
+                }
+            });
+            
+            $('#btnShowAll').click(function(){
+                $("table#table-checklist-doc tbody tr").show();                
+            });
+            
+            $("table#table-checklist-doc tbody tr:visible").each(function(i){
+                $(".rownum", this).html(i+1);
+            });
+                    
             // stylish button and input date
             $(function() {
                 $( "input:submit, button").button();

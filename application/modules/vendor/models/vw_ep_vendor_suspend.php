@@ -21,7 +21,7 @@ class vw_ep_vendor_suspend extends MY_Model {
         'NAMA_AKTIFITAS',
         'KODE_VENDOR',
         'NAMA_VENDOR',
-        'URL',
+        'URL' => array('hidden' => true),
         'ACT',
     );
     function __construct() {

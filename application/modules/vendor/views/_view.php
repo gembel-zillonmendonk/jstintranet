@@ -20,7 +20,7 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_login') ?>">INFORMASI LOGIN</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_alamat') ?>">KONTAK PERUSAHAAN</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_alamat') ?>">KONTAK PERUSAHAAN</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_kontak_person') ?>">KONTAK PERSON</h3>
             <div></div>
@@ -31,7 +31,7 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
 
     <div id="tabs-2">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_akta') ?>">AKTA PENDIRIAN</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_akta') ?>">AKTA PENDIRIAN</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_domisili') ?>">DOMISILI PERUSAHAAN</h3>
             <div></div>
@@ -41,33 +41,33 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_siup') ?>">SIUP</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_ijin') ?>">IJIN LAIN-LAIN (OPSIONAL)</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_ijin') ?>">IJIN LAIN-LAIN (OPSIONAL)</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_tdp') ?>">TDP</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_agen') ?>">SURAT KEAGENAN/DISTRIBUTORSHIP (OPSIONAL)</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_agen') ?>">SURAT KEAGENAN/DISTRIBUTORSHIP (OPSIONAL)</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_importir') ?>">ANGKA PENGENAL IMPORTIR (OPSIONAL)</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_importir') ?>">ANGKA PENGENAL IMPORTIR (OPSIONAL)</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-3">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_komisaris') ?>">DEWAN KOMISARIS</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_komisaris') ?>">DEWAN KOMISARIS</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_direksi') ?>">DEWAN DIREKSI</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_direksi') ?>">DEWAN DIREKSI</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-4">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_bank') ?>">REKENING BANK</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_bank') ?>">REKENING BANK</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_modal') ?>">MODAL SESUAI DENGAN AKTA TERAKHIR</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_laporan_keuangan') ?>">INFORMASI LAPORAN KEUANGAN</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_laporan_keuangan') ?>">INFORMASI LAPORAN KEUANGAN</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_klasifikasi') ?>">KLASIFIKASI PERUSAHAAN</h3>
             <div></div>
@@ -76,52 +76,52 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
 
     <div id="tabs-5">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_barang') ?>">BARANG YANG BISA DIPASOK</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_barang') ?>">BARANG YANG BISA DIPASOK</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_jasa') ?>">JASA YANG BISA DIPASOK</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_jasa') ?>">JASA YANG BISA DIPASOK</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_wilayah') ?>">AREA KERJA</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_wilayah') ?>">AREA KERJA</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-6">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_tenaga_utama') ?>">TENAGA AHLI UTAMA</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_tenaga_utama') ?>">TENAGA AHLI UTAMA</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_tenaga_pendukung') ?>">TENAGA AHLI PENDUKUNG</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_tenaga_pendukung') ?>">TENAGA AHLI PENDUKUNG</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-7">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_sertifikat') ?>">KETERANGAN SERTIFIKAT</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_sertifikat') ?>">KETERANGAN SERTIFIKAT</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-8">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_peralatan') ?>">KETERANGAN TENTANG FASILITAS / PERALATAN</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_peralatan') ?>">KETERANGAN TENTANG FASILITAS / PERALATAN</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-9">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_pengalaman') ?>">PEKERJAAN</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_pengalaman') ?>">PEKERJAAN</h3>
             <div></div>
         </div>
     </div>
 
     <div id="tabs-10">
         <div class="accordion">
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_principal') ?>">PRINCIPAL</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_principal') ?>">PRINCIPAL</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_subkontraktor') ?>">SUBKONTRAKTOR</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_subkontraktor') ?>">SUBKONTRAKTOR</h3>
             <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid_form/ep_vendor_afiliasi') ?>">PERUSAHAAN AFILIASI</h3>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_afiliasi') ?>">PERUSAHAAN AFILIASI</h3>
             <div></div>
         </div>
     </div>

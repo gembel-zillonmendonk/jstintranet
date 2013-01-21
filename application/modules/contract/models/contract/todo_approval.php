@@ -4,8 +4,9 @@ class todo_approval extends MY_Model {
 
     public $table = 'EP_KTR_KONTRAK';
     
-    public $sql_select = "( select x.*, y.*, '' as \"ACT\" from (
-                                select a.* ,c.NAMA_AKTIFITAS, b.url, d.value as KODE_KONTRAK_VALUE from EP_WKF_PROSES a
+    public $sql_select = "( select x.*, y.*, z.NAMA_PELAKSANA, '' as \"ACT\" from (
+                                select a.* ,c.NAMA_AKTIFITAS, b.url, d.value as KODE_KONTRAK_VALUE 
+                                from EP_WKF_PROSES a
                                 inner join (
                                     select rtrim(xmlagg(xmlelement(e, '&' || key || '=' || value )).extract('//text()').extract('//text()') ,',') url, kode_proses 
                                     from EP_WKF_PROSES_VARS
@@ -15,18 +16,23 @@ class todo_approval extends MY_Model {
                                 inner join EP_WKF_PROSES_VARS d on a.kode_proses = d.kode_proses and d.key = 'KODE_KONTRAK'
                                 where kode_wkf = 6 and tanggal_selesai is null
                             ) x
-                            inner join EP_KTR_KONTRAK y on y.KODE_KONTRAK = x.KODE_KONTRAK_VALUE )";
+                            inner join EP_KTR_KONTRAK y on y.KODE_KONTRAK = x.KODE_KONTRAK_VALUE
+                            inner join EP_PGD_TENDER z on y.KODE_TENDER = z.KODE_TENDER and y.KODE_KANTOR = z.KODE_KANTOR )";
     
     public $columns_conf = array(
-        'KODE_PROSES',
+        'KODE_PROSES' => array('hidden' => true),
         'NAMA_AKTIFITAS',
-        'KODE_VENDOR',
-        'KODE_KONTRAK',
+        'KODE_TENDER' => array('hidden' => true),
+        'KODE_VENDOR' => array('hidden' => true),
+        'KODE_KONTRAK' => array('hidden' => true),
         'KODE_KANTOR',
         'NAMA_VENDOR',
         'JUDUL_PEKERJAAN',
         'LINGKUP_KERJA',
-        'URL',
+        'NAMA_PELAKSANA',
+        'NILAI_KONTRAK',
+        'STATUS',
+        'URL' => array('hidden' => true),
         'ACT',
     );
     public $dir = 'contract';
