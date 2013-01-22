@@ -8,7 +8,7 @@ class ep_ktr_kontrak_finalisasi extends MY_Model {
 //        'KODE_KANTOR',
 //        'KODE_TENDER',
 //        'KODE_VENDOR',
-        'NO_KONTRAK',
+        'NO_KONTRAK' => array('type' => 'hidden'),
 //        'USER_PEMINTA',
 //        'JABATAN_PEMINTA',
         
@@ -19,7 +19,7 @@ class ep_ktr_kontrak_finalisasi extends MY_Model {
 //        'TGL_BUAT',
 //        'JUDUL_PEKERJAAN',
 //        'TIPE_KONTRAK',
-//        'JENIS_KONTRAK',
+        'JENIS_KONTRAK' => array('type' => 'hidden'),
 //        'PESANAN_ULANG',
 //        'MATA_UANG',
 //        'NILAI_KONTRAK',
@@ -116,6 +116,24 @@ class ep_ktr_kontrak_finalisasi extends MY_Model {
         }
     }
 
+    function _before_update() {
+        parent::_before_update();
+        
+        // set sequence number NO_KONTRAK
+        $no_urut = 1;
+        $ftgl_ttd = substr(str_replace("-", "", $this->attributes['TGL_TTD']), 2); // convert from 20-12-2013 to 20122013
+        
+        try {
+            $sql = "select 
+                    max(to_number(replace(regexp_substr(NO_KONTRAK, '\/(.*?)\/'), '/' , ''))) + 1 as next_id
+                    from ep_ktr_kontrak
+                    where to_char(tgl_ttd, 'MMYYYY') = '".$ftgl_ttd."'";
+            $row = $this->db->query($sql)->row_array();
+        } catch( Exception $e) { }
+        
+        $this->attributes['NO_KONTRAK'] = sprintf('%1$s/%2$05s/%3$06d', $this->attributes['JENIS_KONTRAK'], count($row) > 0 ? $row['NEXT_ID'] : $no_urut, $ftgl_ttd);
+        
+    }
 }
 
 ?>
