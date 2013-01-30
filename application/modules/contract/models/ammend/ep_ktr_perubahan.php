@@ -5,7 +5,7 @@ class ep_ktr_perubahan extends MY_Model {
     public $table = 'EP_KTR_PERUBAHAN';
     public $elements_conf = array(
         'KODE_PERUBAHAN',
-        'KODE_KONTRAK' => array('type' => 'dropdown', 'options' => array()),
+        'KODE_KONTRAK',
         'KODE_KANTOR',
         'TGL_MULAI',
         'TGL_AKHIR',
@@ -28,14 +28,6 @@ class ep_ktr_perubahan extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->init();
-
-        $rows = $this->db->query("select kode_kontrak, no_kontrak from EP_KTR_KONTRAK where status = 'O' and kode_vendor = " . $this->session->userdata('user_id'))->result_array();
-        $options = array('' => '');
-        foreach ($rows as $k => $v) {
-            $options[$v['KODE_KONTRAK']] = $v['NO_KONTRAK'];
-        }
-
-        $this->elements_conf['KODE_KONTRAK']['options'] = $options;
 
         if (isset($_REQUEST['KODE_KONTRAK'])) {
             
@@ -95,5 +87,4 @@ class ep_ktr_perubahan extends MY_Model {
     }
 
 }
-
 ?>

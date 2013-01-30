@@ -8,6 +8,7 @@ class ep_ktr_jangka_kontrak_view extends MY_Model {
 //        'KODE_KONTRAK',
 //        'KODE_KANTOR',
         'PERSENTASI',
+        'JUMLAH_UANG',
         'TGL_TARGET',
         'PERSENTASI_PERKEMBANGAN',
         'STATUS_PERKEMBANGAN',

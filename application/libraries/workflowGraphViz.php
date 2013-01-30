@@ -16,7 +16,7 @@ class WorkflowGraphViz
     var $dotCommand = 'dot';
 
     function WorkflowGraphViz(){
-        $this->binPath = dirname(__FILE__) ."/graphviz-2.20.2/bin/";
+        $this->binPath = dirname(__FILE__) ."/graphviz/bin/";
     }
     
     function image($data, $format = 'svg', $command = null)
@@ -143,6 +143,7 @@ class WorkflowGraphViz
                 . ' -o' . escapeshellarg($outputfile)
                 . ' ' . escapeshellarg($dotfile)
                 . ' 2>&1';
+        
         $r = exec($command, $msg, $return_val);
         
         clearstatcache();

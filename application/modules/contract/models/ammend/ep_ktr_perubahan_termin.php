@@ -19,7 +19,12 @@ class ep_ktr_perubahan_termin extends MY_Model {
         parent::__construct();
         $this->init();
     }
-
+    
+    function _default_scope() {
+        parent::_default_scope();
+        
+        return " kode_kontrak = '".$_REQUEST['KODE_KONTRAK']."'";
+    }
 }
 
 ?>

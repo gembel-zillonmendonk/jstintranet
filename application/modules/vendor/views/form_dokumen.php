@@ -45,19 +45,21 @@
     </tbody>
 </table>
 
-
+<button type="button" id="btnShowAll">TAMPILKAN SEMUA KATEGORI</button>
 <?php if (!isset($read_only) || $read_only != true): ?>
     <button type="button" id="btnSimpan">SIMPAN</button>
     <button type="button" id="btnBatal">BATAL</button>
-    <button type="button" id="btnShowAll">TAMPILKAN SEMUA KATEGORI</button>
-    <script>
+    
+    
+<?php endif; ?>
+<script>
         $(document).ready(function(){
             $('.tabs').tabs({
                 select: function( event, ui ) {
                     $("table#table-checklist-doc tbody tr").hide();
                     $("table#table-checklist-doc tbody tr.kategori-" + ui.index).show();
                     console.log($("table#table-checklist-doc tbody tr:visible"));
-                    
+                    console.log(ui.index);
                     $("table#table-checklist-doc tbody tr:visible").each(function(i){
                         $(".rownum", this).html(i+1);
                     });
@@ -115,5 +117,4 @@
         });
                 
     </script>
-<?php endif; ?>
 </form>

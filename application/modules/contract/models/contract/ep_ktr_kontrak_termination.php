@@ -55,7 +55,7 @@ class ep_ktr_kontrak_termination extends MY_Model {
 
             // insert manual by human
             foreach ($rows as $val) {
-                $val['TANGGAL'] = date('Y-m-d');
+                $val['TANGGAL'] = date('d-m-Y');
                 $val['TIPE_KOMODITI'] = 'M';
 
                 $details = $_REQUEST['EP_VENDOR_KINERJA'];
@@ -95,7 +95,7 @@ class ep_ktr_kontrak_termination extends MY_Model {
 
                 $other_review_rows = $this->db->query($sql)->result_array();
                 foreach ($other_review_rows as $v) {
-                    $v['TANGGAL'] = date('Y-m-d');
+                    $v['TANGGAL'] = date('d-m-Y');
                     $v['TIPE_KOMODITI'] = 'M';
                     $v['KODE_KEL_JASA_BARANG'] = $val['KODE_KEL_JASA_BARANG'];
                     $v['KODE_VENDOR'] = $val['KODE_VENDOR'];
@@ -123,10 +123,74 @@ class ep_ktr_kontrak_termination extends MY_Model {
             }
         }
 
-        $this->attributes['TGL_PEMUTUSAN'] = date('Y-m-d');
+        $this->attributes['TGL_PEMUTUSAN'] = date('d-m-Y');
         $this->attributes['STATUS'] = 'C';
     }
 
+    function _after_save() {
+        parent::_after_insert();
+        
+//        $this->attributes['ROW_ID'] = '';
+//        $this->db->query("begin 
+//                PROC_EP_TO_AT_PENGADAAN_BARANG('" . $this->attributes['KODE_TENDER'] . "'); 
+//            end;", FALSE, FALSE);
+        
+        $sql = "INSERT INTO AT_PENGADAAN_BARANG
+      SELECT a.kode_tender AS kode_pengadaan,
+             a.kode_tender AS kode_pengadaan_lama,
+             a.kode_tender AS no_pengadaan,
+             b.no_kontrak AS no_perjanjian,
+             a.kode_kantor AS kode_kantor_peminta,
+             a.judul_pekerjaan AS nama_pekerjaan,
+             a.lingkup_pekerjaan AS desc_pekerjaan,
+             a.kode_kantor_perencanaan AS kode_kantor_pengadaan,
+             b.kode_vendor AS kode_rekanan,
+             b.status AS status,
+             0 AS batal,
+             SYSDATE AS tgl_rekam,
+             'EPROC' AS petugas_rekam,
+             '' as TGL_UBAH,
+             '' as petugas_ubah
+        FROM    ep_pgd_tender a
+             INNER JOIN
+                ep_ktr_kontrak b
+             ON     a.kode_tender = b.kode_tender
+                AND a.kode_kantor = b.kode_kantor
+        WHERE a.kode_tender = '" . $this->attributes['KODE_TENDER'] . "'";
+
+        $this->db->query($sql);
+        
+        $sql = "INSERT INTO AT_PENGADAAN_BARANG_DETAIL
+            SELECT c.kode_tender AS KODE_PENGADAAN,
+             ROWNUM AS NO_URUT,
+             kode_barang_jasa AS KODE_BARANG,
+             kode_sub_barang_jasa AS KODE_SUB_BARANG,
+             jumlah AS JUMLAH,
+             b.tgl_bastp AS TGL_TERIMA,
+             jumlah AS JUMLAH_TERIMA,
+             satuan AS JENIS_SATUAN,
+             '' AS KAP,
+             keterangan AS KETERANGAN,
+             '' AS MATA_ANGGARAN,
+             'eproc' AS PETUGAS_REKAM,
+             '' as TGL_UBAH,
+             '' as petugas_ubah,
+             'A' AS STATUS
+        FROM ep_ktr_kontrak_item a
+             INNER JOIN (  SELECT kode_kontrak,
+                                  kode_kantor,
+                                  MAX (tgl_bastp) AS tgl_bastp
+                             FROM ep_ktr_jangka_kontrak
+                         GROUP BY kode_kontrak, kode_kantor) b
+                ON     a.kode_kontrak = b.kode_kontrak
+                   AND a.kode_kantor = b.kode_kantor
+             INNER JOIN ep_ktr_kontrak c
+                ON     a.kode_kontrak = b.kode_kontrak
+                   AND a.kode_kantor = b.kode_kantor
+        WHERE c.kode_tender = '" . $this->attributes['KODE_TENDER'] . "'";
+        
+        $this->db->query($sql);
+    }
 }
 
 ?>
