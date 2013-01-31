@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.list_update_number_smk') ?>">DAFTAR UPDATE VENDOR NO. SMK</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.list_update_number_smk') ?>">DAFTAR UPDATE VENDOR NO. SMK</h3>
     <div></div>
 </div>
 <script>

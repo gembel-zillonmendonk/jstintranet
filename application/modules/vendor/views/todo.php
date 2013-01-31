@@ -1,19 +1,19 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_registration') ?>">DAFTAR VENDOR BARU YANG PERLU PERSETUJUAN</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_registration') ?>">DAFTAR VENDOR BARU YANG PERLU PERSETUJUAN</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_update') ?>">DAFTAR VENDOR UPDATE YANG PERLU PERSETUJUAN</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_update') ?>">DAFTAR VENDOR UPDATE YANG PERLU PERSETUJUAN</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_blacklist') ?>">DAFTAR VENDOR BLACK LIST YANG PERLU PERSETUJUAN</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_blacklist') ?>">DAFTAR VENDOR BLACK LIST YANG PERLU PERSETUJUAN</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_suspend') ?>">DAFTAR VENDOR DALAM PENGAWASAN YANG PERLU PERSETUJUAN</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_suspend') ?>">DAFTAR VENDOR DALAM PENGAWASAN YANG PERLU PERSETUJUAN</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_activation') ?>">DAFTAR VENDOR AKTIVASI YANG PERLU PERSETUJUAN</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_activation') ?>">DAFTAR VENDOR AKTIVASI YANG PERLU PERSETUJUAN</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_expired') ?>">DAFTAR VENDOR TDP,SIUP,DOMISILI EXPIRED YANG PERLU PERSETUJUAN</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_expired') ?>">DAFTAR VENDOR TDP,SIUP,DOMISILI EXPIRED YANG PERLU PERSETUJUAN</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_delisting') ?>">DAFTAR DELISTING VENDOR PRODUCT/SERVICE</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_delisting') ?>">DAFTAR DELISTING VENDOR PRODUCT/SERVICE</h3>
     <div></div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.vw_ep_vendor_undelisting') ?>">DAFTAR UNDELISTING VENDOR PRODUCT/SERVICE</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.vw_ep_vendor_undelisting') ?>">DAFTAR UNDELISTING VENDOR PRODUCT/SERVICE</h3>
     <div></div>
 </div>
 <script>

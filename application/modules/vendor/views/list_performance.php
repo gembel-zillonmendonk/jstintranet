@@ -52,7 +52,7 @@ if (count($_REQUEST) > 0) {
          
         </form>
     </div>
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.list_performance' . $params) ?>">DAFTAR PERFORMANCE VENDOR</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.list_performance' . $params) ?>">DAFTAR PERFORMANCE VENDOR</h3>
     <div></div>
 </div>
 <script>

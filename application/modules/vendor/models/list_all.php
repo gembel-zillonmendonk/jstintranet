@@ -25,8 +25,10 @@ class list_all extends MY_Model {
                     
                     var param = "referer_url=/vendor/list_all&KODE_VENDOR=" + data[\'KODE_VENDOR\'];
                     var href = $site_url + "/vendor/view?" + param;
+                    var href2 = $site_url + "/vendor/form/ep_vendor_update?" + param;
                     
                     be = "<button onclick=\"javascript:window.location=\'" +href+ "\'\" type=\"button\" id=\"btnProses\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">LIHAT DETAIL</span></button>";
+                    be = be + "<button onclick=\"javascript:window.location=\'" +href2+ "\'\" type=\"button\" id=\"btnUpdate\" class=\"ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\" role=\"button\" aria-disabled=\"false\"><span class=\"ui-button-text\">UPDATE</span></button>";
                     jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{ACT:be});
 		}';
     }

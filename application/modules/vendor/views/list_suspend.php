@@ -1,5 +1,5 @@
 <div class="accordion">
-    <h3 href="<?php echo site_url('/vendor/grid/vendor.list_suspend') ?>">DAFTAR VENDOR SUSPEND</h3>
+    <h3 href="<?php echo site_url('/vendor/view_grid/vendor.list_suspend') ?>">DAFTAR VENDOR SUSPEND</h3>
     <div></div>
 </div>
 <script>

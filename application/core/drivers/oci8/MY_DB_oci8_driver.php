@@ -12,7 +12,7 @@ class MY_DB_oci8_driver extends CI_DB_oci8_driver {
     $this->_protect_identifiers = FALSE;
     
         // change datatime format to 'YYYY-MM-DD HH24:MI:SS'
-        $this->query("alter session set nls_date_format='DD-MM-YYYY HH24:MI:SS'");
+        $this->query("alter session set nls_date_format='DD-MM-YYYY HH24:MI'");
 
         log_message('debug', 'Extended DB driver class instantiated!');
     }
