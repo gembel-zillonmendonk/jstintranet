@@ -99,7 +99,7 @@ class ep_ktr_kontrak_item_editor extends MY_Model {
                     jQuery(\'#grid_' . strtolower(get_class($this)) . '\').jqGrid(\'setRowData\',ids[i],{QTY:qty,PILIH:cb});
 		}
                 
-                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
+                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right", "width":"100%"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
         ';
         
         // set default value

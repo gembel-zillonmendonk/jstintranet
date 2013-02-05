@@ -1,16 +1,21 @@
 <?php
 
-class ep_ktr_perubahan extends MY_Model {
+class ep_ktr_perubahan_compare extends MY_Model {
 
     public $table = 'EP_KTR_PERUBAHAN';
     public $elements_conf = array(
 //        'KODE_PERUBAHAN',
 //        'KODE_KONTRAK',
 //        'KODE_KANTOR',
-        'TGL_MULAI',
-        'TGL_AKHIR',
-        'NILAI_KONTRAK',
-        'TGL_PERUBAHAN',
+        'TGL_MULAI' => array('type' => 'label'),
+        'TGL_AKHIR' => array('type' => 'label'),
+        'NILAI_KONTRAK' => array('type' => 'label'),
+        
+        'TGL_MULAI_SEBELUM' => array('type' => 'label'),
+        'TGL_AKHIR_SEBELUM' => array('type' => 'label'),
+        'NILAI_KONTRAK_SEBELUM' => array('type' => 'label'),
+        
+        'TGL_PERUBAHAN' => array('type' => 'label'),
         'MATA_UANG' => array('type' => 'label'),
 //        'STATUS',
 //        'POSISI_PERSETUJUAN',
@@ -59,32 +64,6 @@ class ep_ktr_perubahan extends MY_Model {
 
     }
 
-    public function _after_insert() {
-        parent::_after_insert();
-
-        if (isset($this->attributes['KODE_PERUBAHAN']) != "" &&
-                isset($this->attributes['KODE_KANTOR']) != "" &&
-                isset($this->attributes['KODE_KONTRAK']) != "") {
-
-            $sql = "INSERT INTO EP_KTR_PERUBAHAN_ITEM  (KODE_PERUBAHAN, KODE_KONTRAK, KODE_KANTOR, KODE_BARANG_JASA, KODE_SUB_BARANG_JASA, KETERANGAN, HARGA, JUMLAH)
-                    SELECT " . $this->attributes['KODE_PERUBAHAN'] . " as \"KODE_PERUBAHAN\", KODE_KONTRAK, KODE_KANTOR, KODE_BARANG_JASA, KODE_SUB_BARANG_JASA, KETERANGAN, HARGA, JUMLAH  
-                    FROM EP_KTR_KONTRAK_ITEM
-                    WHERE 
-                        KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "' 
-                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR']. "'";
-
-            $query = $this->db->query($sql);
-
-            $sql = "INSERT INTO EP_KTR_PERUBAHAN_JANGKA (KODE_PERUBAHAN, KODE_JANGKA, KODE_KONTRAK, KODE_KANTOR, PERSENTASI, JUMLA_UANG, TGL_TARGET, KETERANGAN)
-                    SELECT " . $this->attributes['KODE_PERUBAHAN'] . " as \"KODE_PERUBAHAN\", KODE_JANGKA, KODE_KONTRAK, KODE_KANTOR, PERSENTASI, JUMLA_UANG, TGL_TARGET, KETERANGAN  
-                    FROM EP_KTR_JANGKA_KONTRAK
-                    WHERE 
-                        KODE_KONTRAK = '" . $this->attributes['KODE_KONTRAK'] . "' 
-                        AND KODE_KANTOR = '" . $this->attributes['KODE_KANTOR']. "'";
-
-            $query = $this->db->query($sql);
-        }
-    }
 
 }
 ?>

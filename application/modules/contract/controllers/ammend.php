@@ -20,6 +20,14 @@ class ammend extends MY_Controller
             $this->layout->view('ammend/draft');
     }
     
+    public function view_draft(){
+        
+        if($this->_is_ajax_request())
+            $this->load->view('ammend/view_draft');
+        else
+            $this->layout->view('ammend/view_draft');
+    }
+    
     public function compare(){
         
         if($this->_is_ajax_request())

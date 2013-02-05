@@ -25,6 +25,7 @@ class ep_ktr_perubahan_todo extends MY_Model {
                                         group by a.kode_proses
                                     ) d on a.kode_proses = d.kode_proses
                                     where kode_wkf = 63 and tanggal_selesai is null
+                                    and kode_aplikasi is null
                                 ) x 
                             inner join EP_KTR_PERUBAHAN a ON a.KODE_PERUBAHAN = x.KODE_PERUBAHAN
                             inner join EP_KTR_KONTRAK b ON b.KODE_KONTRAK = a.KODE_KONTRAK

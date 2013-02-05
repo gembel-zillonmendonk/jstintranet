@@ -56,7 +56,7 @@ class ep_ktr_invoice_item_bastp extends MY_Model {
                     
 		}
                 
-                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
+                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right", "width":"100%"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
         ';
         
         if (isset($_REQUEST['KODE_INVOICE']) && isset($_REQUEST['KODE_KONTRAK']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])) {

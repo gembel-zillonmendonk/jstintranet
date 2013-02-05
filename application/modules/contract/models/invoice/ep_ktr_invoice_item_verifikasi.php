@@ -82,7 +82,7 @@ class ep_ktr_invoice_item_verifikasi extends MY_Model {
                     total += Number(data[\'SUBTOTAL_BASTP\']);
 		}
                 
-                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
+                $("#t_grid_' . strtolower(get_class($this)) . '").css({"text-align":"right", "width":"100%"}).html("TOTAL : " + total + "&nbsp;&nbsp;");
         ';
     }
 

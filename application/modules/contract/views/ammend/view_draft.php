@@ -13,27 +13,26 @@ if (count($_REQUEST) > 0) {
 ?>
 
 <div class="accordion">
-    <h3 href="<?php echo site_url('/contract/view_form/ammend.ep_ktr_perubahan_compare' . $params) ?>">HEADER</h3>
-    <div></div>
-    <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
-    <div></div>    
-    <h3 href="<?php echo site_url('/wkf/list_history' . $params) ?>">MONITORING PROSES</h3>
+    <h3 href="<?php echo site_url('/contract/view_form/ammend.ep_ktr_perubahan' . $params) ?>">HEADER</h3>
     <div></div>
 
-</div>
-<div style="display: inline-block; width: 100%;">
-    <div class="accordion" style="width: 50%; float:left">
+    <?php if (strlen($params) > 0 && ! isset($_REQUEST['KODE_PERUBAHAN']) && isset($_REQUEST['KODE_KONTRAK']) && $_REQUEST['KODE_KONTRAK'] > 0): ?>
         <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_item' . $params) ?>">ITEM</h3>
         <div></div>
-        <h3 href="<?php echo site_url('/contract/milestone/view_grid/milestone.ep_ktr_jangka_kontrak' . $params) ?>">MILESTONE</h3>
+        <h3 href="<?php echo site_url('/contract/view_grid/milestone.ep_ktr_jangka_kontrak' . $params) ?>">MILESTONE</h3>
         <div></div>
-    </div>
-    <div class="accordion" style="width: 50%; float:right">
+        <h3 href="<?php echo site_url('/contract/view_grid/contract.ep_ktr_kontrak_dok' . $params) ?>">LAMPIRAN</h3>
+        <div></div>    
+
+
+    <?php elseif (isset($_REQUEST['KODE_PERUBAHAN']) && $_REQUEST['KODE_PERUBAHAN'] > 0): ?>
+
         <h3 href="<?php echo site_url('/contract/ammend/view_grid/ammend.ep_ktr_perubahan_item' . $params) ?>">ITEM</h3>
         <div></div>
         <h3 href="<?php echo site_url('/contract/ammend/view_grid/ammend.ep_ktr_perubahan_jangka' . $params) ?>">MILESTONE</h3>
         <div></div>
-    </div>
+
+    <?php endif; ?>
 </div>
 <script>
     $(".accordion").each(function(){
@@ -88,16 +87,28 @@ if (count($_REQUEST) > 0) {
             $(el).click(function() {
                 if(validator.form()) {
                     jQuery(f).ajaxSubmit({
-                        success: function(){
+                        success: function(data){
                             validator.prepareForm();
                             validator.hideErrors();
+                            
+                            var KODE_PERUBAHAN = $("input[name='EP_KTR_PERUBAHAN[KODE_PERUBAHAN]']", data).val();
+                            var KODE_KONTRAK = $("input[name='EP_KTR_PERUBAHAN[KODE_KONTRAK]']", data).val();
+                            var KODE_KANTOR = $("input[name='EP_KTR_PERUBAHAN[KODE_KANTOR]']", data).val();
+                            $("#id_form_ep_ktr_perubahan").replaceWith(data);
+                            f = data;
                             
                             var params = "KODE_KONTRAK="+$("#id_ep_ktr_perubahan_kode_kontrak", f).val()
                                 +"&KODE_PERUBAHAN="+$("#id_ep_ktr_perubahan_kode_perubahan", f).val()
                                 +"&KODE_KANTOR="+$("#id_ep_ktr_perubahan_kode_kantor", f).val();
                             
                             //reload page
-                            window.location = '<?php echo site_url('/wkf/start?kode_wkf=63&') ?>' + params;
+                            //window.location = '<?php echo site_url('/wkf/start?kode_wkf=63&') ?>' + params;
+                            
+                            var newURL = window.location.href
+                            newURL = updateURLParameter(newURL, 'KODE_KONTRAK', KODE_KONTRAK);
+                            newURL = updateURLParameter(newURL, 'KODE_KANTOR', KODE_KANTOR);
+                            newURL = updateURLParameter(newURL, 'KODE_PERUBAHAN', KODE_PERUBAHAN);
+                            window.location = newURL;  
                         },
                         error: function(){
                             alert('Data gagal disimpan')
@@ -107,4 +118,27 @@ if (count($_REQUEST) > 0) {
             });
         }
     });
+    
+    /**
+     * http://stackoverflow.com/a/10997390/11236
+     */
+    function updateURLParameter(url, param, paramVal){
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+            tempArray = additionalURL.split("&");
+            for (i=0; i<tempArray.length; i++){
+                if(tempArray[i].split('=')[0] != param){
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        }
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
 </script>
