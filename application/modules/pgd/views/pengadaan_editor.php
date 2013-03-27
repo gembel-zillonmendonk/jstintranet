@@ -1817,7 +1817,8 @@ function fnVerifikasiVendor(str) {
                         buttons: { 
                             "SIMPAN": function() { 
                                     
-                                     $('#KETERANGAN_VERIFIKASI').val(tinyMCE.get('commentar_verifikasi').getContent());
+                                    // $('#KETERANGAN_VERIFIKASI').val(tinyMCE.get('commentar_verifikasi').getContent());
+                                    $('#KETERANGAN_VERIFIKASI').val($('#commentar_verifikasi').val());
 
                                     str = $("#frm_vendor_verifikasi").serialize();
                                     
@@ -1832,7 +1833,7 @@ function fnVerifikasiVendor(str) {
                                                    var grid = $("#grid_ep_pgd_tender_vendor_view");
                                                    grid.trigger("reloadGrid",[{page:1}]);
          
-                                       //      jQuery('#modal_form_verifikasi').dialog("close");
+                                           jQuery('#modal_form_verifikasi').dialog("close");
                                         
                                     }
 
@@ -1958,8 +1959,8 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
-                               
+                               // $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
@@ -2193,7 +2194,9 @@ function fnEditPeringkat(str) {
 if (in_array("InputEvaluasiTeknisVendor", $arr_antarmuka)) {
 ?>
 <div id="modal_form_komentar_harga" ></div>
-<div id="modal_form_komentar_teknis" ></div> 
+<div id="modal_form_komentar_teknis" >
+ 
+</div> 
 <div id="modal_form_evaluasi_teknis" ></div>  
  <div id="modal_form_evaluasi_harga" ></div>
  <div class="accordion">
@@ -2214,7 +2217,7 @@ if (in_array("InputEvaluasiTeknisVendor", $arr_antarmuka)) {
                                              success: function(msg){
                                                  
                                           //   $("#trace").html(msg);
-                                             alert(msg);
+                                          //   alert(msg);
   jQuery('#modal_form_evaluasi_harga').load($site_url + '/pgd/pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' );
  // alert(msg);
                                                  //reload grid
@@ -2289,8 +2292,10 @@ function fnKomentarHarga(kode_vendor,nama_vendor){
 function fnKomentarTeknis(kode_vendor,nama_vendor){
        // alert(kode_vendor + nama_vendor); 
        nama_vendor = 'VENDOR';
+       jQuery('#modal_form_komentar_teknis').html("");
       jQuery('#modal_form_komentar_teknis')
-                     .load($site_url + '/pgd/pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                      
+        .load($site_url + '/pgd/pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
                    // .load($site_url + '/pgd/pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor)
                     .dialog({ //dialog form use for popup after click button in pager
                         autoOpen:false,
@@ -2301,7 +2306,10 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                                //alert(tinyMCE.get('commentar_teknis').getContent());
+                                
+                              
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
                                
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
@@ -2518,7 +2526,9 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                              //  $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                               
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
                                
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
@@ -2743,8 +2753,9 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
-                               
+                               // $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
+                                
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
@@ -3061,11 +3072,11 @@ if (1) {
                           $("#frmKomentar").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
-                                          //     alert(msg);
-                                          //    $("#trace").html(msg);
+                                          //      alert(msg);
+                                          //     $("#trace").html(msg);
                                          // alert(msg);
                                           //reload grid
-                                          window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd"; ;   
+                                           window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd"; ;   
                                       },
                                       error: function(){
                                           alert('Data gagal disimpan')

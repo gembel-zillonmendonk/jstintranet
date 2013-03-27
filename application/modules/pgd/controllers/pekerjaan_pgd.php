@@ -891,8 +891,8 @@ class Pekerjaan_pgd extends MY_Controller {
               
               $data["max_rangking"] = count($result);
                
-               $this->layout->view("pengadaan_editor", $data);
- 
+             $this->layout->view("pengadaan_editor", $data);
+             
             
         }
         
@@ -1070,10 +1070,10 @@ class Pekerjaan_pgd extends MY_Controller {
                     $sql .= " , KETERANGAN_EVALUASI ";
                     $sql .= " , PTP_INQUIRY_NOTES ";
                     $sql .= " , PANITIA ";
-                    if ($this->input->post("METODE_TENDER") == 2 ) {
+                   // if ($this->input->post("METODE_TENDER") == 2 ) {
                         $sql .= " , KODE_PANITIA  ";
                         $sql .= " , KODE_KANTOR_PANITIA   ";
-                    } 
+                   // } 
                     $sql .= " ) ";
                     $sql .= " VALUES ( ";
                     $sql .= "  '" .$this->input->post("KODE_TENDER") . "' ";
@@ -1098,8 +1098,11 @@ class Pekerjaan_pgd extends MY_Controller {
                         echo "1";
 
                     } else{
+                        
+                        
+                        
                          echo "0";
-
+                        //  echo $sql;   
                     }
                       
                 }
