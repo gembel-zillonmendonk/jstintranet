@@ -2,8 +2,12 @@
         
             <div   >
 			<fieldset>
-			<form id="frmKomentar" action="<?php echo base_url() . "index.php/pgd/komentar_tender/update" ?>"  method="POST" >
-			<p>                   
+			<form id="frmKomentar" action="<?php echo base_url() . "index.php/pgd/komentar_tender/update" ?>"  method="POST" enctype="multipart/form-data" >
+			<p>	
+                            <label>File (Max 2MB, PDF)</label>
+                            <input type="file" class="{validate:{required:false,maxlength:64}}" name="userfile" id="NAMA_FILE" />
+                        </p>
+                            <p>                   
                <textarea  style="width:100%" id="commentar" name="commentar" ></textarea>
 			</p>
 	<input type="hidden" name="kode_alurkerja" id="KODE_ALURKERJA" value="<?php echo $kode_alurkerja ; ?>" />
@@ -119,6 +123,10 @@
       }); 
         
   
+        $("#btnCancel").click(function(){ 
+            
+           window.history.back();
+        });
 
     });
         

@@ -68,6 +68,35 @@ class Komentar_tender extends MY_Controller {
         }
 
 	
+         function do_uploadftp($file, $key) {
+            $config = $this->config->item('ftp');
+
+            if ($config['enable']) {
+                $name = $file[$key]['name'];
+                $tmp_name = $file[$key]["tmp_name"];
+                $size = $file[$key]['size'];
+                $type = $file[$key]['type'];
+
+                try {
+                    // check file size
+                    if ($size > $config['max_filesize'])
+                        return false;
+
+                    $this->load->library('ftp');
+                    $this->ftp->connect($config);
+                    $this->ftp->upload($tmp_name, $config['target_dir'] . $name);
+                    $this->ftp->close();
+
+                    return true;
+                } catch (Exception $e) {
+                    echo $e;
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        
 	function update() {
 		 print_r($_POST);
                   
@@ -85,7 +114,17 @@ class Komentar_tender extends MY_Controller {
                  //}
               
                  $this->alur->setKomentar($this->input->post("komentar"));
-                 $this->alur->setAttachment('attachment');
+                 
+                  $str_file ="";
+                
+                  if (strlen($_FILES["userfile"]['name']) >  0) {
+                    if ($this->do_uploadftp($_FILES, "userfile")) {
+                      $str_file =   $_FILES["userfile"]['name'] ; 
+                    }  
+                  }
+                 
+                 
+                 $this->alur->setAttachment($str_file);
                  
                  $this->alur->getAktifitasKe($this->input->post("kode_transisi"));
                 

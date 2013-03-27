@@ -14,6 +14,15 @@ class Pengadaan_evaluasi extends MY_Controller {
         function komentar_teknis($kode_vendor, $nama_vendor){
             
             if ($this->input->post("KODE_VENDOR")) {
+                $nama_vendor = "VENDOR";
+                $sql = "SELECT NAMA_VENDOR FROM EP_VENDOR WHERE KODE_VENDOR = " . $kode_vendor;
+                $query = $this->db->query($sql);
+                
+                $result = $query->result();
+                if (count($result)) {
+                    $nama_vendor = $result[0]->NAMA_VENDOR;
+                }
+                
                 
                 
                 $this->load->model('Nomorurut','urut');
@@ -35,14 +44,14 @@ class Pengadaan_evaluasi extends MY_Controller {
                 $sql .= ",'" . $this->input->post("KODE_KANTOR") . "' ";
                 $sql .= ", " . $this->input->post("KODE_VENDOR") . "  ";
                 $sql .= ", '" . $this->session->userdata("user_id") . "'  ";
-                $sql .= ",'" . $this->input->post("NAMA_VENDOR") . "' ";
+                $sql .= ",'" . $nama_vendor . "' ";
                 $sql .= ",'" . $this->input->post("KOMENTAR_EVALUASI") . "' ";
                 $sql .= ", TO_DATE('" .date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
                 $sql .= ",'T' ";
                 $sql .= ", TO_DATE('" .date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
                 $sql .= ", '" . $this->session->userdata("user_id") . "')  ";
                 
-                echo $sql;
+                // echo $sql;
                 
                 if ($this->db->simple_query($sql)){
                        $this->urut->set_plus( "ALL","KOMENTAREVALUASI") ;
@@ -52,7 +61,7 @@ class Pengadaan_evaluasi extends MY_Controller {
                     echo $sql;
                     
                 }
-                      print_r($_POST);
+                    //  print_r($_POST);
                      exit();
             }       
             
@@ -78,6 +87,15 @@ class Pengadaan_evaluasi extends MY_Controller {
               
             if ($this->input->post("KODE_VENDOR")) {
                 
+                $nama_vendor = "VENDOR";
+                $sql = "SELECT NAMA_VENDOR FROM EP_VENDOR WHERE KODE_VENDOR = " . $kode_vendor;
+                $query = $this->db->query($sql);
+                
+                $result = $query->result();
+                if (count($result)) {
+                    $nama_vendor = $result[0]->NAMA_VENDOR;
+                }
+               
                 
                 $this->load->model('Nomorurut','urut');
                 $urut = $this->urut->get("ALL","KOMENTAREVALUASI");
@@ -98,7 +116,7 @@ class Pengadaan_evaluasi extends MY_Controller {
                 $sql .= ",'" . $this->input->post("KODE_KANTOR") . "' ";
                 $sql .= ", " . $this->input->post("KODE_VENDOR") . "  ";
                 $sql .= ", '" . $this->session->userdata("user_id") . "'  ";
-                $sql .= ",'" . $this->input->post("NAMA_VENDOR") . "' ";
+                $sql .= ",'" . $nama_vendor . "' ";
                 $sql .= ",'" . $this->input->post("KOMENTAR_EVALUASI") . "' ";
                 $sql .= ", TO_DATE('" .date("Y-m-d H:i:s") . "','YYYY-MM-DD HH24:MI:SS' )   ";
                 $sql .= ",'C' ";
@@ -133,7 +151,7 @@ class Pengadaan_evaluasi extends MY_Controller {
                 
                 if ($this->input->post("KODE_TENDER")) {
                     
-                     print_r($_POST);
+                    //  print_r($_POST);
                     
                     $i=0;
                     foreach($_POST["NILAI"] as $k=>$v) {
@@ -265,22 +283,22 @@ class Pengadaan_evaluasi extends MY_Controller {
                          $this->eval->setNilaiHarga($_POST["KODE_TENDER"],$_POST["KODE_KANTOR"]);
                          
                             
-                             print_r($_POST);
+                         //    print_r($_POST);
 
                              $i=0;
-                    foreach($_POST["KODE_VENDOR"] as $k=>$v) {
-                          $sql = "UPDATE EP_PGD_TENDER_EVALUASI ";
-                            $sql .= "SET KETERANGAN_HARGA = '" . $_POST["KETERANGAN_HARGA"][$i] . "'";
-                            $sql .= ", PENAWARAN = '" . (isset($_POST["PENAWARAN_" . $v]) ? $_POST["PENAWARAN_" . $v] : 0 )  . "'";
-                            $sql .= ", BID_BOND = '" . (isset($_POST["BIDBOND_" . $v]) ? $_POST["BIDBOND_" . $v] : 0 )  . "'";
-                            $sql .= " WHERE KODE_VENDOR = " . $v;
-                            $sql .= " AND KODE_KANTOR = '" .$_POST["KODE_KANTOR"]. "'";
-                            $sql .= " AND KODE_TENDER = '" .$_POST["KODE_TENDER"]. "'";
-                    
-                    $this->db->simple_query($sql);
-                        $i++;
-                    }
-                    
+                        foreach($_POST["KODE_VENDOR"] as $k=>$v) {
+                              $sql = "UPDATE EP_PGD_TENDER_EVALUASI ";
+                                $sql .= "SET KETERANGAN_HARGA = '" . $_POST["KETERANGAN_HARGA"][$i] . "'";
+                                $sql .= ", PENAWARAN = '" . (isset($_POST["PENAWARAN_" . $v]) ? $_POST["PENAWARAN_" . $v] : 0 )  . "'";
+                                $sql .= ", BID_BOND = '" . (isset($_POST["BIDBOND_" . $v]) ? $_POST["BIDBOND_" . $v] : 0 )  . "'";
+                                $sql .= " WHERE KODE_VENDOR = " . $v;
+                                $sql .= " AND KODE_KANTOR = '" .$_POST["KODE_KANTOR"]. "'";
+                                $sql .= " AND KODE_TENDER = '" .$_POST["KODE_TENDER"]. "'";
+
+                        $this->db->simple_query($sql);
+                            $i++;
+                        }
+
                              
                              exit();
                     }
@@ -297,7 +315,11 @@ class Pengadaan_evaluasi extends MY_Controller {
                  $strwhere .=" AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
                  
                  
-                 $sql = $this->crosstab->PivotTableSQL($this->db, "EP_PGD_ITEM_PENAWARAN P, EP_VENDOR V, VW_BARANG_JASA J, EP_PGD_ITEM_TENDER T ", "P.KODE_BARANG_JASA, J.NAMA_BARANG_JASA,  T.HARGA * T.JUMLAH ", "NAMA_VENDOR", $strwhere ,  "P.HARGA * P.JUMLAH","SUM");
+                 $sql = $this->crosstab->PivotTableSQL($this->db, "EP_PGD_ITEM_PENAWARAN P, EP_VENDOR V, (SELECT KODE_JASA AS KODE_BARANG_JASA , KODE_KEL_JASA AS  KODE_SUB_BARANG_JASA, NAMA_JASA AS NAMA_BARANG_JASA
+FROM EP_KOM_JASA
+UNION ALL
+SELECT KODE_BARANG, KODE_SUB_BARANG, NAMA_BARANG
+FROM MS_BARANG) J, EP_PGD_ITEM_TENDER T ", "P.KODE_BARANG_JASA, J.NAMA_BARANG_JASA,  T.HARGA * T.JUMLAH ", "NAMA_VENDOR", $strwhere ,  "P.HARGA * P.JUMLAH","SUM");
         
                  //echo $sql;
                   

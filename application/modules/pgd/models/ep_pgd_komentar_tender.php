@@ -74,7 +74,7 @@ class Ep_pgd_komentar_tender extends MY_Model {
    , TGL_MULAI
    , TGL_BERAKHIR
    , KOMENTAR
-   , ATTACHMENT 
+   ,  '<a href=\"download_komentar/' || KODE_KOMENTAR || '\"  target=\"_blank\" >' || ATTACHMENT || '</a>' AS ATTACHMENT 
 FROM EP_PGD_KOMENTAR_TENDER
 WHERE KODE_ALURKERJA = 5   ";
  
@@ -93,7 +93,7 @@ WHERE KODE_ALURKERJA = 5   ";
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
                 $this->sql_select  = $this->sql_select . " AND  KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 

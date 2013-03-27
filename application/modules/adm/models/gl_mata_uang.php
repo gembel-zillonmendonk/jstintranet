@@ -18,7 +18,7 @@ class Gl_mata_uang extends MY_Model {
     
     public $elements_conf = array('MATA_UANG', 'NOTASI','KETERANGAN');
     public $columns_conf = array('MATA_UANG', 'NOTASI','KETERANGAN');
-    public $sql_select = "(select  MATA_UANG ,  NOTASI , KETERANGAN from GL_MATA_UANG)";
+    public $sql_select = "(select  MATA_UANG ,  UPPER(NOTASI) AS NOTASI  , KETERANGAN from GL_MATA_UANG)";
     
     /*
       public $columns = array(

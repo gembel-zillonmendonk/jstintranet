@@ -20,4 +20,10 @@ class Evaluasi extends MY_Controller {
 		$this->layout->view("evaluasi_edit", $data);
 	}
 	
+        function view(){
+                $data["KODE_EVALUASI"] = $this->input->get("KODE_EVALUASI");
+		$this->load->view("evaluasi_view", $data);
+        }
+        
+        
 }	

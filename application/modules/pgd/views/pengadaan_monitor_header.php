@@ -3,9 +3,13 @@
             <div>
    <fieldset class="ui-widget-content">
       <form id="frmPermintaan" method="POST" action="add_tender" >
+          <p>	
+            <?php echo form_label("Nomor Pengadaan *") ?>
+	    <input type="text" style="width: 50%" readonly="true" name="NAMA_JABATAN"  value="<?php echo $nomor_pengadaan; ?>" />
+	</p>
         <p>	
             <?php echo form_label("User *") ?>
-	    <input type="text" style="width: 50%" readonly="true" name="NAMA_JABATAN"  value="<?php echo $nama_pemohon; ; ?>" />
+	    <input type="text" style="width: 50%" readonly="true" name="NAMA_JABATAN"  value="<?php echo $nama_pemohon;   ?>" />
 	</p>
         <p>	
             <?php echo form_label("Biro/Unit *") ?>

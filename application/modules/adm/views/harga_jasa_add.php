@@ -7,16 +7,17 @@
             <h3 id="h3_harga_hasa"  href="<?php echo site_url('/crud/form/ep_kom_harga_jasa') ?>">HARGA JASA</h3>
             <div   >
   <fieldset class="ui-widget-content">
-   <form id="frmHargaJasa" method="POST" action="" >
+   <form id="frmHargaJasa" method="POST" action="" enctype="multipart/form-data" >
     <legend>Fields with remark (*) is required.</legend>
  
 			<p>	
-			 <?php echo form_label("Kode Jasa") ?>
+			 <?php echo form_label("Kode Jasa * ") ?>
 	   <?php 
 	   $kode_jasa = array (
 			'id' => 'kode_jasa',
 			'name' => 'kode_jasa',
-			'readonly' => true
+			'readonly' => true,
+                        'class' => " {validate:{required:true,maxlength:255}}"
 			
 	   );
 	   
@@ -50,7 +51,7 @@
 	   </p> 
            <p>
                <?php echo form_label("Tanggal") ?>
-               <input type="text" style="" name="TGL_SUMBER"  value="<?php echo date("Y-m-d"); ?>" id="TGL_SUMBER" style="" class="datepicker  {validate:{required:true,date:true}}"  />  
+               <input type="text" style="" name="TGL_SUMBER"  value="<?php echo date("d-m-Y"); ?>" id="TGL_SUMBER" style="" class="datepicker  {validate:{required:true,dateID:true}}"  />  
            </p>
            
 		<p> 
@@ -107,9 +108,7 @@
         </p>		
 		<p> 
                 <label     >Lampiran</label>                 
-                  <?php 
-				echo form_upload()
-				?>
+                <input type="file" class="{validate:{required:false,maxlength:64}}" name="userfile" id="NAMA_FILE" />
         </p>
 		 
 	  </form>
@@ -203,8 +202,9 @@
 				 jQuery("#frmHargaJasa").ajaxSubmit({
                     //clearForm: false,
                     success: function(msg){
+                          	
                          
-						if (msg) {
+						if (msg != '0') {
 								$("#kode_harga").val(msg);
                                                                
                                                                  $('#komentar').val(tinyMCE.get('commentar').getContent());

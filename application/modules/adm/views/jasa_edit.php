@@ -43,7 +43,8 @@
 	   $nama_jasa = array (
 			'id' => 'nama_jasa',
 			'name' => 'nama_jasa', 
-			'value' => $nama_jasa
+			'value' => $nama_jasa,
+                        'class' => ' {validate:{required:true,maxlength:255}}'
 			
 	   );
 	   
@@ -60,9 +61,10 @@
     
 </form>	
 <p>
-        <input type="button" id="btncancel"  value="Cancel" />
-        <input type="submit" id="btnsubmit" value="Submit" />
-    </p>
+    <button type="button" id="btnsubmit" >Submit</button>
+    <button type="button" id="btncancel" >Cancel</button>
+    
+</p>
 <div id="modal_form_kelompok_jasa"></div>
 
 </fieldset> 
@@ -75,9 +77,19 @@
   }
   
   $(document).ready(function(){
+      
+      	 var validator = $("#frmJasa").validate({
+            meta: "validate",
+            submitHandler: function(form) {
+                jQuery(form).ajaxSubmit();
+            }
+        });
+
+      
        	$("#btnsubmit").click(function() {
-            $("#frmJasa").submit();
-            
+            if(validator.form()) {  
+                    $("#frmJasa").submit();
+            }        
         });
   
 	$("#btnPopup").click(function() {

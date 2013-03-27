@@ -125,25 +125,63 @@ class Harga_jasa extends MY_Controller {
 	 
         }
         
+        
+        function do_upload()
+	{
+		$config['upload_path'] = './uploaded_test/';
+		$config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx';
+		$config['max_size']	= '1000';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload())
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			//echo $error; 
+                        return ''; 
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+                         //print_r($data['upload_data']);
+                        $str = './uploaded_test/' . $data['upload_data']['file_name'];
+                        /*
+                        if (isset( $str)) {
+                              $this->do_ftp($data['upload_data']['file_name']);
+                         
+                        }
+                         */
+                          return  $data['upload_data']['file_name'] ;
+			// $this->load->view('upload_success', $data);
+		}
+	}
+        
+        
 	function add(){
 	
 	 
 		if ($this->input->post("kode_jasa")) {
-		 	
+                        $str_file =  $this->do_upload();
 			$urut = $this->urut->get("ALL","HARGAJASA");
 			 
+                        $arrTglSumber = split("-",$this->input->post("TGL_SUMBER"));
 			 
+                        $tgl_sumber = $arrTglSumber[2] . "-" . $arrTglSumber[1] .  "-" . $arrTglSumber[0];
                         
-			 $sql = "INSERT INTO EP_KOM_HARGA_JASA (KODE_HARGA_JASA, KODE_JASA, KODE_KANTOR, KODE_SUMBER , MATA_UANG, HARGA, NAMA_VENDOR, CATATAN,  TGL_SUMBER,  TGL_REKAM ) ";
+			 $sql = "INSERT INTO EP_KOM_HARGA_JASA (KODE_HARGA_JASA, KODE_JASA, KODE_KANTOR, KODE_SUMBER , MATA_UANG, HARGA, NAMA_VENDOR, CATATAN, LAMPIRAN, TGL_SUMBER,  TGL_REKAM, PETUGAS_REKAM ) ";
 			 $sql .= " VALUES (".$urut.",'". $this->input->post("kode_jasa")."','" . $this->input->post("kode_kantor"). "'," . $this->input->post("kode_sumber"). " , '" . $this->input->post("mata_uang"). "' ";
 			 $sql .= " ," .str_replace(",","",$this->input->post("harga")). " ";
                          $sql .= " ,'" .str_replace(",","",$this->input->post("nama_vendor")). "' ";
-                         $sql .= " ,'" .str_replace(",","",$this->input->post("catatan")). "' "; 
-                         $sql .= " ,   TO_DATE('" . $this->input->post("TGL_SUMBER") . "','YYYY-MM-DD') ";
-			 $sql .= " ,   TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD HH24:MI:SS')) ";
+                         $sql .= " ,'" .str_replace(",","",$this->input->post("catatan")). "' ";
+                         $sql .= " ,'" .$str_file . "' ";
+                         $sql .= " ,   TO_DATE('" . $tgl_sumber . "','YYYY-MM-DD') ";
+			 $sql .= " ,   TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD HH24:MI:SS')  ";
+                         $sql .= " ,'" .$this->session->userdata("kode_user") . "') ";
 			 
-			  
-                         
+			    
 			 if ($this->db->simple_query($sql)) {
 				$this->urut->set_plus( "ALL","HARGAJASA") ;
 				echo $urut;

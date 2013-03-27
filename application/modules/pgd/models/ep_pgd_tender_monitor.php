@@ -55,8 +55,9 @@ class Ep_pgd_tender_monitor extends MY_Model {
 								 );
 	
 	
-    public $sql_select = "(SELECT T.KODE_TENDER, T.KODE_KANTOR , T.NAMA_PEMOHON, T.JUDUL_PEKERJAAN, '' AS STATUS, '' AS PELAKU_PROSES, '' AS \"LIHAT\"
+    public $sql_select = "(SELECT T.KODE_TENDER, T.KODE_KANTOR , T.NAMA_PEMOHON, T.JUDUL_PEKERJAAN, A.NAMA_AKTIFITAS AS STATUS, '' AS PELAKU_PROSES, '' AS \"LIHAT\"
 		FROM EP_PGD_TENDER T
+                LEFT JOIN (SELECT KODE_AKTIFITAS, NAMA_AKTIFITAS FROM EP_ALURKERJA_AKTIFITAS ) A ON T.STATUS = A.KODE_AKTIFITAS
 		)";
 	
     function __construct() {

@@ -46,11 +46,13 @@ class Ep_pgd_komentar_evaluasi_harga extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-            $this->sql_select  = $this->sql_select . " AND KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+            $this->sql_select  = $this->sql_select . " AND KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
             $this->sql_select  = $this->sql_select . " AND  KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
             $this->sql_select  = $this->sql_select . " )";  
+            
+           //  echo $this->sql_select;
         
     }
 	

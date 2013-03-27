@@ -61,7 +61,7 @@
   </div>
   <h3 id="h3_vendor_verifikasi" href="">CATATAN</h3>
   <div>
-          <textarea  style="width:100%" id="commentar_verifikasi" name="commentar_verifikasi" ></textarea>
+          <textarea  style="width:100%" id="commentar_verifikasi" name="commentar_verifikasi" ><?php  echo $rs_status[0]->KETERANGAN_TEKNIKAL ; ?></textarea>
   </div>
 
   </div>			

@@ -19,7 +19,7 @@
 			'readonly' => true
 			
 	   );
-	   echo form_input($kode_kel_jasa) ?><input type="button" id="btnPopup"  value="..." />
+	   echo form_input($kode_kel_jasa) ?><button type="button" id="btnPopup"  >...</button>
 	   <br/> <br/>
 	   <?php echo form_label("Nama Jasa * ") ?>
 	   <?php 
@@ -78,10 +78,9 @@
 			</form>
 			</fieldset>
 <br/> 
-<input type="button" id="btnSubmit" value="Submit" />
-<input type="button" id="btnCancel"  value="Cancel" /> 
-  
- </div>
+<button type="button" id="btnSubmit" >Submit</button>
+<button type="button" id="btnCancel" >Cancel</button> 
+</div>
 
  </div> 
  

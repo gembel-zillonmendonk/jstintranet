@@ -8,27 +8,29 @@
             <div   >
   <fieldset class="ui-widget-content">
    <legend>Kolom dengan tanda (*) wajib diisi.</legend>
-   <form id="frmHargaBarang" method="POST" action="" >
+   <form id="frmHargaBarang" method="POST" action="" enctype="multipart/form-data" >
     
 	   <p>	
-	   <?php echo form_label("Kode Barang") ?>
+	   <?php echo form_label("Kode Barang *") ?>
 	   <?php 
 	   $kode_barang = array (
 			'id' => 'kode_barang',
 			'name' => 'kode_barang',
-			'readonly' => true
+			'readonly' => true,
+                        'class' => " {validate:{required:true,maxlength:3}}"
 			
 	   );
 	   
 	   echo form_input($kode_barang) ?>&nbsp;<button type="button" id="btnPopup"  >...</button>
 	   </p>
 	   <p>	
-	   <?php echo form_label("Kode Sub Barang") ?>
+	   <?php echo form_label("Kode Sub Barang *") ?>
 	   <?php 
 	   $kode_sub_barang = array (
 			'id' => 'kode_sub_barang',
 			'name' => 'kode_sub_barang',
-			'readonly' => true
+			'readonly' => true,
+                        'class' => " {validate:{required:true,maxlength:2}}"
 			
 	   ); 
 	   echo form_input($kode_sub_barang) ?> 
@@ -139,14 +141,11 @@
 		echo form_input($catatan) ?>
   
         </p>		
-		<p> 
+	<p> 
                 <label     >Lampiran</label>                 
-                  <?php 
-				echo form_upload()
-				?>
-        </p>
-		 
-	  </form>
+                <input type="file" class="{validate:{required:true,maxlength:64}}" name="userfile" id="NAMA_FILE" />
+	</p>
+	</form>
 </fieldset>
 	  	
 			</div>
@@ -172,8 +171,8 @@
 			</form>
 			</fieldset>
 <br/> 
-<input type="button" id="btnSubmit" value="Submit" />
-<input type="button" id="btnCancel"  value="Cancel" /> 
+<button type="button" id="btnSubmit" >Submit</button>
+<button type="button" id="btnCancel" >Cancel</button> 
   
  </div>
 
@@ -337,11 +336,11 @@
                     }
                 });
             });
-						
-			$("#btnCancel" ).click(function() {
-				window.location = "<?php echo base_url() ."index.php/adm/harga_jasa"; ?>";  
-			});
- 	 
+
+        $("#btnCancel" ).click(function() {
+                window.location = "<?php echo base_url() ."index.php/adm/harga_barang"; ?>";  
+        });
+
 	
 
 	

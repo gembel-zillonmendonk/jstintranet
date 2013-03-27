@@ -186,7 +186,7 @@ class Perencanaan extends MY_Controller {
  
             
            
-          if ($this->session->userdata("nama_jabatan") == "KAUR PERENCANAAN") { 
+          if ($this->session->userdata("nama_jabatan") == "KAUR PERENCANAAN" || $this->session->userdata("nama_jabatan") == "KAUR PERENCANAAN PENGADAAN" ) { 
                 $this->layout->view("perencanaan_anggaran_editor", $data);
           } else {
                  $data["pesan_error"] = "Persetujuan Anggaran Harus Oleh: KAUR PERENCANAAN";

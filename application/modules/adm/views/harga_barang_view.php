@@ -150,9 +150,8 @@
         </p>		
 		<p> 
                 <label     >Lampiran</label>                 
-                  <?php 
-				echo form_upload()
-				?>
+                 <a target="_blank" onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"  href="<?php echo base_url(); ?>uploaded_test/<?php echo $LAMPIRAN; ?>" ><?php echo $LAMPIRAN; ?></a>
         </p>
 		 
 	  </form>

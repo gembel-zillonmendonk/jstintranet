@@ -1,15 +1,18 @@
   <div class="accordion">
  <h3 href="<?php echo base_url()?>index.php/adm/gridr/ms_jabatan">JABATAN</h3>
             <div>
-			<!--
 			<p>
-			<div id="mysearch"></div>
-				<input type="text" id="kolom" name="kolom"  value="" /> 
-				<input type="button" id="btnSrc"  value="Cari" /> 
-			</p>
-			-->
+                                <label>CARI BERDASARKAN</label>
+                            		<select  id="kolom" name="kolom"  > 
+                                            <option value="KODE_JABATAN">KODE JABATAN</option>
+                                            <option value="NAMA_JABATAN">NAMA JABATAN</option>
+                                            
+                                         </select>    
+                                <input type="text" id="cari" name="cari"  />
+                                <button type="button" id="btnSrc"  >Cari</button> 
+                        </p>
 			<p>
-                            <button type="button" id="btnEdit"  >Edit Jabatan</button> 
+                            <button type="button" id="btnEdit"  >Edit Otorisasi Menu Jabatan</button> 
 				 
 			</p>
 			 
@@ -42,10 +45,11 @@
 		
 		
 		srcval = $("#kolom").val();
+                val = $("#cari").val();
 		var myfilter = { groupOp: "AND", rules: []};
-		myfilter.rules.push({field:"KODE_KEL_JASA",op:"eq",data:srcval});
+		myfilter.rules.push({field:srcval,op:"cn",data:val});
 		
-		var grid = $("#grid_ep_kom_kelompok_jasa");
+		var grid = $("#grid_ms_jabatan");
 			
 	 
 		grid[0].p.search = myfilter.rules.length>0;

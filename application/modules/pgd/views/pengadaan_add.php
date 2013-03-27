@@ -48,20 +48,7 @@
             </select> 
         </p>
         
-        <p>	
-            <?php echo form_label("JENIS KONTRAK *") ?>
-            <select name="TIPE_KONTRAK" class="{validate:{required:true}}" >
-                <?php
-                   echo "<option value='' >-- Pilih Jenis Kontrak --</option>";
-                 
-                foreach($arr_tipekontrak as $k=>$v) {
-                    echo "<option value='" .$k. "' >".$v."</option>";
-                   
-                }
-                 
-                ?>
-            </select>
-        </p>
+        
         
         <input type="hidden" name="KODE_KANTOR" id="KODE_KANTOR" VALUE="<?php echo $this->session->userdata("kode_kantor") ; ?>"  />
         <input type="hidden" name="KODE_TENDER" id="KODE_TENDER_PERMINTAAN" value="0"    />
@@ -199,11 +186,11 @@
                     $("#frmKomentar").ajaxSubmit({
                                 //clearForm: false,
                                 success: function(msg){
-                                    //  alert(msg);
-                                    //  $("#trace").html(msg);
+                                    //   alert(msg);
+                                    //   $("#trace").html(msg);
                                    // alert(msg);
                                     //reload grid
-                                    window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd";
+                                      window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd";
                    
                                 },
                                 error: function(){
@@ -465,8 +452,7 @@
  
  function fnPerencanaan( arr) {
      
-    // alert(arr);
-     
+      
      $("#KODE_PERENCANAAN").val(arr[0]);
      $("#KODE_KANTOR_PERENCANAAN").val(arr[1]);
      $("#JUDUL_PEKERJAAN").val(arr[2]);

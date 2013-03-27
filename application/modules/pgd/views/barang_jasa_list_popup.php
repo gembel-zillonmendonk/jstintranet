@@ -1,5 +1,5 @@
   <div class="accordion">
- <h3 id="h3_harga_jasa_popup" href="<?php echo base_url(); ?>index.php/adm/gridpopup_barang_jasa/kom_barang_jasa">BARANG</h3>
+ <h3 id="h3_harga_jasa_popup" href="<?php echo base_url(); ?>index.php/adm/gridpopup_barang_jasa/kom_barang_jasa">BARANG / JASA</h3>
             <div>
 			<p>
 			<div id="mysearch"></div>

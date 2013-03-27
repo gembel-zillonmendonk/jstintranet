@@ -44,7 +44,24 @@ class Ep_pgd_pesan_tender extends MY_Model {
                                    DARI,
                                    UNTUK,
                                    PESAN 
-                            FROM VW_PESAN_NEGOSIASI
+                            FROM ( SELECT  P.KODE_PESAN_TENDER  ,
+                              P.KODE_TENDER ,
+                              P.KODE_KANTOR ,
+                              P.KODE_VENDOR ,
+     	   P.NAMA_AKTIFITAS ,
+     	   P.TGL_PESAN,
+      CASE
+                              		WHEN P.MODE_PESAN = 0 THEN 'JAMSOSTEK PROCUREMENT TEAM'
+     ELSE V.NAMA_VENDOR
+    END  AS  DARI,
+                               CASE
+                              		WHEN P.MODE_PESAN = 0 THEN V.NAMA_VENDOR
+     ELSE 'JAMSOSTEK PROCUREMENT TEAM'
+    END  AS  UNTUK ,
+    P.PESAN
+FROM EP_PGD_PESAN_TENDER P
+LEFT JOIN EP_ALURKERJA_AKTIFITAS A ON P.KODE_AKTIFITAS = A.KODE_AKTIFITAS
+LEFT JOIN EP_VENDOR V ON P.KODE_VENDOR  = V.KODE_VENDOR ) VW_PESAN_NEGOSIASI
                             WHERE 1 = 1
 		 ";
 	
@@ -60,7 +77,7 @@ class Ep_pgd_pesan_tender extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
                 $this->sql_select  = $this->sql_select . " AND KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 

@@ -138,11 +138,47 @@ class Harga_barang extends MY_Controller {
         }
        
         
+        function do_upload()
+	{
+		$config['upload_path'] = './uploaded_test/';
+		$config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx';
+		$config['max_size']	= '1000';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload())
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			//echo $error; 
+                        return ''; 
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+                         //print_r($data['upload_data']);
+                        $str = './uploaded_test/' . $data['upload_data']['file_name'];
+                        /*
+                        if (isset( $str)) {
+                              $this->do_ftp($data['upload_data']['file_name']);
+                         
+                        }
+                         */
+                          return  $data['upload_data']['file_name'] ;
+			// $this->load->view('upload_success', $data);
+		}
+	}
+        
+        
+        
 	function add(){
 	
+             
 	 
 		if ($this->input->post("kode_barang")) {
-		 	
+		 	$str_file =  $this->do_upload();
 			$urut = $this->urut->get("ALL","HARGABARANG");
 			 
 		 
@@ -159,6 +195,7 @@ class Harga_barang extends MY_Controller {
                          $sql .= ", TOTAL_BIAYA "; 
                          $sql .= ", NAMA_VENDOR ";
                          $sql .= ", CATATAN ";
+                         $sql .= ", LAMPIRAN ";
                          $sql .= ", TGL_REKAM, PETUGAS_REKAM ) ";
 			 $sql .= " VALUES (".$urut.",'". $this->input->post("kode_barang")."','". $this->input->post("kode_sub_barang")."','" . $this->input->post("kode_kantor"). "'," . $this->input->post("kode_sumber"). " , '" . $this->input->post("mata_uang"). "' ";
 			 $sql .= "," .str_replace(",","",$this->input->post("harga")). " ";
@@ -170,6 +207,8 @@ class Harga_barang extends MY_Controller {
                          $sql .= ", " . str_replace(",", "", $this->input->post("total_biaya"));
                          $sql .= ", '" . $this->input->post("nama_vendor") . "'" ;
                          $sql .= ", '" . $this->input->post("catatan") . "'" ;
+                         $sql .= ", '" . $str_file . "'" ;
+                         
 			 $sql .= ",   TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD'), '" . $this->session->userdata("kode_user") . "') ";
 			 
 			  

@@ -3,7 +3,13 @@
             <div>
 			<p>
 			<div id="mysearch"></div>
-				<input type="text" id="kolom" name="kolom"  value="" /> 
+                        <select id="myfieldanggaran" >
+                            <option value="AKUN" >Kode Akun</option>
+                            <option value="NAMA_AKUN" >Nama Akun</option>
+                        </select>
+                        
+                        
+				<input type="text" id="kolomanggaran" name="kolomanggaran"  value="" /> 
 				<input type="button" id="btnSrc"  value="Cari" /> 
 			</p>
 			 
@@ -39,20 +45,18 @@
 		//alert($("#kolom").val());
 		
 		
-		
-		srcval = $("#kolom").val();
+		myfield = $("#myfieldanggaran").val();
+		srcval = $("#kolomanggaran").val();
 		var myfilter = { groupOp: "AND", rules: []};
-		myfilter.rules.push({field:"KODE_JASA",op:"eq",data:srcval});
+		myfilter.rules.push({field:myfield,op:"cn",data:srcval});
 		
-		var grid = $("#grid_ep_kom_jasa");
-			
-		
-		alert(grid);
+		var grid = $("#grid_bg_ms_anggaran");
+			 
 		
 		grid[0].p.search = myfilter.rules.length>0;
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
-		alert(grid);
+		 
 		 
 		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
 		

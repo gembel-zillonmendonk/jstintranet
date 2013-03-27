@@ -126,7 +126,7 @@ function fnTenderMonitor(str) {
  
     
     jQuery('#modal_form_pengadaan_monitor')
-                    .load($site_url + '/pgd/Pengadaan_monitor/view?KODE_TENDER=' + kode_tender + '&KODE_KANTOR=' + kode_kantor ) 
+                    .load($site_url + '/pgd/pengadaan_monitor/view?KODE_TENDER=' + kode_tender + '&KODE_KANTOR=' + kode_kantor ) 
                     .dialog({ //dialog form use for popup after click button in pager
                         autoOpen:false,
                         width:1000,

@@ -1,4 +1,5 @@
-  <div class="accordion">
+ <div id="modal_form_lihat_evaluasi" ></div>   
+<div class="accordion">
  <h3 id="h3_evaluasi_popup" href="<?php echo base_url(); ?>index.php/pgd/gridpopup_evaluasi/ep_pgd_evaluasi_view">TEMPLATE EVALUASI</h3>
             <div>
 			<p>
@@ -77,5 +78,35 @@
 	 
 
 	 });
+         
+         
+         
+ function fnLihatEvaluasi(str){
+      
+     
+          $('#grid_ep_pgd_evaluasi_view').jqGrid('setSelection',str); 
+     var selected = $('#grid_ep_pgd_evaluasi_view').jqGrid('getGridParam', 'selrow');
+     selected = jQuery('#grid_ep_pgd_evaluasi_view').jqGrid('getRowData',selected);
+			 
+
+     
+                 str= "";
+		jQuery('#modal_form_lihat_evaluasi')
+                     .load($site_url + '/pgd/evaluasi/view?KODE_EVALUASI=' + selected["KODE_EVALUASI"])
+                    .dialog({ //dialog form use for popup after click button in pager
+                        autoOpen:false,
+                        width:800,
+                        modal:true,
+                        //position:'top',
+                        buttons: { 
+                            "BATAL": function() { 
+                                $(this).dialog("close");
+                            } 
+                        }
+                    });
+            jQuery('#modal_form_lihat_evaluasi').dialog("open");
+     
+ }
+ 
   
 </script>   			

@@ -425,8 +425,8 @@
         data: str,
         success: function(msgx){
                 
-                alert(msgx);
-                alert('Data berhasil disimpan');
+              //  alert(msgx);
+              //  alert('Data berhasil disimpan');
                 jQuery('#modal_form_anggaran').dialog("close");
                     
                     

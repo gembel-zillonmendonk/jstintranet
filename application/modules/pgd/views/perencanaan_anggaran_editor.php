@@ -213,11 +213,11 @@
                           $("#frmKomentar").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
-                                          //  alert(msg);
-                                          // $("#trace").html(msg);
+                                            //alert(msg);
+                                            // $("#trace").html(msg);
                                          // alert(msg);
                                           //reload grid
-                                          window.location = "<?php echo base_url(); ?>index.php/pgd/perencanaan/rekap_perencanaan";  
+                                            window.location = "<?php echo base_url(); ?>index.php/pgd/perencanaan/rekap_perencanaan";  
 
                                       },
                                       error: function(){

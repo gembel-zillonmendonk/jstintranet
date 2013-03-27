@@ -37,7 +37,7 @@ class App_security extends CI_Model {
 		$query = $this->db->query($sql);
 		$result = $query->result(); 
 		
-                print_r($result);
+                // print_r($result);
                 
 		if(count($result)) {  
 			$this->session->set_userdata("kode_jabatan", $kode_jabatan );
@@ -79,8 +79,7 @@ class App_security extends CI_Model {
 		 
 		$query = $this->db->query($sql);
 		$result = $query->result(); 
-		
- 
+	 
 
 		$xml = new DOMDocument( "1.0", "ISO-8859-15" );	 
 	 	$this->addUl($xml, "0" ,"", "F" , "CRV-0","");

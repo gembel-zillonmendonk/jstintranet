@@ -7,20 +7,24 @@
             <?php echo form_label("Metode Pengadaan") ?>
 	    <input type="text" style="width: 50%" readonly="true"   value="<?php echo $nama_metode_tender;   ?>" />
 	</p>
-        <!--
+        <?php 
+        if (strlen($nama_panitia) > 0 ) {
+        ?>    
+         
         <p>	
             <?php echo form_label("Panitia Pelelangan") ?>
+            	    <input type="text" style="width: 50%" readonly="true"   value="<?php echo $nama_panitia;   ?>" />
 	</p>
-        -->
+        <?php
+        }
+        ?>
+ 
+        <?php if  ($nama_metode_tender != "PENUNJUKAN LANGSUNG" ) {  ?>
         <p>	
             <?php echo form_label("Sistem Sampul") ?>
 	    <input type="text" style="width: 50%" readonly="true"   value="<?php echo $nama_metode_sampul;   ?>" />
 	</p>
-        <p>	
-            <?php echo form_label("Metode Evaluasi") ?>
-	    <input type="text" style="width: 50%" readonly="true"   value="<?php echo $nama_metode_sampul;   ?>" />
-	</p>
-        
+        <?php }  ?> 
         
     	<p>	
             <?php echo form_label("Template Evaluasi") ?>

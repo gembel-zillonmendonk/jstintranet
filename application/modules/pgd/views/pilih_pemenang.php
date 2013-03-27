@@ -7,7 +7,7 @@
 ?>
 <?php $this->load->helper('form'); ?>
 <fieldset class="ui-widget-content">
-      <form class="clsinput" id="frm_InputPemenang" method="POST" action="update_penata_pelaksana" > 
+      <form class="clsinput" id="frm_InputPemenang" method="POST" action="update_pemenang" > 
          <p>
           <?php echo form_label("Pilih Pemenang  *") ?>
             <select name="KODE_VENDOR" class="{validate:{required:true,maxlength:1024}}">

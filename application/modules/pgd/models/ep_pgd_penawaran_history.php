@@ -35,12 +35,14 @@ class Ep_pgd_penawaran_history extends MY_Model {
 								 'NAMA_VENDOR'  =>array('hidden'=>false, 'width'=>60),
                                                                  'NO_PENAWARAN'  =>array('hidden'=>false, 'width'=>20),
 								 'TGL_REKAM'  =>array('hidden'=>false, 'width'=>10),
-        							 'DETAIL'  =>array('hidden'=>false, 'width'=>10)
+        							 'TOTAL'  =>array('hidden'=>false, 'width'=>10,'align'=>'right'),
+                                                                 'DETAIL'  =>array('hidden'=>false, 'width'=>10)
                                                                     
 								 );
 	
 	
     public $sql_select = "(SELECT  P.KODE_HIST_PENAWARAN,
+                                    P.KODE_TENDER ,
                                     P.KODE_KANTOR ,
                                     P.KODE_VENDOR ,
                                     V.NAMA_VENDOR,
@@ -53,6 +55,7 @@ class Ep_pgd_penawaran_history extends MY_Model {
                                     P.TGL_REKAM ,
                                     P.LAMPIRAN ,
                                     P.KETERANGAN,
+                                    (SELECT TO_CHAR(1.1 * SUM(COALESCE(JUMLAH,0) * COALESCE(HARGA,0))  ,'999G999G999G999') FROM   EP_PGD_HIST_ITEM_PENAWARAN  WHERE KODE_HIST_PENAWARAN = P.KODE_HIST_PENAWARAN) AS TOTAL,
                                     '' AS \"DETAIL\"
                              FROM 	 EP_PGD_HIST_PENAWARAN P
                              LEFT JOIN EP_VENDOR V ON P.KODE_VENDOR = V.KODE_VENDOR
@@ -72,7 +75,7 @@ class Ep_pgd_penawaran_history extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND  P.KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND  P.KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
                 $this->sql_select  = $this->sql_select . " AND  P.KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 

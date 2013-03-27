@@ -38,7 +38,7 @@ class Vendor_verifikasi extends MY_Controller {
                 
             }
             
-            $sql = "SELECT KODE_TENDER,KODE_KANTOR, KODE_VENDOR, KETERANGAN, STATUS_CEK, VENDOR_CEK ";
+            $sql = "SELECT KODE_TENDER,KODE_KANTOR, KODE_VENDOR, KETERANGAN, STATUS_CEK, VENDOR_CEK   ";
             $sql .= " FROM EP_PGD_PENAWARAN_TEKNIS T ";
             $sql .= " WHERE T.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "' ";
             $sql .= " AND T.KODE_KANTOR = '" .$this->input->get("KODE_KANTOR"). "' ";
@@ -48,10 +48,24 @@ class Vendor_verifikasi extends MY_Controller {
             $query= $this->db->query($sql);
             $data["rs_teknisadm"] = $query->result();
             
+            
+            $sql = "SELECT KETERANGAN_TEKNIKAL ";
+            $sql .= " FROM EP_PGD_TENDER_VENDOR_STATUS T ";
+            $sql .= " WHERE T.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "' ";
+            $sql .= " AND T.KODE_KANTOR = '" .$this->input->get("KODE_KANTOR"). "' ";
+            $sql .= " AND T.KODE_VENDOR =  " . $this->input->get("KODE_VENDOR") . "  ";
+            
+            
+            $query= $this->db->query($sql);
+            $data["rs_status"] = $query->result();
+            
+            
+            
            
             $data["kode_tender"] = $this->input->get("KODE_TENDER");
             $data["kode_kantor"] = $this->input->get("KODE_KANTOR");
             $data["kode_vendor"] = $this->input->get("KODE_VENDOR");
+             
             
             
             

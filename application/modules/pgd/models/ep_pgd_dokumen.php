@@ -28,7 +28,7 @@ class Ep_pgd_dokumen extends MY_Model {
                                 'KATEGORI'  =>array('hidden'=>false, 'width'=>20),
                                 'KETERANGAN'  =>array('hidden'=>false, 'width'=>50),
                                 'NAMA_FILE'  =>array('hidden'=>false, 'width'=>20 )
-                                 
+                                 ,   'HAPUS'  =>array('hidden'=>false, 'width'=>5, 'align'=>'center')  
                                 );
     
     
@@ -37,10 +37,11 @@ class Ep_pgd_dokumen extends MY_Model {
                                    KODE_KANTOR ,
                                    KATEGORI ,
 				   KETERANGAN ,
-				   '<a href=\"' || NAMA_FILE || '\" >' || NAMA_FILE || '</a>' AS NAMA_FILE 
-                                  
-                            FROM EP_PGD_DOKUMEN       
+				   '<a href=\"download/' || KODE_DOKUMEN || '\"  target=\"_blank\" >' || NAMA_FILE || '</a>' AS NAMA_FILE 
+                                   ,  '' as \"HAPUS\" 
+                            FROM EP_PGD_DOKUMEN 
                             WHERE 1 = 1
+                            AND KATEGORI <> 'HPS'
 		 ";
 	
     function setParam() {
@@ -55,7 +56,7 @@ class Ep_pgd_dokumen extends MY_Model {
                     $this->session->set_userdata("KODE_KANTOR_TENDER",$this->input->get("KODE_KANTOR")  );
             }
 
-                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = " .  $this->session->userdata("KODE_TENDER"). "  ";
+                $this->sql_select  = $this->sql_select . " AND KODE_TENDER = '" .  $this->session->userdata("KODE_TENDER"). "'  ";
                 $this->sql_select  = $this->sql_select . " AND  KODE_KANTOR = '" .  $this->session->userdata("KODE_KANTOR_TENDER"). "'  ";
             
                 
@@ -76,6 +77,8 @@ class Ep_pgd_dokumen extends MY_Model {
                     
                     be = "<button onclick=\"fnDownloadDokumen(\'"+cl+"\');\"  >DOWNLOAD</button>"; 
                     jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{DOWNLOAD:be});
+                    bx = "<button onclick=\"fnDeleteLampiran(\'"+cl+"\');\"  >HAPUS</button>"; 
+                    jQuery(\'#grid_'.strtolower(get_class($this)).'\').jqGrid(\'setRowData\',ids[i],{HAPUS:bx});
                          
 		}';
 

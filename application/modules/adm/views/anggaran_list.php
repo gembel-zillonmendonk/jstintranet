@@ -66,7 +66,7 @@
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
 	 
-		 alert(grid);
+		 
 		 
 		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
 		
