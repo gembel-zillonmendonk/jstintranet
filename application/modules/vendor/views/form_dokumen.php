@@ -58,14 +58,14 @@
                 select: function( event, ui ) {
                     $("table#table-checklist-doc tbody tr").hide();
                     $("table#table-checklist-doc tbody tr.kategori-" + ui.index).show();
-                    console.log($("table#table-checklist-doc tbody tr:visible"));
-                    console.log(ui.index);
+                    //console.log($("table#table-checklist-doc tbody tr:visible"));
+                    //console.log(ui.index);
                     $("table#table-checklist-doc tbody tr:visible").each(function(i){
                         $(".rownum", this).html(i+1);
                     });
                 },
                 activate : function(evt, ui) {
-                    console.log(ui);
+                    //console.log(ui);
                 }
             });
             

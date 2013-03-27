@@ -22,6 +22,7 @@ class ep_ktr_perubahan extends MY_Model {
 //        'TERMIN_BAYAR_SEWA',
         'KET_PERUBAHAN' => array('type' => 'label'),
         'ALASAN_PERUBAHAN' => array('type' => 'label'),
+        'LAMPIRAN' => array('type' => 'file'),
     );
     public $dir = 'ammend';
 
@@ -59,6 +60,13 @@ class ep_ktr_perubahan extends MY_Model {
 
     }
 
+    public function _before_save() {
+        parent::_before_save();
+        
+        if (isset($this->attributes['LAMPIRAN']) && strlen($this->attributes['LAMPIRAN']) == 0)
+            unset($this->attributes['LAMPIRAN']);
+    }
+    
     public function _after_insert() {
         parent::_after_insert();
 

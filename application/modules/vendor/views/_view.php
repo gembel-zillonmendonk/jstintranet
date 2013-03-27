@@ -26,6 +26,8 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_form/ep_vendor_jamsostek') ?>">KEPESERTAAN JAMSOSTEK</h3>
             <div></div>
+            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_wilayah') ?>">KANTOR PENDAFTARAN</h3>
+            <div></div>
         </div>
     </div>
 
@@ -79,8 +81,6 @@ $this->session->set_userdata('user_id', $_REQUEST['KODE_VENDOR']);
             <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_barang') ?>">BARANG YANG BISA DIPASOK</h3>
             <div></div>
             <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_jasa') ?>">JASA YANG BISA DIPASOK</h3>
-            <div></div>
-            <h3 href="<?php echo site_url('/vendor/view_grid/ep_vendor_wilayah') ?>">AREA KERJA</h3>
             <div></div>
         </div>
     </div>

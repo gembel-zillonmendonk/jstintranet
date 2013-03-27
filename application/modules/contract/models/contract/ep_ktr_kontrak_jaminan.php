@@ -113,7 +113,12 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 
         // set default value
         if (isset($_REQUEST['KODE_KONTRAK'])) {
-            $sql = "SELECT NILAI_KONTRAK * 0.05 as NILAI_KONTRAK
+            $sql = "SELECT NILAI_KONTRAK * 0.05 as NILAI_KONTRAK,
+                        CASE
+                        WHEN (select sum(jumlah * harga) * 0.8 hps from ep_pgd_item_tender where KODE_TENDER = '" . $_REQUEST['KODE_TENDER'] . "' and KODE_KANTOR = '" . $_REQUEST['KODE_KANTOR'] . "') > NILAI_KONTRAK 
+                          THEN (select sum(jumlah * harga) * 0.8 hps from ep_pgd_item_tender where KODE_TENDER = '" . $_REQUEST['KODE_TENDER'] . "' and KODE_KANTOR = '" . $_REQUEST['KODE_KANTOR'] . "') * 0.5
+                          ELSE NILAI_KONTRAK * 0.5
+                        END as NILAI_MINIMAL_JAMINAN
                         FROM EP_KTR_KONTRAK
                         WHERE KODE_KONTRAK = '" . $_REQUEST['KODE_KONTRAK'] . "' 
                             AND KODE_VENDOR = '" . $_REQUEST['KODE_VENDOR'] . "' 
@@ -124,8 +129,8 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
 
             if (count($row)) {
 //            $this->attributes['NILAI_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
-                $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['NILAI_KONTRAK'] * 1;
-                $this->validation['NILAI_JAMINAN']['min'] = $row['NILAI_KONTRAK'] * 1;
+                $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['NILAI_MINIMAL_JAMINAN'] * 1;
+                $this->validation['NILAI_JAMINAN']['min'] = $row['NILAI_MINIMAL_JAMINAN'] * 1;
             }
         } else if (isset($_REQUEST['KODE_TENDER']) && isset($_REQUEST['KODE_KANTOR']) && isset($_REQUEST['KODE_VENDOR'])) {
             $this->attributes['KODE_TENDER'] = $_REQUEST['KODE_TENDER'];
@@ -148,6 +153,13 @@ class ep_ktr_kontrak_jaminan extends MY_Model {
             $this->attributes['NILAI_MINIMAL_JAMINAN'] = $row['TOTAL_JAMINAN'] * 1;
             $this->validation['NILAI_JAMINAN']['min'] = $row['TOTAL_JAMINAN'] * 1;
         }
+    }
+
+    public function _before_save() {
+        parent::_before_save();
+
+        if (isset($this->attributes['LAMPIRAN_JAMINAN']) && strlen($this->attributes['LAMPIRAN_JAMINAN']) == 0)
+            unset($this->attributes['LAMPIRAN_JAMINAN']);
     }
 
 }

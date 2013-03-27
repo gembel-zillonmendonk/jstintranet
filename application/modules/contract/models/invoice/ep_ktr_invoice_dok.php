@@ -61,6 +61,13 @@ class ep_ktr_invoice_dok extends MY_Model {
         $this->db->query("update ep_nomorurut set nomorurut = nomorurut + 1 
             where kode_nomorurut = 'EP_KTR_INVOICE_DOK'");
     }
+    
+    public function _before_save() {
+        parent::_before_save();
+        
+        if (isset($this->attributes['NAMA_FILE']) && strlen($this->attributes['NAMA_FILE']) == 0)
+            unset($this->attributes['NAMA_FILE']);
+    }
 
 }
 

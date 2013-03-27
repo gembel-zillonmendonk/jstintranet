@@ -162,129 +162,129 @@ $form_id = 'modal_form_' . $grid->id;
 //        })    
         <?php if (!isset($read_only) || $read_only != true): ?>
         /// delete button
-        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
-            id: 'pager_delete',
-            caption: '',
-            buttonicon:'ui-icon-trash', 
-            title: 'Hapus Data',
-            position:'first',
-            onClickButton : function (){
-                jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
-            }
-        })
+//        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
+//            id: 'pager_delete',
+//            caption: '',
+//            buttonicon:'ui-icon-trash', 
+//            title: 'Hapus Data',
+//            position:'first',
+//            onClickButton : function (){
+//                jQuery('#<?php echo $grid->id ?>').jqGrid('columnChooser');
+//            }
+//        })
         /// edit button
-        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
-            id: 'pager_edit',
-            caption: '',
-            buttonicon:'ui-icon-pencil', 
-            title: 'Ubah Data',
-            position:'first',
-            onClickButton : function (){
-                var selected = $('#<?php echo $grid->id ?>').jqGrid('getGridParam', 'selrow');
-                
-                if (selected) {
-                    selected = jQuery('#<?php echo $grid->id ?>').jqGrid('getRowData',selected);
-                    var keys = <?php echo json_encode($grid->primary_keys); ?>;
-                    var count = 0;
-                
-                    var data = {};
-                    var str ="";
-                    $.each(keys, function(k, v) { 
-                        data = {v:selected[v]};
-                        str += v + "=" + selected[v] + "&";
-                        count++; 
-                    });
-                    
-                    //console.debug(data);
-                    
-                    jQuery('#<?php echo $form_id ?>')
-                    .load($site_url + '/crud/modal_form/<?php echo $grid->model ?>?' + str)
-                    .dialog({ //dialog form use for popup after click button in pager
-                        autoOpen:false,
-                        width:800,
-                        modal:true,
-                        //position:'top',
-                        buttons: {
-                            "SIMPAN": function() {
-                                //jQuery("form", this).submit();
-                                var d = this;
-                                if($("form", this).valid()){
-                                    jQuery("form", this).ajaxSubmit({
-                                        debug:true,
-                                        success:function(x){                                
-                                            if(x == ""){
-                                                alert("Data berhasil disimpan");
-                                                $(d).dialog("close");
-                                            }
-                                            else
-                                                alert("Data gagal disimpan : " + x);
-                                            
-                                            $('#<?php echo $grid->id ?>').trigger("reloadGrid"); 
-                                        }
-                                    });
-
-                                }
-                            
-                            }, 
-                            "BATAL": function() { 
-                                $(this).dialog("close");
-                            } 
-                        }
-                    });
-                    jQuery('#<?php echo $form_id ?>').dialog("open");
-                } else {
-                    alert('Harap pilih data yang akan diubah');
-                    return;
-                }
-                
-                
-            }
-        })
+//        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
+//            id: 'pager_edit',
+//            caption: '',
+//            buttonicon:'ui-icon-pencil', 
+//            title: 'Ubah Data',
+//            position:'first',
+//            onClickButton : function (){
+//                var selected = $('#<?php echo $grid->id ?>').jqGrid('getGridParam', 'selrow');
+//                
+//                if (selected) {
+//                    selected = jQuery('#<?php echo $grid->id ?>').jqGrid('getRowData',selected);
+//                    var keys = <?php echo json_encode($grid->primary_keys); ?>;
+//                    var count = 0;
+//                
+//                    var data = {};
+//                    var str ="";
+//                    $.each(keys, function(k, v) { 
+//                        data = {v:selected[v]};
+//                        str += v + "=" + selected[v] + "&";
+//                        count++; 
+//                    });
+//                    
+//                    //console.debug(data);
+//                    
+//                    jQuery('#<?php echo $form_id ?>')
+//                    .load($site_url + '/crud/modal_form/<?php echo $grid->model ?>?' + str)
+//                    .dialog({ //dialog form use for popup after click button in pager
+//                        autoOpen:false,
+//                        width:800,
+//                        modal:true,
+//                        //position:'top',
+//                        buttons: {
+//                            "SIMPAN": function() {
+//                                //jQuery("form", this).submit();
+//                                var d = this;
+//                                if($("form", this).valid()){
+//                                    jQuery("form", this).ajaxSubmit({
+//                                        debug:true,
+//                                        success:function(x){                                
+//                                            if(x == ""){
+//                                                alert("Data berhasil disimpan");
+//                                                $(d).dialog("close");
+//                                            }
+//                                            else
+//                                                alert("Data gagal disimpan : " + x);
+//                                            
+//                                            $('#<?php echo $grid->id ?>').trigger("reloadGrid"); 
+//                                        }
+//                                    });
+//
+//                                }
+//                            
+//                            }, 
+//                            "BATAL": function() { 
+//                                $(this).dialog("close");
+//                            } 
+//                        }
+//                    });
+//                    jQuery('#<?php echo $form_id ?>').dialog("open");
+//                } else {
+//                    alert('Harap pilih data yang akan diubah');
+//                    return;
+//                }
+//                
+//                
+//            }
+//        })
         /// add button
-        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
-            id: 'pager_add',
-            caption: '',
-            buttonicon:'ui-icon-plus', 
-            title: 'Tambah Data',
-            position:'first',
-            onClickButton : function (){
-                
-                jQuery('#<?php echo $form_id; ?>')
-                //.load($site_url + '/crud/modal_form/' + $grid->model)
-                .load($site_url + '/crud/modal_form/<?php echo $grid->model ?>')
-                .dialog({ //dialog form use for popup after click button in pager
-                    autoOpen:false,
-                    width: 800,
-                    modal:true,
-                    //position:'auto',
-                    buttons: {
-                        "SIMPAN": function(x) {                            
-                            var d = this;
-                            if($("form", this).valid()){
-                                jQuery("form", this).ajaxSubmit({
-                                    success:function(x){                                
-                                        if(x == ""){
-                                            alert("Data berhasil disimpan");
-                                            $(d).dialog("close");
-                                        }
-                                        else
-                                            alert("Data gagal disimpan : " + x);
-                                        
-                                        $('#<?php echo $grid->id ?>').trigger("reloadGrid"); 
-                                    }
-                                });
-
-                            }
-                        }, 
-                        "BATAL": function() { 
-                            $(this).dialog("close");
-                        } 
-                    }
-                });
-                
-                jQuery('#<?php echo $form_id ?>').dialog("open");
-            }
-        });
+//        .jqGrid('navButtonAdd','#<?php echo $pager_id ?>',{
+//            id: 'pager_add',
+//            caption: '',
+//            buttonicon:'ui-icon-plus', 
+//            title: 'Tambah Data',
+//            position:'first',
+//            onClickButton : function (){
+//                
+//                jQuery('#<?php echo $form_id; ?>')
+//                //.load($site_url + '/crud/modal_form/' + $grid->model)
+//                .load($site_url + '/crud/modal_form/<?php echo $grid->model ?>')
+//                .dialog({ //dialog form use for popup after click button in pager
+//                    autoOpen:false,
+//                    width: 800,
+//                    modal:true,
+//                    //position:'auto',
+//                    buttons: {
+//                        "SIMPAN": function(x) {                            
+//                            var d = this;
+//                            if($("form", this).valid()){
+//                                jQuery("form", this).ajaxSubmit({
+//                                    success:function(x){                                
+//                                        if(x == ""){
+//                                            alert("Data berhasil disimpan");
+//                                            $(d).dialog("close");
+//                                        }
+//                                        else
+//                                            alert("Data gagal disimpan : " + x);
+//                                        
+//                                        $('#<?php echo $grid->id ?>').trigger("reloadGrid"); 
+//                                    }
+//                                });
+//
+//                            }
+//                        }, 
+//                        "BATAL": function() { 
+//                            $(this).dialog("close");
+//                        } 
+//                    }
+//                });
+//                
+//                jQuery('#<?php echo $form_id ?>').dialog("open");
+//            }
+//        });
         <?php endif; ?>
         $('#<?php echo $grid->id ?>').jqGrid("setGridWidth", $('#gbox_<?php echo $grid->id ?>').parent().width() , true);
         

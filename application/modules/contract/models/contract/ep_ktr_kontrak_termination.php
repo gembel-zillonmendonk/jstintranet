@@ -12,6 +12,7 @@ class ep_ktr_kontrak_termination extends MY_Model {
 //        'TGL_PEMUTUSAN' => array('type' => 'hidden'),
         'ALASAN_PEMUTUSAN' => array('type' => 'dropdown', 'options' => array('SELESAI' => 'SELESAI', 'TERMINASI' => 'TERMINASI')),
         'CATATAN_PEMUTUSAN' => array('type' => 'textarea'),
+        'LAMPIRAN_PEMUTUSAN' => array('type' => 'file'),
     );
     public $dir = 'contract';
     public $form_view = 'contract/contract/ep_ktr_kontrak_termination';
@@ -125,6 +126,9 @@ class ep_ktr_kontrak_termination extends MY_Model {
 
         $this->attributes['TGL_PEMUTUSAN'] = date('d-m-Y');
         $this->attributes['STATUS'] = 'C';
+        
+        if (isset($this->attributes['LAMPIRAN_PEMUTUSAN']) && strlen($this->attributes['LAMPIRAN_PEMUTUSAN']) == 0)
+            unset($this->attributes['LAMPIRAN_PEMUTUSAN']);
     }
 
     function _after_save() {

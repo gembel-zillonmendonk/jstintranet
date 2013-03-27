@@ -51,6 +51,13 @@ class ep_ktr_kontrak_dok extends MY_Model {
                    " AND KODE_KANTOR = '" . $_REQUEST['KODE_KANTOR'] . "'";
     }
     
+    public function _before_save() {
+        parent::_before_save();
+        
+        if (isset($this->attributes['NAMA_FILE']) && strlen($this->attributes['NAMA_FILE']) == 0)
+            unset($this->attributes['NAMA_FILE']);
+    }
+    
     public function _before_update() {
         parent::_before_update();
         $this->attributes['STATUS_PUBLISH'] = (isset($_REQUEST['EP_KTR_KONTRAK_DOK']['STATUS_PUBLISH']) && $_REQUEST['EP_KTR_KONTRAK_DOK']['STATUS_PUBLISH'] > 0 ? 1 : 0);

@@ -3,7 +3,7 @@
 class ep_ktr_perubahan_todo extends MY_Model {
 
     public $table = 'EP_KTR_PERUBAHAN';
-    public $sql_select = "( select x.*, b.judul_pekerjaan, b.no_kontrak, b.nama_vendor, '' as \"ACT\" from (
+    public $sql_select = "( select x.*, z.NAMA_PELAKSANA, b.judul_pekerjaan, b.no_kontrak, b.nama_vendor, '' as \"ACT\" from (
                                     select a.* ,c.NAMA_AKTIFITAS, b.url, d.KODE_PERUBAHAN, KODE_KONTRAK, KODE_KANTOR, KODE_VENDOR, KODE_TENDER, KODE_INVOICE
                                     from EP_WKF_PROSES a
                                     inner join (
@@ -29,6 +29,7 @@ class ep_ktr_perubahan_todo extends MY_Model {
                                 ) x 
                             inner join EP_KTR_PERUBAHAN a ON a.KODE_PERUBAHAN = x.KODE_PERUBAHAN
                             inner join EP_KTR_KONTRAK b ON b.KODE_KONTRAK = a.KODE_KONTRAK
+                            inner join EP_PGD_TENDER z on b.KODE_TENDER = z.KODE_TENDER and b.KODE_KANTOR = z.KODE_KANTOR
                           )";
     public $columns_conf = array(
         'KODE_PERUBAHAN',
@@ -38,6 +39,7 @@ class ep_ktr_perubahan_todo extends MY_Model {
         'NO_KONTRAK',
         'JUDUL_PEKERJAAN',
         'NAMA_VENDOR',
+        'NAMA_PELAKSANA',
         'URL',
         'ACT'
     );

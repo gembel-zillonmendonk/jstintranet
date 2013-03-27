@@ -166,6 +166,24 @@ class ep_ktr_kontrak extends MY_Model {
                 $this->attributes['TGL_PENETAPAN_PEMENANG'] = $row['TGL_SELESAI'];
                 
             }
+            else
+            {
+                $sql = "SELECT a.KODE_KANTOR,
+                                a.KODE_TENDER,
+                                SUM (HARGA * JUMLAH) AS TOTAL_HARGA_HPS,
+                                b.TGL_SELESAI
+                        FROM EP_PGD_ITEM_TENDER a
+                        inner join EP_PGD_TENDER b on a.KODE_TENDER = b.KODE_TENDER and a.KODE_KANTOR = b.KODE_KANTOR 
+                        where a.KODE_TENDER = '" . $this->attributes['KODE_TENDER'] . "'" .
+                        " and a.KODE_KANTOR = '" . $this->attributes['KODE_KANTOR'] . "'" .
+                        " group by a.KODE_KANTOR, a.KODE_TENDER, b.TGL_SELESAI";
+                
+                $query = $this->db->query($sql);
+                $row = $query->row_array();
+                
+                $this->attributes['NILAI_HPS'] = $row['TOTAL_HARGA_HPS'];
+                $this->attributes['TGL_PENETAPAN_PEMENANG'] = $row['TGL_SELESAI'];
+            }
 //            print_r($this->attributes);
         }
     }
