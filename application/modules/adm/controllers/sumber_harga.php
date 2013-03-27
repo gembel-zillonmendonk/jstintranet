@@ -42,7 +42,8 @@ class Sumber_harga extends MY_Controller {
 			$sql .= " WHERE KODE_SUMBER = " . $this->input->get("KODE_SUMBER");
 		 
 			$this->db->simple_query($sql);
-			redirect(base_url() . "index.php/adm/sumber_harga");
+	 
+                        redirect(base_url() . "index.php/adm/sumber_harga");
 		 
 		}
 	}	

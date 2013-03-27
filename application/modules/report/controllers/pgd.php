@@ -56,9 +56,12 @@ class Pgd extends MY_Controller {
                 $jabatan[$v['KODE_KANTOR']] = $v['NAMA_KANTOR'];
             }
         }
-        $this->layout->view('pgd/kinerja_pengadaan_perbiro', array(
-            'jabatan' => $jabatan
-        ));
+        $data["jabatan"] = $jabatan;
+        
+        $query = $this->db->query("SELECT DISTINCT EXTRACT(YEAR FROM TGL_REKAM) AS TAHUN FROM EP_PGD_TENDER ");
+        $data["rstahun"] = $query->result();
+        
+        $this->layout->view('pgd/kinerja_pengadaan_perbiro', $data);
     }
 
     public function kinerja_pengadaan_perpelaksana() {

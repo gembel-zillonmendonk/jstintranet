@@ -3,19 +3,20 @@
             <div>
 			<p>
 			<div id="mysearch"></div>
-                        <form>
-                            <fieldset>     
-                            <label>JUDUL PEKERJAAN</label>
-				<input type="text" id="kolom" name="kolom"  value="" /> 
-				<input type="button" id="btnSrcP"  value="Cari" /> 
-			</fieldset>
-                        </form>
-                        </p>
+                        <div style="float: left" >
+                         <label>JUDUL PEKERJAAN&nbsp;&nbsp;</label>
+                        </div>
+                        <div style="float: left" >
+				<input type="text" id="kolomPerencanaan" name="kolom"  value="" /> 
+				<input type="button" id="btnSrcPerencanaan"  value="Cari" /> 
+                                 </div> 
+                        <div style="clear: both" ></div>
+                            </p>
 			 
 			
 			
 			 
-			<div id="listpopup" ></div>
+			<div id="listpopup_perencanaan" ></div>
 			</div>
   </div>			
  <script>
@@ -37,27 +38,29 @@
     .addClass("ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active")
     .css('overflow','visible')
 	
-	$("#btnSrcP").click(function() {
+	$("#btnSrcPerencanaan").click(function() {
 	
 
 	
-		//alert($("#kolom").val());
+	 
 		
-		
-		
-		srcval = $("#kolom").val();
+		srcval = $("#kolomPerencanaan").val();
 		var myfilter = { groupOp: "AND", rules: []};
 		myfilter.rules.push({field:"JUDUL_PEKERJAAN",op:"cn",data:srcval});
 		
 		var grid = $("#grid_ep_pgd_perencanaan_get");
 			
 		
-		alert(grid);
+		 
 		
 		grid[0].p.search = myfilter.rules.length>0;
 		$.extend(grid[0].p.postData,{filters:JSON.stringify(myfilter)});
 		grid.trigger("reloadGrid",[{page:1}]);
-		alert(grid);
+		 
+		 
+		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
+		 
+		 
 		 
 		//$('#grid_ep_kom_kelompok_jasa').jqGrid().trigger("reloadGrid");
 		
@@ -70,7 +73,7 @@
                 $('#h3_perencanaan_popup', $(this)).each(function(){
                     var uri = $(this).attr('href');
                     if(uri != '' && uri != '#'){
-                        var ctn = $("#listpopup") ;
+                        var ctn = $("#listpopup_perencanaan") ;
                         //alert($(ctn).width());
                         //alert(uri);
                         if(ctn.html() == '')

@@ -214,11 +214,11 @@
 								jQuery("#frmKomentar").ajaxSubmit({
                     //clearForm: false,
 								success: function(msgx){
-									  // alert(msgx);
-									  // $("#trace").html(msgx);
+									  //  alert(msgx);
+									  //  $("#trace").html(msgx);
 								
                                                                         //alert('Data berhasil disimpan');
-                                                                       window.location = "<?php echo base_url() ?>index.php/adm/harga_jasa";       
+                                                                        window.location = "<?php echo base_url() ?>index.php/adm/harga_jasa";       
 								},
 								error: function(){
 									alert('Data Komentar gagal disimpan')

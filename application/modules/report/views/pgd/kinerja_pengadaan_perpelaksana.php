@@ -75,7 +75,7 @@ if (count($_REQUEST) > 0) {
 
         </form>
     </div>
-    <h3 href="<?php echo site_url('/report/grid/pgd.rekap_pengadaan' . $params) ?>">LAPORAN KINERJA PENGADAAN PERPELAKSANA</h3>
+    <h3 href="<?php echo site_url('/report/grid/rpt_pgd_kinerja_pengadaan_per_pelaksana' . $params) ?>">LAPORAN KINERJA PENGADAAN PERPELAKSANA</h3>
     <div></div>
 
 </div>

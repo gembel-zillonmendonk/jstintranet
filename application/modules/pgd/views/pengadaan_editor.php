@@ -1780,6 +1780,96 @@ function fnDeleteVendor(str) {
   
   
  <?php
+ if (in_array("InputPembuatanJadwal2", $arr_antarmuka)) {
+?>
+  <div class="accordion">
+ <h3 id="InputPembuatanJadwal" href="" >PEMBUATAN JADWAL LELANG</h3>
+    <div>
+      <fieldset class="ui-widget-content">
+      <form class="clsinput"  id="frm_InputPembuatanJadwal2" method="POST" action="update_Pembuatan_jadwal2" > 
+           
+          <p>	
+            <?php echo form_label("Tgl Aanwijzing 2 *") ?>
+            <input type="text" style="" name="TGL_AANWIJZING2" value="<?php echo $TGL_AANWIJZING2; ?>"  id="TGL_PRE_LELANG" class="datetimepicker  {validate:{required:true,datetimeID:true}}" />  
+	 
+          </p> 
+          <p>	
+            <?php echo form_label("Lokasi Aanwijzing 2 *") ?>
+	  <input type="text" style="" name="LOKASI_AANWIJZING2" value="<?php echo $LOKASI_AANWIJZING2; ?>"   id="LOKASI_PRE_LELANG" class="{validate:{required:true,maxlength:150}}" />  
+	 
+          </p> 
+          <p>	
+            <?php echo form_label("Tgl Mulai Pemasukan Penawaran  *") ?>
+	   <input type="text" style="" name="TGL_MULAI_PENAWARAN" value="<?php echo $TGL_MULAI_PENAWARAN; ?>"  id="TGL_MULAI_PENAWARAN" class="datetimepicker  {validate:{required:true,datetimeID:true}}" />  
+	
+          </p>
+          
+          <p>	
+            <?php echo form_label("Tgl Pembukaan Penawaran  *") ?>
+	   <input type="text" style="" name="TGL_PEMBUKAAN_LELANG" value="<?php echo $TGL_PEMBUKAAN_LELANG; ?>"  id="TGL_PEMBUKAAN_LELANG" class="datetimepicker  {validate:{required:true,datetimeID:true}}" />  
+	
+          </p>
+           
+          <input type="hidden" name="KODE_KANTOR" id="KODE_KANTOR_TENDER" VALUE="<?php echo $kode_kantor  ; ?>"  />
+          <input type="hidden" name="KODE_TENDER" id="KODE_TENDER"  VALUE="<?php echo $kode_tender  ; ?>"  />
+      
+          <p>
+          <button type="button"  id="btnAddPembuatanJadwal" >UPDATE</button>
+            </p>
+          
+      </form>
+      </fieldset>     
+       
+        <div id="list" ></div>
+    </div>
+ </div>
+  <script>
+ var validator_InputPembuatanJadwal 
+  $(document).ready(function(){
+	 
+        validator_InputPembuatanJadwal2 = $("#frm_InputPembuatanJadwal2").validate({
+            meta: "validate",
+            submitHandler: function(form) {
+                jQuery(form).ajaxSubmit();
+            }
+        });
+        
+         $("#btnAddPembuatanJadwal").click(function() {
+         
+            	 if(validator_InputPembuatanJadwal2.form()) {
+                    $("#frm_InputPembuatanJadwal2").ajaxSubmit({
+                                //clearForm: false,
+                                success: function(msg){
+                                        alert(msg);
+                                    //   $("#trace").html(msg);
+                                   // alert(msg);
+                                    //reload grid
+                                    
+                                    
+                                     
+
+                                },
+                                error: function(){
+                                    alert('Data gagal disimpan')
+                                }
+                            });
+
+                 }
+                 
+      });
+        
+     
+     
+   });
+ 
+  </script> 
+  
+<?php
+}
+?>
+  
+  
+ <?php
 if (in_array("InputEvaluasiAdminVendor", $arr_antarmuka)) {
 ?>
   
