@@ -49,10 +49,15 @@ if (count($_REQUEST) > 0) {
                     <div class="control-group">
                         <?php echo form_label("TAHUN PELAKSANAAN", "TAHUN", array("class" => "control-label")) ?> 
                         <div class="controls">
-                            <?php
-                            echo form_input("TAHUN"
-                                    , isset($_REQUEST['TAHUN']) ? $_REQUEST['TAHUN'] : "", 'class="{validate:{required:true,maxlength:4}}"');
-                            ?>
+                            
+                            <select name="TAHUN" >
+                                <?php
+                                    foreach($rstahun as $row) {
+                                        echo "<option >". $row->TAHUN."</option>";
+                                    }
+                                ?>
+                                
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -62,7 +67,7 @@ if (count($_REQUEST) > 0) {
 
         </form>
     </div>
-    <h3 href="<?php echo site_url('/report/grid/pgd.rekap_pengadaan' . $params) ?>">LAPORAN KINERJA PENGADAAN PERBIRO</h3>
+    <h3 href="<?php echo site_url('/report/gridr/rpt_pgd_kinerja_pengadaan' . $params) ?>">LAPORAN KINERJA PENGADAAN PERBIRO</h3>
     <div></div>
 
 </div>

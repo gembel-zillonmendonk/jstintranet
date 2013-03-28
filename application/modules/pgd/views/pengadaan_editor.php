@@ -1780,6 +1780,96 @@ function fnDeleteVendor(str) {
   
   
  <?php
+ if (in_array("InputPembuatanJadwal2", $arr_antarmuka)) {
+?>
+  <div class="accordion">
+ <h3 id="InputPembuatanJadwal" href="" >PEMBUATAN JADWAL LELANG</h3>
+    <div>
+      <fieldset class="ui-widget-content">
+      <form class="clsinput"  id="frm_InputPembuatanJadwal2" method="POST" action="update_Pembuatan_jadwal2" > 
+           
+          <p>	
+            <?php echo form_label("Tgl Aanwijzing 2 *") ?>
+            <input type="text" style="" name="TGL_AANWIJZING2" value="<?php echo $TGL_AANWIJZING2; ?>"  id="TGL_PRE_LELANG" class="datetimepicker  {validate:{required:true,datetimeID:true}}" />  
+	 
+          </p> 
+          <p>	
+            <?php echo form_label("Lokasi Aanwijzing 2 *") ?>
+	  <input type="text" style="" name="LOKASI_AANWIJZING2" value="<?php echo $LOKASI_AANWIJZING2; ?>"   id="LOKASI_PRE_LELANG" class="{validate:{required:true,maxlength:150}}" />  
+	 
+          </p> 
+          <p>	
+            <?php echo form_label("Tgl Mulai Pemasukan Penawaran  *") ?>
+	   <input type="text" style="" name="TGL_MULAI_PENAWARAN" value="<?php echo $TGL_MULAI_PENAWARAN; ?>"  id="TGL_MULAI_PENAWARAN" class="datetimepicker  {validate:{required:true,datetimeID:true}}" />  
+	
+          </p>
+          
+          <p>	
+            <?php echo form_label("Tgl Pembukaan Penawaran  *") ?>
+	   <input type="text" style="" name="TGL_PEMBUKAAN_LELANG" value="<?php echo $TGL_PEMBUKAAN_LELANG; ?>"  id="TGL_PEMBUKAAN_LELANG" class="datetimepicker  {validate:{required:true,datetimeID:true}}" />  
+	
+          </p>
+           
+          <input type="hidden" name="KODE_KANTOR" id="KODE_KANTOR_TENDER" VALUE="<?php echo $kode_kantor  ; ?>"  />
+          <input type="hidden" name="KODE_TENDER" id="KODE_TENDER"  VALUE="<?php echo $kode_tender  ; ?>"  />
+      
+          <p>
+          <button type="button"  id="btnAddPembuatanJadwal" >UPDATE</button>
+            </p>
+          
+      </form>
+      </fieldset>     
+       
+        <div id="list" ></div>
+    </div>
+ </div>
+  <script>
+ var validator_InputPembuatanJadwal 
+  $(document).ready(function(){
+	 
+        validator_InputPembuatanJadwal2 = $("#frm_InputPembuatanJadwal2").validate({
+            meta: "validate",
+            submitHandler: function(form) {
+                jQuery(form).ajaxSubmit();
+            }
+        });
+        
+         $("#btnAddPembuatanJadwal").click(function() {
+         
+            	 if(validator_InputPembuatanJadwal2.form()) {
+                    $("#frm_InputPembuatanJadwal2").ajaxSubmit({
+                                //clearForm: false,
+                                success: function(msg){
+                                        alert(msg);
+                                    //   $("#trace").html(msg);
+                                   // alert(msg);
+                                    //reload grid
+                                    
+                                    
+                                     
+
+                                },
+                                error: function(){
+                                    alert('Data gagal disimpan')
+                                }
+                            });
+
+                 }
+                 
+      });
+        
+     
+     
+   });
+ 
+  </script> 
+  
+<?php
+}
+?>
+  
+  
+ <?php
 if (in_array("InputEvaluasiAdminVendor", $arr_antarmuka)) {
 ?>
   
@@ -1817,7 +1907,8 @@ function fnVerifikasiVendor(str) {
                         buttons: { 
                             "SIMPAN": function() { 
                                     
-                                     $('#KETERANGAN_VERIFIKASI').val(tinyMCE.get('commentar_verifikasi').getContent());
+                                    // $('#KETERANGAN_VERIFIKASI').val(tinyMCE.get('commentar_verifikasi').getContent());
+                                    $('#KETERANGAN_VERIFIKASI').val($('#commentar_verifikasi').val());
 
                                     str = $("#frm_vendor_verifikasi").serialize();
                                     
@@ -1832,7 +1923,7 @@ function fnVerifikasiVendor(str) {
                                                    var grid = $("#grid_ep_pgd_tender_vendor_view");
                                                    grid.trigger("reloadGrid",[{page:1}]);
          
-                                       //      jQuery('#modal_form_verifikasi').dialog("close");
+                                           jQuery('#modal_form_verifikasi').dialog("close");
                                         
                                     }
 
@@ -1958,8 +2049,8 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
-                               
+                               // $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
@@ -2193,7 +2284,9 @@ function fnEditPeringkat(str) {
 if (in_array("InputEvaluasiTeknisVendor", $arr_antarmuka)) {
 ?>
 <div id="modal_form_komentar_harga" ></div>
-<div id="modal_form_komentar_teknis" ></div> 
+<div id="modal_form_komentar_teknis" >
+ 
+</div> 
 <div id="modal_form_evaluasi_teknis" ></div>  
  <div id="modal_form_evaluasi_harga" ></div>
  <div class="accordion">
@@ -2214,7 +2307,7 @@ if (in_array("InputEvaluasiTeknisVendor", $arr_antarmuka)) {
                                              success: function(msg){
                                                  
                                           //   $("#trace").html(msg);
-                                             alert(msg);
+                                          //   alert(msg);
   jQuery('#modal_form_evaluasi_harga').load($site_url + '/pgd/pengadaan_evaluasi/harga?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>' );
  // alert(msg);
                                                  //reload grid
@@ -2289,8 +2382,10 @@ function fnKomentarHarga(kode_vendor,nama_vendor){
 function fnKomentarTeknis(kode_vendor,nama_vendor){
        // alert(kode_vendor + nama_vendor); 
        nama_vendor = 'VENDOR';
+       jQuery('#modal_form_komentar_teknis').html("");
       jQuery('#modal_form_komentar_teknis')
-                     .load($site_url + '/pgd/pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
+                      
+        .load($site_url + '/pgd/pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor + '?KODE_TENDER=<?php echo $kode_tender; ?>&KODE_KANTOR=<?php echo $kode_kantor; ?>')
                    // .load($site_url + '/pgd/pengadaan_evaluasi/komentar_teknis/' + kode_vendor + '/' + nama_vendor)
                     .dialog({ //dialog form use for popup after click button in pager
                         autoOpen:false,
@@ -2301,7 +2396,10 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                                //alert(tinyMCE.get('commentar_teknis').getContent());
+                                
+                              
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
                                
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
@@ -2518,7 +2616,9 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                              //  $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                               
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
                                
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
@@ -2743,8 +2843,9 @@ function fnKomentarTeknis(kode_vendor,nama_vendor){
                         //position:'top',
                         buttons: { 
                             "SIMPAN": function() { 
-                                $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
-                               
+                               // $('#KOMENTAR_EVALUASI').val(tinyMCE.get('commentar_teknis').getContent());
+                                $('#KOMENTAR_EVALUASI').val($('#commentar_teknis').val()  );
+                                
                                 $("#frmKomentarTeknis").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
@@ -3061,11 +3162,11 @@ if (1) {
                           $("#frmKomentar").ajaxSubmit({
                                       //clearForm: false,
                                       success: function(msg){
-                                          //     alert(msg);
-                                          //    $("#trace").html(msg);
+                                          //      alert(msg);
+                                          //     $("#trace").html(msg);
                                          // alert(msg);
                                           //reload grid
-                                          window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd"; ;   
+                                           window.location = "<?php echo base_url(); ?>index.php/pgd/pekerjaan_pgd"; ;   
                                       },
                                       error: function(){
                                           alert('Data gagal disimpan')

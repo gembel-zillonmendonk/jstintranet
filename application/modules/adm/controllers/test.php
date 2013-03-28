@@ -15,8 +15,16 @@ class Test extends MX_Controller {
             $urut = $this->urut->get("ALL","TENDER");
             echo $urut;
             echo "TEST NOMOR URUT";
+        } 
+        
+        
+        function pengadaan_ulang($kode_tender, $kode_kantor) {
+            $this->load->model('Pengadaan_ulang','ulang');
             
-	}	
+            $this->ulang('201302.44A.00004', '44A');
+            
+            
+        }
 	 
 }	
 	

@@ -18,7 +18,7 @@ class Crosstab extends CI_Model {
         if ($aggfield) $hidecnt = true;
         else $hidecnt = false;
         
-         $iif = false;
+         $iif = ($aggfn !='SUM') ;
        // $iif = strpos($db->databaseType,'access') !== false; 
                 // note - vfp 6 still doesn' work even with IIF enabled || $db->databaseType == 'vfp';
         
@@ -55,11 +55,14 @@ class Crosstab extends CI_Model {
                                         "\n\t$aggfn(CASE WHEN $v THEN 1 ELSE 0 END) AS \"$k\", ";
                         }
                         if ($aggfield) {
+                            /*
                                 $sel .= $iif ?
                                         "\n\t$aggfn(IIF($v,$aggfield,0)) AS \"$sumlabel$k\", "
                                         :
                                         "\n\t$aggfn(CASE WHEN $v THEN $aggfield ELSE 0 END) AS \"$sumlabel$k\", ";
-                        }
+                        */
+                               }
+                              
                 } 
         } else {
                 foreach ($colarr as $v) {
@@ -79,11 +82,19 @@ class Crosstab extends CI_Model {
                         if ($aggfield) {
                                 if ($hidecnt) $label = $v;
                                 else $label = "{$v}_$aggfield";
+                                                            $sel .= $iif ?
+                                         "\n\t$aggfn(CASE WHEN $colfield=$vq THEN $aggfield ELSE  TO_DATE('01-01-1900','DD-MM-YYYY')  END) AS \"$label\", " 
+                                        :
+                                        "\n\t$aggfn(CASE WHEN $colfield=$vq THEN $aggfield ELSE 0 END) AS \"$label\", ";
+    
+ /*
                                 $sel .= $iif ?
                                         "\n\t$aggfn(IIF($colfield=$vq,$aggfield,0)) AS \"$label\", "
                                         :
                                         "\n\t$aggfn(CASE WHEN $colfield=$vq THEN $aggfield ELSE 0 END) AS \"$label\", ";
-                        } 
+                        
+  */
+                        }
                           
                 }
         }

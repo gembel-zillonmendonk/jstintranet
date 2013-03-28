@@ -67,11 +67,12 @@
   </div>			
 </form> 
  <script> 
+     /*
      tinyMCE.init({
 		mode : "textareas",
 		theme : "simple"
 	});
-        
+     */   
  
   
   $(document).ready(function(){

@@ -820,9 +820,11 @@ class Pekerjaan_pgd extends MY_Controller {
              $data["LOKASI_PRE_LELANG"] = "";
              $data["TGL_PEMBUKAAN_LELANG"] = "";
              $data["TGL_MULAI_PENAWARAN"] = "";
+             $data["TGL_AANWIJZING2"] = "";
+             $data["LOKASI_AANWIJZING2"] = "";
              
              
-             $sql = "SELECT TGL_PEMBUKAAN_REG, TGL_PENUTUPAN_REG, TGL_PRE_LELANG, LOKASI_PRE_LELANG, TGL_PEMBUKAAN_LELANG, TGL_MULAI_PENAWARAN  ";
+             $sql = "SELECT LOKASI_AANWIJZING2, TGL_AANWIJZING2, TGL_PEMBUKAAN_REG, TGL_PENUTUPAN_REG, TGL_PRE_LELANG, LOKASI_PRE_LELANG, TGL_PEMBUKAAN_LELANG, TGL_MULAI_PENAWARAN  ";
              $sql .= "FROM EP_PGD_PERSIAPAN_TENDER ";
              $sql .= " WHERE KODE_TENDER =  '" . $data["kode_tender"] . "'" ;
              $sql .= " AND KODE_KANTOR =  '" . $data["kode_kantor"] . "' " ;
@@ -891,8 +893,8 @@ class Pekerjaan_pgd extends MY_Controller {
               
               $data["max_rangking"] = count($result);
                
-               $this->layout->view("pengadaan_editor", $data);
- 
+             $this->layout->view("pengadaan_editor", $data);
+             
             
         }
         
@@ -969,7 +971,44 @@ class Pekerjaan_pgd extends MY_Controller {
             
             
         }
+       
         
+         function update_Pembuatan_jadwal2() {
+   //          print_r($_POST);
+              
+            if (strlen($this->input->post("TGL_AANWIJZING2"))) {
+                $sql  = " SELECT KODE_TENDER FROM EP_PGD_PERSIAPAN_TENDER ";
+                $sql .= " WHERE KODE_TENDER =   '" .$this->input->post("KODE_TENDER") . "' ";
+                $sql .= " AND KODE_KANTOR =  '" .$this->input->post("KODE_KANTOR") . "'  ";
+                $query = $this->db->query($sql);
+                $result = $query->result(); 
+
+                if (count($result))  {
+                    $sql = "UPDATE EP_PGD_PERSIAPAN_TENDER ";
+                    $sql .= " SET  TGL_AANWIJZING2 ='" .$this->input->post("TGL_AANWIJZING2") . "'  ";
+                    $sql .= " , LOKASI_AANWIJZING2='" .$this->input->post("LOKASI_AANWIJZING2") . "'  "; 
+                    $sql .= " , TGL_PEMBUKAAN_LELANG= '" .$this->input->post("TGL_PEMBUKAAN_LELANG") . "' ";
+                    $sql .= " , TGL_MULAI_PENAWARAN= '" .$this->input->post("TGL_MULAI_PENAWARAN") . "' ";
+                    $sql .= " WHERE KODE_TENDER = '" .$this->input->post("KODE_TENDER") . "' ";
+                    $sql .= " AND KODE_KANTOR =  '" .$this->input->post("KODE_KANTOR") . "'  ";
+
+// echo $sql;
+                    
+                    if ($this->db->simple_query($sql)) {
+                        echo "1";
+
+                    } else{
+                         echo "0";
+
+                    }   
+                    
+                }   else {
+                    
+                    echo "0";
+                }
+            }
+        }
+       
         
         
         function update_Pembuatan_jadwal() {
@@ -1009,6 +1048,9 @@ class Pekerjaan_pgd extends MY_Controller {
                 }
             }
         }
+        
+        
+        
         function update_metode_pengadaan() {
              
             if (strlen($this->input->post("METODE_TENDER"))) {
@@ -1070,10 +1112,10 @@ class Pekerjaan_pgd extends MY_Controller {
                     $sql .= " , KETERANGAN_EVALUASI ";
                     $sql .= " , PTP_INQUIRY_NOTES ";
                     $sql .= " , PANITIA ";
-                    if ($this->input->post("METODE_TENDER") == 2 ) {
+                   // if ($this->input->post("METODE_TENDER") == 2 ) {
                         $sql .= " , KODE_PANITIA  ";
                         $sql .= " , KODE_KANTOR_PANITIA   ";
-                    } 
+                   // } 
                     $sql .= " ) ";
                     $sql .= " VALUES ( ";
                     $sql .= "  '" .$this->input->post("KODE_TENDER") . "' ";
@@ -1098,8 +1140,11 @@ class Pekerjaan_pgd extends MY_Controller {
                         echo "1";
 
                     } else{
+                        
+                        
+                        
                          echo "0";
-
+                        //  echo $sql;   
                     }
                       
                 }
