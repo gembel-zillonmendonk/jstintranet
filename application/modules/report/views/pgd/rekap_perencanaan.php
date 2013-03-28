@@ -49,7 +49,7 @@ if (count($_REQUEST) > 0) {
 
         </form>
     </div>
-    <h3 href="<?php echo site_url('/report/grid/pgd.rekap_perencanaan' . $params) ?>">LAPORAN PERENCANAAN</h3>
+    <h3 href="<?php echo site_url('/report/gridrf/rpt_pgd_perencanaan' . $params) ?>">LAPORAN PERENCANAAN</h3>
     <div></div>
 
 </div>

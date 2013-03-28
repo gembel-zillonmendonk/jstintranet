@@ -327,16 +327,57 @@ FROM MS_BARANG) J, EP_PGD_ITEM_TENDER T ", "P.KODE_BARANG_JASA, J.NAMA_BARANG_JA
                  
                  $data["arrharga"] = $query->result_array(); 
                  
+                 
+                 
                  $sql = "SELECT E.KODE_VENDOR , V.NAMA_VENDOR, COALESCE(E.NILAI_HARGA,0) AS  NILAI_HARGA, E.KETERANGAN_HARGA, E.PENAWARAN, E.BID_BOND  ";
                  $sql .= " FROM EP_PGD_TENDER_EVALUASI E ";
                  $sql .= " LEFT JOIN EP_VENDOR V ON E.KODE_VENDOR = V.KODE_VENDOR  ";
                  $sql .= " WHERE E.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "'";
                  $sql .= " AND E.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
                   
-                // echo $sql;
+                 // echo $sql;
                  
                  $query = $this->db->query($sql);
                  $data["rsevalharga"] = $query->result(); 
+                 
+                 
+                 
+                 $strwhere = "P.KODE_VENDOR = V.KODE_VENDOR  ";  
+                 $strwhere .=" AND P.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "'";
+                 $strwhere .=" AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
+                 
+                  $sql = $this->crosstab->PivotTableSQL($this->db, "EP_PGD_ITEM_PENAWARAN P, EP_VENDOR V ", "'TOTAL'
+                      As TOTAL", "NAMA_VENDOR", $strwhere ,  "P.HARGA * P.JUMLAH","SUM");
+         
+                 $query = $this->db->query($sql); 
+                 $data["arrtotalharga"] = $query->result_array(); 
+                 
+                 
+                 $strwhere = "P.KODE_VENDOR = V.KODE_VENDOR  ";  
+                 $strwhere .=" AND P.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "'";
+                 $strwhere .=" AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
+                 
+                  $sql = $this->crosstab->PivotTableSQL($this->db, "EP_PGD_PENAWARAN P, EP_VENDOR V ", "'TOTAL'
+                      As TOTAL", "NAMA_VENDOR", $strwhere ,  "P.BID_BOND","SUM");
+         
+                  // echo $sql;
+                  
+                  $query = $this->db->query($sql); 
+                  $data["arrbidbond"] = $query->result_array(); 
+                 
+                 $strwhere = "P.KODE_VENDOR = V.KODE_VENDOR  ";  
+                 $strwhere .=" AND P.KODE_TENDER = '" . $this->input->get("KODE_TENDER") . "'";
+                 $strwhere .=" AND P.KODE_KANTOR = '" . $this->input->get("KODE_KANTOR") . "'";
+                 
+                  $sql = $this->crosstab->PivotTableSQL($this->db, "EP_PGD_PENAWARAN P, EP_VENDOR V ", "'TOTAL'
+                      As TOTAL", "NAMA_VENDOR", $strwhere ,  "P.BERLAKU_HINGGA","MAX", "MAX");
+         
+                  // echo $sql;
+                  
+                    $query = $this->db->query($sql); 
+                  $data["arrberlaku"] = $query->result_array(); 
+                 
+                 
                  
                  
 		$this->load->view("pengadaan_evaluasi_harga", $data);

@@ -15,7 +15,7 @@ class Kurs extends CI_Controller {
             $sql = "DELETE FROM EP_MS_MATA_UANG_KURS ";
             $sql .= " WHERE MATA_UANG_DARI = '" . $_GET["MATA_UANG_DARI"] . "'";
             $sql .= " AND MATA_UANG_KE = '" . $_GET["MATA_UANG_KE"] . "'";
-            $sql .= " AND TO_CHAR(TGL_KURS,'YYYY-MM-DD') = SUBSTR('" . $_GET["TGL_KURS"] . "',0,10) ";
+            $sql .= " AND TO_CHAR(TGL_KURS,'DD-MM-YYYY') = SUBSTR('" . $_GET["TGL_KURS"] . "',0,10) ";
             
             $this->db->simple_query($sql);
             redirect(base_url() . "index.php/adm/kurs");
@@ -28,7 +28,7 @@ class Kurs extends CI_Controller {
 			//echo $this->input->post("nama_panitia");
 			
 			$sql = "INSERT INTO EP_MS_MATA_UANG_KURS (MATA_UANG_DARI, MATA_UANG_KE, NILAI, TGL_KURS , TGL_REKAM) ";
-			$sql .= " VALUES ('" .$this->input->post("mata_uang_dari"). "','".$this->input->post("mata_uang_ke")."'," . $this->input->post("nilai")   .", TO_DATE('" . $this->input->post("tgl_kurs") . "','YYYY-MM-DD'), TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD'))" ;
+			$sql .= " VALUES ('" .$this->input->post("mata_uang_dari"). "','".$this->input->post("mata_uang_ke")."'," . $this->input->post("nilai")   .", TO_DATE('" . $this->input->post("tgl_kurs") . "','DD-MM-YYYY'), TO_DATE('" . date("d-m-Y") . "','DD-MM-YYYY'))" ;
 			
 			$query = $this->db->simple_query($sql);
 			
@@ -52,7 +52,7 @@ class Kurs extends CI_Controller {
 			$sql .= " SET  NILAI= '" .$this->input->post("nilai") . "' ";
 			$sql .= "   WHERE MATA_UANG_DARI = '" .$this->input->post("mata_uang_dari") . "' ";
 			$sql .= " AND MATA_UANG_KE = '" .$this->input->post("mata_uang_ke") . "' ";
-			$sql .= " AND TO_CHAR( TGL_KURS ,'YYYY-MM-DD')  =    '" . substr($this->input->post("tgl_kurs"),0,10) . "' ";
+			$sql .= " AND TO_CHAR( TGL_KURS ,'DD-MM-YYYY')  =    '" . substr($this->input->post("tgl_kurs"),0,10) . "' ";
 			
 			 
 			
@@ -64,11 +64,11 @@ class Kurs extends CI_Controller {
 			 
 		}	
 		
-		$sql = "SELECT MATA_UANG_DARI, MATA_UANG_KE, NILAI, TO_CHAR(TGL_KURS,'YYYY-MM-DD') as TGL_KURS ";
+		$sql = "SELECT MATA_UANG_DARI, MATA_UANG_KE, NILAI, TO_CHAR(TGL_KURS,'DD-MM-YYYY') as TGL_KURS ";
 		$sql .= " FROM EP_MS_MATA_UANG_KURS ";
 		$sql .= " WHERE MATA_UANG_DARI = '" . $this->input->get("MATA_UANG_DARI"). "' ";
 		$sql .= " AND MATA_UANG_KE = '" . $this->input->get("MATA_UANG_KE"). "' ";
-		$sql .= " AND TO_CHAR(TGL_KURS,'YYYY-MM-DD') = '" . substr($this->input->get("TGL_KURS"),0,10) . "' ";
+		$sql .= " AND TO_CHAR(TGL_KURS,'DD-MM-YYYY') = '" . substr($this->input->get("TGL_KURS"),0,10) . "' ";
 		
 		 
 		$query = $this->db->query($sql);

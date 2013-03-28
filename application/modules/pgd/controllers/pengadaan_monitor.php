@@ -83,7 +83,7 @@ class Pengadaan_monitor extends MY_Controller {
             $data["kode_klas_vendor_K"] = "";
             $data["kode_klas_vendor_M"] = "";
             $data["kode_klas_vendor_B"] = "";
-            
+            $data["nama_panitia"] = "";
 
             $query = $this->db->query($sql);
             $result = $query->result();

@@ -167,9 +167,9 @@ class Harga_jasa extends MY_Controller {
                         $str_file =  $this->do_upload();
 			$urut = $this->urut->get("ALL","HARGAJASA");
 			 
-                        $arrTglSumber = split("-",$this->input->post("TGL_SUMBER"));
+                        $arrTglSumber = explode("-",$this->input->post("TGL_SUMBER"));
 			 
-                        $tgl_sumber = $arrTglSumber[2] . "-" . $arrTglSumber[1] .  "-" . $arrTglSumber[0];
+                        $tgl_sumber = $arrTglSumber[0] . "-" . $arrTglSumber[1] .  "-" . $arrTglSumber[2];
                         
 			 $sql = "INSERT INTO EP_KOM_HARGA_JASA (KODE_HARGA_JASA, KODE_JASA, KODE_KANTOR, KODE_SUMBER , MATA_UANG, HARGA, NAMA_VENDOR, CATATAN, LAMPIRAN, TGL_SUMBER,  TGL_REKAM, PETUGAS_REKAM ) ";
 			 $sql .= " VALUES (".$urut.",'". $this->input->post("kode_jasa")."','" . $this->input->post("kode_kantor"). "'," . $this->input->post("kode_sumber"). " , '" . $this->input->post("mata_uang"). "' ";
@@ -177,8 +177,8 @@ class Harga_jasa extends MY_Controller {
                          $sql .= " ,'" .str_replace(",","",$this->input->post("nama_vendor")). "' ";
                          $sql .= " ,'" .str_replace(",","",$this->input->post("catatan")). "' ";
                          $sql .= " ,'" .$str_file . "' ";
-                         $sql .= " ,   TO_DATE('" . $tgl_sumber . "','YYYY-MM-DD') ";
-			 $sql .= " ,   TO_DATE('" . date("Y-m-d") . "','YYYY-MM-DD HH24:MI:SS')  ";
+                         $sql .= " ,   TO_DATE('" . $tgl_sumber . "','DD-MM-YYYY') ";
+			 $sql .= " ,   TO_DATE('" . date("d-m-Y") . "','DD-MM-YYYY')  ";
                          $sql .= " ,'" .$this->session->userdata("kode_user") . "') ";
 			 
 			    
@@ -186,6 +186,7 @@ class Harga_jasa extends MY_Controller {
 				$this->urut->set_plus( "ALL","HARGAJASA") ;
 				echo $urut;
 			 }	else {
+                                //echo $sql;  
 				echo "0";
 			 }
 			

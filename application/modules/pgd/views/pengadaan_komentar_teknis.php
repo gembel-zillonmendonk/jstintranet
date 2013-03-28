@@ -9,6 +9,7 @@
 <input type="hidden" name="NAMA_VENDOR" value="<?php echo $NAMA_VENDOR; ?>" />
 </form>
 <script>
+    /*
      tinyMCE.init({
 		mode : "textareas",
 		theme : "simple", 
@@ -31,4 +32,5 @@
                     });
                 }
 	});
+     */   
 </script>      

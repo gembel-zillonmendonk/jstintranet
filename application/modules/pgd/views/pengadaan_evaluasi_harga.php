@@ -37,10 +37,13 @@
              <tr>
                  
         <?php 
+          $arrTotal = array();  
           $arr =    $arrharga[$i];
           $j=0;
+          $vnd = 0 ;
           foreach($arr  as $k=>$v) {
               if ($j == 0 ) {
+                  $vnd = 0 ;
           ?>
              
               <td  >&nbsp;<?php echo ($i+1);?></td>
@@ -51,6 +54,14 @@
          ?>
               <td style="text-align: right" >&nbsp;<?php echo number_format($arr[$k],2);?></td>
          <?php
+                     
+                    if ($j > 2) {
+                         $arrKey[$vnd]  =  $k ;// $arr[$k];
+                         $vnd++;
+                     } 
+                       if ($j == 2) {
+                         $arrTotal['HPS']  =   $arr[$k];
+                     }
                }
               $j++;
           }
@@ -60,19 +71,68 @@
           }
          ?>
            <tr class="ui-widget-content jqgrow ui-row-ltr" > 
-               <td colspan="2" style="background-color: yellow" >&nbsp;Total Harga</td>
+               <td colspan="2" style="background-color: yellow" >&nbsp;Total Harga </td>
+               <td style="text-align: right"   ><?php  echo number_format($arrTotal['HPS'],2); ?></td>
+               <?php 
+               $arr = $arrtotalharga[0];
+                for($x=0;$x<$vnd;$x++) {
+               ?>
+               <td style="text-align: right;background-color: yellow"  ><?php echo number_format($arr[$arrKey[$x]]   ,2); ?> </td>
+               <?php 
+               }
+               ?>
+               
+               
            </tr>
            <tr>
                <td colspan="2" style="background-color: yellow" >&nbsp;PPN</td>
+               <td style="text-align: right"  ><?php  echo number_format($arrTotal['HPS'] * 0.1 ,2); ?></td>
+               <?php  
+               for($x=0;$x<$vnd;$x++) {
+               ?>
+               <td style="text-align: right;background-color: yellow"  ><?php echo number_format($arr[$arrKey[$x]] * 0.1   ,2); ?> </td>
+               <?php 
+               }
+               ?>
+               
            </tr>
            <tr>
                <td colspan="2" style="background-color: yellow" >&nbsp;Total Harga Setelah PPN</td>
+               <td style="text-align: right"  ><?php  echo number_format($arrTotal['HPS'] * 1.1 ,2); ?></td>
+               <?php  
+               for($x=0;$x<$vnd;$x++) {
+               ?>
+               <td style="text-align: right;background-color: yellow"  ><?php echo number_format($arr[$arrKey[$x]] * 1.1   ,2); ?> </td>
+               <?php 
+               }
+               ?>
+               
+               
            </tr> 
             <tr>
                <td colspan="2" style="background-color: yellow" >&nbsp;Bid Bond</td>
+               <td>&nbsp;</td>
+               <?php  
+               $arr = $arrbidbond[0];
+               for($x=0;$x<$vnd;$x++) {
+               ?>
+               <td style="text-align: right;background-color: yellow"  ><?php echo number_format($arr[$arrKey[$x]] * 1.1   ,2); ?> </td>
+               <?php 
+               }
+               ?>
            </tr> 
             <tr>
+                
                <td colspan="2" style="background-color: yellow" >&nbsp;Valid Sampai</td>
+               <td>&nbsp;</td>
+               <?php  
+               $arr = $arrberlaku[0];
+               for($x=0;$x<$vnd;$x++) {
+               ?>
+               <td style="text-align: right;background-color: yellow"  ><?php echo substr($arr[$arrKey[$x]],0,10) ; ?> </td>
+               <?php 
+               }
+               ?>
            </tr> 
 
              </table>
